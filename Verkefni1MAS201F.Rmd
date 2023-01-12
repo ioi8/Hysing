@@ -4,3 +4,18 @@ author: "Isak Orn Ivarsson og Adalheidur Magnusdottir"
 date: "2023-01-12"
 output: html_document
 ---
+
+1. Útskýrið með ykkar eigin orðum hvers vegna það borgar sig að skipta um hurð.
+- Líkurnar á því að velja hurðina með bíllnum sem þú vilt eru 1 á móti 3, þú velur þvíu eina hurð með þeim líkum. Þá eru 2/3 líkur gegn þér þar sem það eru tvær hurðar eftir. Hinsvegar opnar Monty eina hurð þar sem geit er. Þá "þjappast" mótlíkurnar frá tveim hurðum yfir í eina. Líkurnar eru því ennþá 2/3 en núna bara á einni hurð. Það er því þér í hag að skipta um hurð þar sem hurðin sem Monty valdi ekki.
+
+2. Setjið Monty Hall gátuna stærðfræðilega fram, þar með talið að skilgreina hvert útkomumengið og hverjir eru atburðirnir sem vísað er til.
+
+
+3. Teiknið skýringarmynd, eða -töflu, þar sem þið tiltakið þá atburði sem koma fyrir í þrautinni og líkurnar á þeim.
+
+
+4. Notið tungumál stærðfræðinnar til að rökstyðja hvers vegna það borgar sig að skipta um hurð.
+
+
+Bónusspurning. Nú gerist það að þáttastjórnandinn er búinn að steingleyma á bakvið hvaða hurð geitin er. Hann tekur samt sénsinn og opnar eina hurð af handahófi og sem betur fer reynist geit á bakvið hurðina. Eigið þið enn að skipta um hurð?
+
