@@ -42,9 +42,7 @@ Líkurnar eru því 1/3 þér í hag og 2/3 gegn þér. En þá opnar Monty Hall
 
 Þar sem Monty Hall opnar eina hurð þar sem staðfest að ein geit er þá eru líkurnar gegn þér ennþá 2/3 nema þú veist að það er geit á bakvið hurðina sem Monty opnaði og því "þjappast mótlíkurnar" á hurðina sem stendur eftir óopin, í þessu tilviki "Hurð 3".
 
-4. Notið tungumál stærðfræðinnar til að rökstyðja hvers vegna það borgar sig að skipta um hurð.
--Látum P(A) vera atburðurinn að velja hurð 1.
--Látum P(B) vera atburðurinn að Monty Hall sýnir geit bakvið hurð 2.
+Til að skýra betur frá því afhverju þátttakandi skuli alltaf skipta um hurð látum við P(A) vera atburðurinn að velja hurð 1 og P(B) vera atburðurinn að Monty Hall sýnir geit bakvið hurð 2.
 $$
 P(A|B) = \frac
   {P(B|A) P(A)} 
@@ -63,7 +61,7 @@ $$
 -Hann velur aldrei hurð með bíl, þ.e. 1/3 * 0.
 -Hann velur alltaf hurð sem hefur geit, þ.e. 1/3*1/2
 -Ef Bíllinn er bakvið hurð 3 þá mun hann alltaf opna hurð 2, þ.e. 1/3*1
-Þá getum við ályktað sem svo að líkurnar á því að velja hurð 1 hefur líkurnar 1/3 og að bakvið hana sé bíll en að velja hurð 3 hefur líkurnar 2/3.
+Þá getum við ályktað sem svo að líkurnar á því að velja hurð 1 og á bakvið hana sé bíll eru 1/3 en að velja hurð 3 hefur líkurnar 2/3. Því skal þátttakandi alltaf skipta um hurð. 
 
 
 5. Bónusspurning: Nú gerist það að þáttastjórnandinn er búinn að steingleyma á bakvið hvaða hurð geitin er. Hann tekur samt sénsinn og opnar eina hurð af handahófi og sem betur fer reynist geit á bakvið hurðina. Eigið þið enn að skipta um hurð?
