@@ -8,39 +8,29 @@ output: html_document
 knitr::opts_chunk$set(echo=T, warning=F, message =F)
 ```
 
-Líkurnar á því að velja hurðina með bílnum sem þú vilt eru 1 á móti 3, þú velur því eina hurð með þeim líkum. Þá eru 2/3 líkur gegn þér þar sem það eru tvær hurðir eftir. Hinsvegar opnar Monty eina hurð þar sem geit er. Þá "þjappast" mótlíkurnar frá tveim hurðum yfir í eina. Líkurnar eru því ennþá 2/3 en núna bara á einni hurð. Það er því þér í hag að skipta um hurð.
 
-Hér að neðan má sjá Monty Hall gátuna setta stærðfræðilega fram,  hvert útkomumengið er og hverjir eru atburðirnir sem vísað er til.
+1. Útskýrið með ykkar eigin orðum hvers vegna það borgar sig að skipta um hurð.
+
+Líkurnar á því að velja hurðina með bíllnum sem þú vilt eru 1 á móti 3, þú velur því eina hurð með þeim líkum. Þá eru 2/3 líkur gegn þér þar sem það eru tvær hurðar eftir. Hinsvegar opnar Monty eina hurð þar sem geit er. Þá "þjappast" mótlíkurnar frá tveim hurðum yfir í eina. Líkurnar eru því ennþá 2/3 en núna bara á einni hurð. Það er því þér í hag að skipta um hurð þar sem hurðin sem Monty valdi ekki.
+
+2. Setjið Monty Hall gátuna stærðfræðilega fram, þar með talið að skilgreina hvert útkomumengið og hverjir eru atburðirnir sem vísað er til.
 
 Útkomumengi:
 $$
-\Omega = \{Geit, Bíll\}
+\Omega = \{Vinna, Tapa\}
 $$
-
 Atburðir:
-$$
-Vinna = \{Bíll\}
-$$
-$$
-Tapa = \{Geit\}
-$$
+Velja hurð = {A}
 
-Mögulegir atburðir: 
-$$
-\Omega = \{Vinna \cap  Tapa\}
-$$
-
-Ómögulegur atburður: 
-$$
-Ø = \{Vinna \cup  Tapa\}
-$$
+Monty Hall opnar hurð með geit = {B}
 
 
-Í töflunni má sjá atburðina sem koma fyrir í þrautinni og líkurnar á þeim. 
+
+3. Teiknið skýringarmynd, eða -töflu, þar sem þið tiltakið þá atburði sem koma fyrir í þrautinni og líkurnar á þeim.
 
 | Hurð 1        | Hurð 2          | Hurð 3        |
 | :---          |    :----:       |  ---:         |
-| Valin hurð    |  Óvalin hurð    | Óvalin hurð   |
+| Valin hurð    |  ÓVALIN hurð    | Óvalin hurð   |
 | Líkur: 1 / 3  |  Líkur: 1/3     | Líkur: 2 / 3  |
 
 Líkurnar eru því 1/3 þér í hag og 2/3 gegn þér. En þá opnar Monty Hall  eina hurð þar sem geit er.
@@ -53,8 +43,28 @@ Líkurnar eru því 1/3 þér í hag og 2/3 gegn þér. En þá opnar Monty Hall
 Þar sem Monty Hall opnar eina hurð þar sem staðfest að ein geit er þá eru líkurnar gegn þér ennþá 2/3 nema þú veist að það er geit á bakvið hurðina sem Monty opnaði og því "þjappast mótlíkurnar" á hurðina sem stendur eftir óopin, í þessu tilviki "Hurð 3".
 
 4. Notið tungumál stærðfræðinnar til að rökstyðja hvers vegna það borgar sig að skipta um hurð.
+-Látum P(A) vera atburðurinn að velja hurð 1.
+-Látum P(B) vera atburðurinn að Monty Hall sýnir geit bakvið hurð 2.
+$$
+P(A|B) = \frac
+  {P(B|A) P(A)} 
+  {P(B)}
+=
+\frac
+  {\frac{1}{2} * \frac{1}{3}}
+  {\frac{1}{3} * \frac{1}{2} +
+  \frac{1}{3} * 0 
+  + \frac{1}{3} * 1}
+=
+\frac{1}{3}
+$$
+-Í teljara setjum við 1/3 * 1/2 þar sem við veljum hurð og líkurnar á því að hún sé með bíl eru 1/3. Þá eru tvær hurðar eftir sem hafa helmings (1/2) líkur á því að vera valdar.
+-Í nefnara setjum við líkurnar á Monty Hall að velji hurð 2.
+-Hann velur aldrei hurð með bíl, þ.e. 1/3 * 0.
+-Hann velur alltaf hurð sem hefur geit, þ.e. 1/3*1/2
+-Ef Bíllinn er bakvið hurð 3 þá mun hann alltaf opna hurð 2, þ.e. 1/3*1
+Þá getum við ályktað sem svo að líkurnar á því að velja hurð 1 hefur líkurnar 1/3 og að bakvið hana sé bíll en að velja hurð 3 hefur líkurnar 2/3.
 
 
-
-Ef þáttastjórnandinn er búinn að steingleyma á bakvið hvaða hurð geitin er en  tekur samt sénsinn og opnar eina hurð af handahófi þar sem betur fer reynist geit á bakvið hurðina þá á enn að skipta um hurð. Líkurnar haldast þær sömu þó að þáttastjórnandinn gleymi því hvar geitin er. 
-
+5. Bónusspurning: Nú gerist það að þáttastjórnandinn er búinn að steingleyma á bakvið hvaða hurð geitin er. Hann tekur samt sénsinn og opnar eina hurð af handahófi og sem betur fer reynist geit á bakvið hurðina. Eigið þið enn að skipta um hurð?
+- Já, líkurnar haldast þær sömu. 
