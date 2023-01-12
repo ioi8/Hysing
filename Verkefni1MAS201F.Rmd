@@ -42,10 +42,19 @@ $$
 
 3. Teiknið skýringarmynd, eða -töflu, þar sem þið tiltakið þá atburði sem koma fyrir í þrautinni og líkurnar á þeim.
 
-| Hurð 1      | Hurð 2 | Hurð 3   |
-| :---        |    :----:   |          ---: |
-| Valin hurð     | Hurð valin af gestgjafa       | Óopnuð hurð   |
-| 1 / 3    |  0  |              2 / 3  |
+| Hurð 1        | Hurð 2          | Hurð 3        |
+| :---          |    :----:       |  ---:         |
+| Valin hurð    |  ÓVALIN hurð    | Óvalin hurð   |
+| Líkur: 1 / 3  |  Líkur: 1/3     | Líkur: 2 / 3  |
+
+Líkurnar eru því 1/3 þér í hag og 2/3 gegn þér. En þá opnar Monty Hall  eina hurð þar sem geit er.
+
+| Hurð 1        | Hurð 2          | Hurð 3        |
+| :---          |    :----:       |  ---:         |
+| Valin hurð    | Monty Hall hurð | Óvalin hurð   |
+| Líkur: 1 / 3  |  Líkur: 0       | Líkur: 2 / 3  |
+
+Þar sem Monty Hall opnar eina hurð þar sem staðfest að ein geit er þá eru líkurnar gegn þér ennþá 2/3 nema þú veist að það er geit á bakvið hurðina sem Monty opnaði og því "þjappast mótlíkurnar" á hurðina sem stendur eftir óopin, í þessu tilviki "Hurð 3".
 
 4. Notið tungumál stærðfræðinnar til að rökstyðja hvers vegna það borgar sig að skipta um hurð.
 
