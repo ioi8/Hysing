@@ -69,9 +69,32 @@ $$
 
 1. Smíðið slembistærð sem lýsir hurðunum þremur og vinningunum á bak við þær í Monty Hall þrautinni. Gerum ráð fyrir að geit sé fimm þúsund króna virði en bíll fimm milljóna króna virði.
 
-2. Skrifið formúlu líkindafalls slembistærðarinnar sem þið bjugguð til og teiknið graf hennar.
+Hurd = {5000, 5000, 5000000}
 
-3. Hermið 100000 þátttökur í leiknum og reiknið gróðann í hvert sinn ef þið skiptið ekki hurð.
+2. Skrifið formúlu líkindafalls slembistærðarinnar sem þið bjugguð til og teiknið graf hennar.
+P(X=x)
+
+
+```{r}
+#3. Hermið 100000 þátttökur í leiknum og reiknið gróðann í hvert sinn ef þið skiptið ekki hurð.
+
+hurd <- c("geit", "geit", "bíll")
+peningur <- 0
+
+for(i in 1:100000){ #hermun 
+  utkoma <- sample(hurd,1) #Slembival á einum hlut úr Hurd.
+  if(utkoma=="bíll"){ #Ef bíll þá +5.000.000kr
+    peningur <- peningur+5000000
+    i+1 
+  }
+    if(utkoma== "geit"){
+      peningur <- peningur+5000
+      i+1
+    }
+}
+
+print(peningur)
+```
 
 4. Hermið 100000 þátttökur í leiknum og reiknið gróðann í hvert sinn ef þið skiptið um hurð.
 

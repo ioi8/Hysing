@@ -379,32 +379,127 @@ skilgreina hvert útkomumengið og hverjir eru atburðirnir sem vísað er
 til.</li>
 </ol>
 <p>Útkomumengi: <span class="math display">\[
-\Omega = \{Geit, Bíll\}
-\]</span></p>
-<p>Atburðir: <span class="math display">\[
-Vinna = \{Bíll\}
-\]</span> <span class="math display">\[
-Tapa = \{Geit\}
-\]</span></p>
-<p>Mögulegir atburðir: <span class="math display">\[
-\Omega = \{Vinna \cap  Tapa\}
-\]</span></p>
-<p>Ómögulegur atburður: <span class="math display">\[
-Ø = \{Vinna \cup  Tapa\}
-\]</span></p>
+\Omega = \{Vinna, Tapa\}
+\]</span> Atburðir: Velja hurð = {A}</p>
+<p>Monty Hall opnar hurð með geit = {B}</p>
 <ol start="3" style="list-style-type: decimal">
 <li>Teiknið skýringarmynd, eða -töflu, þar sem þið tiltakið þá atburði
 sem koma fyrir í þrautinni og líkurnar á þeim.</li>
 </ol>
-<p>||||| |hurð 1 |Hurð 2 |Hurð 3 | |:— |:— |:— | | 1/3|1/3 |1/3 |</p>
-<ol start="4" style="list-style-type: decimal">
-<li>Notið tungumál stærðfræðinnar til að rökstyðja hvers vegna það
-borgar sig að skipta um hurð.</li>
-</ol>
-<p>Bónusspurning. Nú gerist það að þáttastjórnandinn er búinn að
+<table>
+<thead>
+<tr class="header">
+<th align="left">Hurð 1</th>
+<th align="center">Hurð 2</th>
+<th align="right">Hurð 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Valin hurð</td>
+<td align="center">ÓVALIN hurð</td>
+<td align="right">Óvalin hurð</td>
+</tr>
+<tr class="even">
+<td align="left">Líkur: 1 / 3</td>
+<td align="center">Líkur: 1/3</td>
+<td align="right">Líkur: 2 / 3</td>
+</tr>
+</tbody>
+</table>
+<p>Líkurnar eru því 1/3 þér í hag og 2/3 gegn þér. En þá opnar Monty
+Hall eina hurð þar sem geit er.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Hurð 1</th>
+<th align="center">Hurð 2</th>
+<th align="right">Hurð 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Valin hurð</td>
+<td align="center">Monty Hall hurð</td>
+<td align="right">Óvalin hurð</td>
+</tr>
+<tr class="even">
+<td align="left">Líkur: 1 / 3</td>
+<td align="center">Líkur: 0</td>
+<td align="right">Líkur: 2 / 3</td>
+</tr>
+</tbody>
+</table>
+<p>Þar sem Monty Hall opnar eina hurð þar sem staðfest að ein geit er þá
+eru líkurnar gegn þér ennþá 2/3 nema þú veist að það er geit á bakvið
+hurðina sem Monty opnaði og því “þjappast mótlíkurnar” á hurðina sem
+stendur eftir óopin, í þessu tilviki “Hurð 3”.</p>
+<p>Til að skýra betur frá því afhverju þátttakandi skuli alltaf skipta
+um hurð látum við P(A) vera atburðurinn að velja hurð 1 og P(B) vera
+atburðurinn að Monty Hall sýnir geit bakvið hurð 2. <span class="math display">\[
+P(A|B) = \frac
+  {P(B|A) P(A)}
+  {P(B)}
+=
+\frac
+  {\frac{1}{2} * \frac{1}{3}}
+  {\frac{1}{3} * \frac{1}{2} +
+  \frac{1}{3} * 0
+  + \frac{1}{3} * 1}
+=
+\frac{1}{3}
+\]</span> -Í teljara setjum við 1/3 * 1/2 þar sem við veljum hurð og
+líkurnar á því að hún sé með bíl eru 1/3. Þá eru tvær hurðar eftir sem
+hafa helmings (1/2) líkur á því að vera valdar. -Í nefnara setjum við
+líkurnar á Monty Hall að velji hurð 2. -Hann velur aldrei hurð með bíl,
+þ.e. 1/3 * 0. -Hann velur alltaf hurð sem hefur geit, þ.e. 1/3<em>1/2
+-Ef Bíllinn er bakvið hurð 3 þá mun hann alltaf opna hurð 2, þ.e.
+1/3</em>1 Þá getum við ályktað sem svo að líkurnar á því að velja hurð 1
+og á bakvið hana sé bíll eru 1/3 en að velja hurð 3 hefur líkurnar 2/3.
+Því skal þátttakandi alltaf skipta um hurð.</p>
+<ol start="5" style="list-style-type: decimal">
+<li>Bónusspurning: Nú gerist það að þáttastjórnandinn er búinn að
 steingleyma á bakvið hvaða hurð geitin er. Hann tekur samt sénsinn og
 opnar eina hurð af handahófi og sem betur fer reynist geit á bakvið
-hurðina. Eigið þið enn að skipta um hurð?</p>
+hurðina. Eigið þið enn að skipta um hurð?</li>
+</ol>
+<ul>
+<li>Þá skiptir það ekki máli hvort við skiptum um hurð.</li>
+</ul>
+<pre class="r"><code>#1. Smíðið slembistærð sem lýsir hurðunum þremur og vinningunum á bak við þær í Monty Hall þrautinni. Gerum ráð fyrir að geit sé fimm þúsund króna virði en bíll fimm milljóna króna virði.
+#2. Skrifið formúlu líkindafalls slembistærðarinnar sem þið bjugguð til og teiknið graf hennar.
+#3. Hermið 100000 þátttökur í leiknum og reiknið gróðann í hvert sinn ef þið skiptið ekki hurð.
+
+hermun &lt;-  100000
+hurd &lt;- c(5000,5000,5000000)
+monty &lt;- function(iteration){
+        Hurdval &lt;-  sample(hurd, size = hermun, replace = TRUE)
+        i=1:iteration
+        results &lt;- data.frame(i=i+i, Hurdval=Hurdval)
+        return(results)
+}
+
+monty_results &lt;- monty(hermun)
+summary &lt;- table(monty_results$Hurdval)
+
+df_summary &lt;- data.frame(label = names(summary), count = matrix(summary))
+
+print(df_summary)</code></pre>
+<pre><code>##   label count
+## 1  5000 66758
+## 2 5e+06 33242</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Hermið 100000 þátttökur í leiknum og reiknið gróðann í hvert sinn
+ef þið skiptið um hurð.</p></li>
+<li><p>Skrifið formúlu skilyrta líkindafallsins sem lýsir mögulegum
+útkomum þegar búið er að opna eina hurð með geit bakvið.</p></li>
+<li><p>Notið tungumál stærðfræðinnar til að rökstyðja hvert væntigildi
+gróðans er þegar eintaklingur tekur þátt í leiknum og skiptir ekki um
+hurð.</p></li>
+<li><p>Notið tungumál stærðfræðinnar til að rökstyðja hvert væntigildi
+gróðans er þegar eintaklingur tekur þátt í leiknum og skiptir um
+hurð.</p></li>
+</ol>
 
 
 
