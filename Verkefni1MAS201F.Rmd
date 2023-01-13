@@ -66,3 +66,17 @@ $$
 
 5. Bónusspurning: Nú gerist það að þáttastjórnandinn er búinn að steingleyma á bakvið hvaða hurð geitin er. Hann tekur samt sénsinn og opnar eina hurð af handahófi og sem betur fer reynist geit á bakvið hurðina. Eigið þið enn að skipta um hurð?
 - Þá skiptir það ekki máli hvort við skiptum um hurð.
+
+1. Smíðið slembistærð sem lýsir hurðunum þremur og vinningunum á bak við þær í Monty Hall þrautinni. Gerum ráð fyrir að geit sé fimm þúsund króna virði en bíll fimm milljóna króna virði.
+
+2. Skrifið formúlu líkindafalls slembistærðarinnar sem þið bjugguð til og teiknið graf hennar.
+
+3. Hermið 100000 þátttökur í leiknum og reiknið gróðann í hvert sinn ef þið skiptið ekki hurð.
+
+4. Hermið 100000 þátttökur í leiknum og reiknið gróðann í hvert sinn ef þið skiptið um hurð.
+
+5. Skrifið formúlu skilyrta líkindafallsins sem lýsir mögulegum útkomum þegar búið er að opna eina hurð með geit bakvið.
+
+6. Notið tungumál stærðfræðinnar til að rökstyðja hvert væntigildi gróðans er þegar eintaklingur tekur þátt í leiknum og skiptir ekki um hurð.
+
+7. Notið tungumál stærðfræðinnar til að rökstyðja hvert væntigildi gróðans er þegar eintaklingur tekur þátt í leiknum og skiptir um hurð.
