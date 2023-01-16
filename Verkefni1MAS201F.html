@@ -463,7 +463,8 @@ virði.</p>
 <p>Hurd = {5000, 5000, 5000000}</p>
 <p>Hér er formúla líkindafalls slembistærðarinnar sem var búin til.</p>
 <p>P(X=x)</p>
-<p>Graf 1. Líkindafall slembistærðar.</p>
+<div id="graf-1.-líkindafall-slembistærðar." class="section level2">
+<h2>Graf 1. Líkindafall slembistærðar. ?</h2>
 <p>Til að skýra þrautina enn frekar var hermt eftir 100000 þátttökum í
 leiknum og gróðinn reiknaður í hvert sinn sem ekki var skipt um hurð
 eftir að þátttastjórnandi opnar eina hurð með geit.</p>
@@ -491,11 +492,11 @@ for(j in 1:100000){
   j &lt;- j+1
 }
 utkoma</code></pre>
-<pre><code>## [1] 167323010</code></pre>
+<pre><code>## [1] 167328005</code></pre>
 <pre class="r"><code>win2</code></pre>
-<pre><code>## [1] 33398</code></pre>
+<pre><code>## [1] 33399</code></pre>
 <pre class="r"><code>loss2</code></pre>
-<pre><code>## [1] 66602</code></pre>
+<pre><code>## [1] 66601</code></pre>
 <p>Hermt var einnig eftir 100000 þátttökum í leiknum og reiknaður
 gróðinn í hvert sinn þegar þátttakandi skiptir um hurð eftir að
 þátttastjórnandi hefur opnað eina hurð með geit</p>
@@ -531,15 +532,16 @@ for(i in 1:100000){
   i &lt;- i+1
 }
 SkiptiUtkoma</code></pre>
-<pre><code>## [1] 333456710</code></pre>
+<pre><code>## [1] 333326840</code></pre>
 <pre class="r"><code>loss</code></pre>
-<pre><code>## [1] 33342</code></pre>
+<pre><code>## [1] 33368</code></pre>
 <pre class="r"><code>win</code></pre>
-<pre><code>## [1] 66658</code></pre>
-<ol start="5" style="list-style-type: decimal">
-<li>Skrifið formúlu skilyrta líkindafallsins sem lýsir mögulegum útkomum
-þegar búið er að opna eina hurð með geit bakvið.</li>
-</ol>
+<pre><code>## [1] 66632</code></pre>
+<p>Hér má sjá formúlu skilyrta líkindafallsins sem lýsir mögulegum
+útkomum þegar búið er að opna eina hurð með geit bakvið.</p>
+<p><span class="math display">\[
+x -&gt; P(X = 5,000,000 | X = 5,000)
+\]</span></p>
 <p>Væntigildi gróðans í leiknum eru líkurnar á því að vinna bíl
 margfaldað með verðmæti bílsins sem er svo samanlagt við líkurnar á því
 að vinna geit margfaldað með verðmæti geitarinnar. Í þessu tilviki er
@@ -558,8 +560,13 @@ E[X] = \frac{1}{3} * 5000 + \frac{2}{3} * 5,000,000
 \]</span> Það má sjá að væntigildi gróðans er 3,444,999kr ef skipt er um
 hurð þegar þátttastjórnandi hefur opnað eina hurð en væntigildi er
 1,669,999kr ef ekki er skipt um hurð. Það er því hagstæðara að skipta um
-hurð. Út frá þessum upplýsingum að ofan má draga þá ályktun að alltaf
-skuli skipta um hurð.</p>
+hurð.</p>
+<p>Til þess að það borgi sig að skipta um hurð í þessu tilviki þyrfti
+verðmæti geitar að vera helmingur af verðmæti bílsins, eða 2,5 milljónir
+króna.</p>
+<p>Út frá þessum upplýsingum að ofan má draga þá ályktun að alltaf skuli
+skipta um hurð.</p>
+</div>
 
 
 

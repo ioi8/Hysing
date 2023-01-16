@@ -73,8 +73,7 @@ Hér er formúla líkindafalls slembistærðarinnar sem var búin til.
 
 P(X=x)
 
-Graf 1. Líkindafall slembistærðar.
-
+## Graf 1. Líkindafall slembistærðar. ?
 
 Til að skýra þrautina enn frekar var hermt eftir 100000 þátttökum í leiknum og gróðinn reiknaður í hvert sinn sem ekki var skipt um hurð eftir að þátttastjórnandi opnar eina hurð með geit.
 
@@ -147,7 +146,11 @@ loss
 win
 ```
 
-5. Skrifið formúlu skilyrta líkindafallsins sem lýsir mögulegum útkomum þegar búið er að opna eina hurð með geit bakvið.
+Hér má sjá formúlu skilyrta líkindafallsins sem lýsir mögulegum útkomum þegar búið er að opna eina hurð með geit bakvið.
+
+$$
+x -> P(X = 5,000,000 | X = 5,000)
+$$
 
 
 
