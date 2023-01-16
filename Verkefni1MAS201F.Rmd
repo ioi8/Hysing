@@ -78,25 +78,69 @@ P(X=x)
 ```{r}
 #3. Hermið 100000 þátttökur í leiknum og reiknið gróðann í hvert sinn ef þið skiptið ekki hurð.
 
-hurd <- c("geit", "geit", "bíll")
-peningur <- 0
+hurd <- c('bill','geit','geit')
 
-for(i in 1:100000){ #hermun 
-  utkoma <- sample(hurd,1) #Slembival á einum hlut úr Hurd.
-  if(utkoma=="bíll"){ #Ef bíll þá +5.000.000kr
-    peningur <- peningur+5000000
-    i+1 
+#Spilari skiptir ekki
+j <- 0
+win2 <- 0
+loss2 <- 0
+utkoma <- 0
+
+for(j in 1:100000){
+  ValSpilara <- sample(hurd,1)
+  
+  if(ValSpilara=='bill'){
+    utkoma <- utkoma + 5000
+    j+1
+    win2 <- win2+1
   }
-    if(utkoma== "geit"){
-      peningur <- peningur+5000
-      i+1
-    }
+  if(ValSpilara =='geit'){
+    utkoma <- utkoma + 5
+    j+1
+    loss2 <-loss2+1
+  }
+  j <- j+1
 }
-
-print(peningur)
+utkoma
+win2
+loss2
 ```
 
 4. Hermið 100000 þátttökur í leiknum og reiknið gróðann í hvert sinn ef þið skiptið um hurð.
+```{r}
+#Spilari skiptir
+i <- 0
+win <- 0
+loss <- 0
+SkiptiUtkoma <- 0
+
+for(i in 1:100000){
+  Spilari <- sample(hurd,1)
+  Monty <- sample(hurd,1)
+  
+  while (Monty != 'geit'){
+    Monty <- sample(hurd,1)
+    if(Monty == 'geit'){
+      SpilariSkiptir <- sample(hurd,1)
+    }
+  }
+  while(SpilariSkiptir == Spilari){
+    SpilariSkiptir <- sample(hurd,1)
+  }
+  if(SpilariSkiptir=='bill'){
+    SkiptiUtkoma <- SkiptiUtkoma + 5000
+    win <- win+1
+  }
+  if(SpilariSkiptir=='geit'){
+    SkiptiUtkoma <- SkiptiUtkoma + 5
+    loss <- loss +1
+  }
+  i <- i+1
+}
+SkiptiUtkoma
+loss
+win
+```
 
 5. Skrifið formúlu skilyrta líkindafallsins sem lýsir mögulegum útkomum þegar búið er að opna eina hurð með geit bakvið.
 
