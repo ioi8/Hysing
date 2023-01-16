@@ -2,7 +2,9 @@
 title: "Verkefni1 - MAS201F"
 author: "Isak Orn Ivarsson og Adalheidur Magnusdottir"
 date: "2023-01-12"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 ```{r setup, include= F}
 knitr::opts_chunk$set(echo=T, warning=F, message =F)
@@ -78,8 +80,6 @@ Hermt var eftir 100000 þátttökum í leiknum og gróðinn reiknaður í hvert 
 ```{r}
 
 hurd <- c('bill','geit','geit')
-
-#Spilari skiptir ekki
 j <- 0
 win2 <- 0
 loss2 <- 0
@@ -89,25 +89,22 @@ for(j in 1:100000){
   ValSpilara <- sample(hurd,1)
   
   if(ValSpilara=='bill'){
-    utkoma <- utkoma + 5000
+    utkoma <- utkoma + 5000000
     j+1
     win2 <- win2+1
   }
   if(ValSpilara =='geit'){
-    utkoma <- utkoma + 5
+    utkoma <- utkoma + 5000
     j+1
     loss2 <-loss2+1
   }
   j <- j+1
 }
-utkoma
-win2
-loss2
 ```
+af `r j` umferðum þá vinnur spilari í `r win2` skipti og endar með `r utkoma` gróða.
 
 Hermt var einnig eftir 100000 þátttökum í leiknum og reiknaður gróðinn í hvert sinn þegar þátttakandi skiptir um hurð eftir að þátttastjórnandi hefur opnað eina hurð með geit.
 ```{r}
-#Spilari skiptir
 i <- 0
 win <- 0
 loss <- 0
@@ -119,27 +116,25 @@ for(i in 1:100000){
   
   while (Monty != 'geit'){
     Monty <- sample(hurd,1)
-    if(Monty == 'geit'){
-      SpilariSkiptir <- sample(hurd,1)
-    }
+  }
+  if(Monty == 'geit'){
+    SpilariSkiptir <- sample(hurd,1)
   }
   while(SpilariSkiptir == Spilari){
     SpilariSkiptir <- sample(hurd,1)
   }
   if(SpilariSkiptir=='bill'){
-    SkiptiUtkoma <- SkiptiUtkoma + 5000
+    SkiptiUtkoma <- SkiptiUtkoma + 5000000
     win <- win+1
   }
   if(SpilariSkiptir=='geit'){
-    SkiptiUtkoma <- SkiptiUtkoma + 5
+    SkiptiUtkoma <- SkiptiUtkoma + 5000
     loss <- loss +1
   }
   i <- i+1
 }
-SkiptiUtkoma
-loss
-win
 ```
+af `r j` umferðum þá vinnur spilari í `r win` skipti og endar með `r SkiptiUtkoma` gróða.
 
 5. Skrifið formúlu skilyrta líkindafallsins sem lýsir mögulegum útkomum þegar búið er að opna eina hurð með geit bakvið.
 
