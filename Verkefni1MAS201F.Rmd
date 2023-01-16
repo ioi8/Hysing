@@ -9,7 +9,10 @@ knitr::opts_chunk$set(echo=T, warning=F, message =F)
 ```
 
 
-Líkurnar á því að velja hurðina með bílnum sem þú vilt eru 1 á móti 3, þú velur því eina hurð með þeim líkum. Þá eru 2/3 líkur gegn þér þar sem það eru tvær hurðar eftir. Hinsvegar opnar Monty eina hurð þar sem geit er. Þá "þjappast" mótlíkurnar frá tveim hurðum yfir í eina. Líkurnar eru því ennþá 2/3 en núna bara á einni hurð. Það er því þér í hag að skipta um hurð þar sem hurðin sem Monty valdi ekki.
+Monty Hall þrautin gengur út á það að einstaklingur á að ímynda sér að hann sé að taka þátt í leik í sjónvarspsþætti og fái val um þrjár hurðir til að opna. Á bakvið eina hurð er bíll og á bak við hinar eru tvær geitur. Þátttakandinn velur hurð og þá gengur þátttastjórnandinn, sem veit hvað er á bakvið hurðirnar, að annarri hurð, opnar hana og geit birtist. Þá spyr þátttastjórnandinn hvort þátttakandinn vilji breyta valinu og hvort það sé honum í hag að breyta valinu. 
+
+  Líkurnar á því að velja hurðina með bílnum sem þátttakandi vill eru 1 á móti 3 og því velur hann eina hurð með þeim líkum. Þá eru hinsvegar 2/3 líkur gegn þátttakandanum þar sem það eru tvær hurðar eftir. Þátttastjórnandinn, eða Monty, opnar eina hurð þar sem geit er. Þá "þjappast" mótlíkurnar frá tveim hurðum yfir í eina. Líkurnar eru því ennþá 2/3 en núna bara á einni hurð. Það er því þér í hag að skipta um hurð og velja hurðina sem Monty valdi ekki.
+
 
 Hér má sjá Monty Hall gátuna setta stærðfræðilega fram, þar með talið  hvert útkomumengið er og hverjir eru atburðirnir sem vísað er til.
 
@@ -18,6 +21,7 @@ $$
 \Omega = \{Vinna, Tapa\}
 $$
 Atburðir:
+
 Velja hurð = {A}
 
 Monty Hall opnar hurð með geit = {B}
@@ -30,16 +34,16 @@ Tafla 1. Atburðir sem koma fyrir í þrautinni og líkurnar á þeim.
 | Valin hurð    |  Óvalin hurð    | Óvalin hurð    |
 | Líkur: 1 / 3  |  Líkur: 1/3     | Líkur: 1 / 3  |
 
-Líkurnar eru því 1/3 þér í hag og 2/3 gegn þér. En þá opnar Monty Hall  eina hurð þar sem geit er.
+Líkurnar eru því 1/3 þátttakandanum í hag og 2/3 gegn honum. En þá opnar Monty Hall eina hurð þar sem geit er.
 
 | Hurð 1        | Hurð 2          | Hurð 3        |
 | :---          |    :----:       |  ---:         |
 | Valin hurð    | Monty Hall hurð | Óvalin hurð   |
 | Líkur: 1 / 3  | Líkur: 0        | Líkur: 2 / 3  |
 
-Þar sem Monty Hall opnar eina hurð þar sem staðfest að ein geit er þá eru líkurnar gegn þér ennþá 2/3 nema þú veist að það er geit á bakvið hurðina sem Monty opnaði og því "þjappast mótlíkurnar" á hurðina sem stendur eftir óopin, í þessu tilviki "Hurð 3".
+Þar sem Monty Hall opnar eina hurð þar sem staðfest að ein geit er þá eru líkurnar gegn þátttakandanum ennþá 2/3 nema hann veit að það er geit á bakvið hurðina sem Monty opnaði og því "þjappast mótlíkurnar" á hurðina sem stendur eftir óopin, sem í þessu tilviki er "Hurð 3".
 
-Til að skýra betur frá því afhverju þátttakandi skuli alltaf skipta um hurð látum við P(A) vera atburðurinn að velja hurð 1 og P(B) vera atburðurinn að Monty Hall sýnir geit bakvið hurð 2.
+Til að skýra betur frá því afhverju þátttakandi skuli alltaf skipta um hurð er P(A) látinn vera atburðurinn að velja hurð 1 og P(B) atburðurinn að Monty Hall sýnir geit bakvið hurð 2. 
 $$
 P(A|B) = \frac
   {P(B|A) P(A)} 
@@ -54,11 +58,9 @@ P(A|B) = \frac
 \frac{1}{3}
 $$
 
-Í teljara setjum við 1/3 * 1/2 þar sem við veljum hurð og líkurnar á því að hún sé með bíl eru 1/3. Þá eru tvær hurðar eftir sem hafa helmings (1/2) líkur á því að vera valdar.
-  Í nefnara setjum við líkurnar á Monty Hall að velji hurð 2.Hann velur aldrei hurð með bíl, þ.e. 1/3 * 0. Hann velur alltaf hurð sem hefur geit, þ.e. 1/3*1/2. 
-Ef bíllinn er bakvið hurð 3 þá mun hann alltaf opna hurð 2, þ.e. 1/3*1
-Þá getum við ályktað sem svo að líkurnar á því að velja hurð 1 og á bakvið hana sé bíll eru 1/3 en að velja hurð 3 hefur líkurnar 2/3. Því skal þátttakandi alltaf skipta um hurð. 
+Í teljara setjum við 1/3 * 1/2 þar sem við veljum hurð og líkurnar á því að hún sé með bíl eru 1/3. Þá eru tvær hurðar eftir sem hafa helmings (1/2) líkur á því að vera valdar. 
 
+  Í nefnara setjum við líkurnar á Monty Hall að velji hurð 2. Hann velur aldrei hurð með bíl, þ.e. 1/3 * 0. Hann velur alltaf hurð sem hefur geit, þ.e. 1/3 * 1/2. Ef bíllinn er bakvið hurð 3 þá mun hann alltaf opna hurð 2, þ.e. 1/3 * 1. Þá getum við ályktað sem svo að líkurnar á því að velja hurð 1 og á bakvið hana sé bíll eru 1/3 en að velja hurð 3 hefur líkurnar 2/3. Því skal þátttakandi alltaf skipta um hurð. 
 
 Ef að þáttastjórnandinn er búinn að steingleyma á bakvið hvaða hurð geitin er en tekur samt sénsinn og opnar eina hurð af handahófi og sem betur fer reynist geit á bakvið hurðina. Þá skiptir það ekki máli hvort þátttakandi skiptir um hurð eftir að þáttastjórnandinn opnar eina hurð.
 
@@ -73,7 +75,9 @@ P(X=x)
 
 Graf 1. Líkindafall slembistærðar.
 
-Hermt var eftir 100000 þátttökum í leiknum og gróðinn reiknaður í hvert sinn sem ekki var skipt um hurð eftir að þátttastjórnandi opnar eina hurð með geit.
+
+Til að skýra þrautina enn frekar var hermt eftir 100000 þátttökum í leiknum og gróðinn reiknaður í hvert sinn sem ekki var skipt um hurð eftir að þátttastjórnandi opnar eina hurð með geit.
+
 
 ```{r}
 
@@ -105,9 +109,11 @@ win2
 loss2
 ```
 
-Hermt var einnig eftir 100000 þátttökum í leiknum og reiknaður gróðinn í hvert sinn þegar þátttakandi skiptir um hurð eftir að þátttastjórnandi hefur opnað eina hurð með geit.
+Hermt var einnig eftir 100000 þátttökum í leiknum og reiknaður gróðinn í hvert sinn þegar þátttakandi skiptir um hurð eftir að þátttastjórnandi hefur opnað eina hurð með geit
 ```{r}
 #Spilari skiptir
+hurd <- c('bill','geit','geit')
+
 i <- 0
 win <- 0
 loss <- 0
@@ -145,7 +151,7 @@ win
 
 
 
-Væntigildi gróðans í leiknum eru líkurnar á því að vinna bíl margfaldað með verðmæti bílsins sem er svo samanlagt við líkurnar á því að vinna geit margfaldað með verðmæti geitarinnar.
+Væntigildi gróðans í leiknum eru líkurnar á því að vinna bíl margfaldað með verðmæti bílsins sem er svo samanlagt við líkurnar á því að vinna geit margfaldað með verðmæti geitarinnar. Í þessu tilviki er verðmæti bílsins fimm milljónir og verðmæti geitar er fimm þúsund krónur
 
 Þegar þátttakandi skiptir ekki um hurð eftir að þátttastjórnandi hefur opnað eina hurð með geit er væntigildi gróðans: 
 
@@ -154,9 +160,14 @@ E[X] = \frac{1}{3} * 5000000 + \frac{2}{3} * 5000
      = 1,669,999
 $$
 
-Væntigildi gróðans þegar einstaklingur skiptir um hurð eftir að þátttastjórnandi opnar eina hurð með geit er: 
+Væntigildi gróðans þegar einstaklingur skiptir um hurð eftir að þátttastjórnandi opnar eina hurð með geit er:
 $$
 E[X] = \frac{1}{3} * 5000 + \frac{2}{3} * 5,000,000
      = 3,344,999
 $$
 Það má sjá að væntigildi gróðans er 3,444,999kr ef skipt er um hurð þegar þátttastjórnandi hefur opnað eina hurð en væntigildi er 1,669,999kr ef ekki er skipt um hurð. Það er því hagstæðara að skipta um hurð. 
+
+Til þess að það borgi sig að skipta um hurð í þessu tilviki þyrfti verðmæti geitar að vera helmingur af verðmæti bílsins, eða 2,5 milljónir króna. 
+
+Út frá þessum upplýsingum að ofan má draga þá ályktun að alltaf skuli skipta um hurð. 
+
