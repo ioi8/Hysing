@@ -71,9 +71,11 @@ Hurd =  $\{5000, 5000, 5000000\}$
 
 Hér er formúla líkindafalls slembistærðarinnar sem var búin til.
 
-P(Hurd=x) #Þetta er líklegast ekki rétt sbr. ChatGPT -> Sjá skjáskot
+P(Hurd=x)
 
-## Graf 1. Líkindafall slembistærðar. ?
+#### Mynd 1. Graf slembistærðar.
+
+![](graf.jpg)
 
 Til að skýra þrautina enn frekar var hermt eftir 100000 þátttökum í leiknum og gróðinn reiknaður í hvert sinn sem ekki var skipt um hurð eftir að þátttastjórnandi opnar eina hurð með geit.
 
