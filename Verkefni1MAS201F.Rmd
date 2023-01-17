@@ -1,6 +1,6 @@
 ---
 title: "Verkefni1 - MAS201F"
-author: "Isak Orn Ivarsson og Adalheidur Magnusdottir"
+author: ""
 date: "2023-01-12"
 output: html_document
 ---
