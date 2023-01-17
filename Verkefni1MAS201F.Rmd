@@ -71,7 +71,7 @@ Hurd = {5000, 5000, 5000000}
 
 Hér er formúla líkindafalls slembistærðarinnar sem var búin til.
 
-P(X=x)
+P(X=x) #Þetta er líklegast ekki rétt sbr. ChatGPT -> Sjá skjáskot
 
 ## Graf 1. Líkindafall slembistærðar. ?
 
