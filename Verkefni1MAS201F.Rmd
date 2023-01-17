@@ -71,7 +71,7 @@ Hurd = {5000, 5000, 5000000}
 
 Hér er formúla líkindafalls slembistærðarinnar sem var búin til.
 
-P(X=x) #Þetta er líklegast ekki rétt sbr. ChatGPT -> Sjá skjáskot
+P(Hurd=x) #Þetta er líklegast ekki rétt sbr. ChatGPT -> Sjá skjáskot
 
 ## Graf 1. Líkindafall slembistærðar. ?
 
@@ -146,13 +146,23 @@ loss
 win
 ```
 
-Hér má sjá formúlu skilyrta líkindafallsins sem lýsir mögulegum útkomum þegar búið er að opna eina hurð með geit bakvið.
+Hér má sjá formúlu skilyrta líkindafallsins sem lýsir mögulegum útkomum þegar búið er að opna eina hurð með geit bakvið. Mögulegu útkomurnar eru fjórar. Ein útkoma er sí að þátttakandi vinni með því að halda sig við upprunalega valið sitt, gefið að hann velji hurð A.
 
 $$
-x -> P(X = 5,000,000 | X = 5,000)
+P (Vinna | Skiptir Ekki) = P(A | A) * P(Vinna)
 $$
-
-
+Önnur útkoma er sú að þátttakandi vinni ef hann skiptir um hurð, gefið að hann velji hurð A.
+$$ 
+P (Vinna | Skiptir ) = P(B eða C | A) * P(Vnna)
+$$
+Þriðja útkoma er sú að þátttakandi tapi ef hann skiptir ekki um hurð, gefið að hann velji hurð A.
+$$
+P (Tapa | Skiptir Ekki ) = P(B eða C | A) * P(Tapa)
+$$
+Fjórða útkoman er sú að þátttakandi tapi með því að skipta um hurð, gefið að hann velji hurð A en skipti í B eða C.
+$$
+P(Tapa | Skiptir ) = P(A | B eða C ) * P (Tapa)
+$$
 
 Væntigildi gróðans í leiknum eru líkurnar á því að vinna bíl margfaldað með verðmæti bílsins sem er svo samanlagt við líkurnar á því að vinna geit margfaldað með verðmæti geitarinnar. Í þessu tilviki er verðmæti bílsins fimm milljónir og verðmæti geitar er fimm þúsund krónur
 
