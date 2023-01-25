@@ -1,30 +1,30 @@
 ---
 title: "MASVerkefni2"
-author: "Isak Orn Ivarsson"
+author: "Isak Orn Ivarsson, Adalheidur, Alexander & Larus"
 date: "2023-01-25"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+Dæmi 1: 
+  Til þess að finna út líkurnar bla bla þá getum við notað tvíkosta dreifingu þar sem 1 
+  tekur gildið að fá success og 0 er að enginn hópur sé með einum nemanda.
+  byrjum á því að reikna út jöfnuna fyrir tvíkostadreifnu þ.e.: P(X=k)=c(n,k) p^k(1-p)^n-k
+    þar sem:
+      K = 1 (og 0 er þá enginn hópur sé með aðeins einum nemanda)
+      n = 6 (Fjöldi í hóp)
+      p = 156/228 (Líkur)
+    P(1) = choose(6, 1)*(156/228)^1*(1-(156/228))^5 = 0,0129
+    Líkur á því að einn ákveðinn nemandi lendi í hóp þar sem hann er eini sem mætir um 1.3%
+    Setjum þetta upp stærðfræðilega, þ.e., notum slembistærð og stika líkindadreifingarinnar:
+      X~Bin(n,p) -> X~Bin(6, (156/228))
+    
+Dæmi 2.
+  Reiknum út tvíkosta dreifingu: P(X=k)=c(n,k) p^k(1-p)^n-k
+   þar sem:
+    K = 1 ()
+    n = 6
+    p = 156/228
+  P(1) = 38*choose(6, 1)*(156/228)^1*(1-(156/228))^5 = 0.4899
+  Þá eru líkurnar á því að eitthver nemandi sé sá eini sem mæti í eitthvern hóp rúmlega 50%
+  Setjum þetta upp stærðfræðilega, þ.e., notum slembistærð og stika líkindadreifingarinnar:
+    38*X~Bin(n,p) -> X~Bin(6, (156/228))
