@@ -370,7 +370,7 @@ P(X = k) = \binom{n}{k} * p^{k} * (1-p)^{n-k}
 \]</span> þar sem: K = 1 (og 0 er þá enginn hópur sé með aðeins einum
 nemanda), n = 6 (Fjöldi í hóp) og p = 156/228 (Líkur)</p>
 <p><span class="math display">\[
-P(X = 1) = choose(6, 1)*(156/228)^1*(1-(156/228))^5 = 0.0129
+P(X = 1) = \binom{6} {1}*(156/228)^1*(1-(156/228))^5 = 0.0129
 \]</span></p>
 <p>Líkur á því að einn ákveðinn nemandi lendi í hóp þar sem hann er eini
 sem mætir eru um 1.3% Setjum þetta upp stærðfræðilega, þ.e., notum
@@ -387,9 +387,10 @@ eini sem mætti í einhvern hóp skal reikna út tvíkostadreifingu:</p>
 P(X = k) = \binom{n}{k}  * p^{k} * (1-p)^{n-k}
 \]</span></p>
 <p>þar sem: K = 1 (og 0 er þá enginn hópur sé með aðeins einum nemanda),
-n = 6 (fjöldi í hópi) og p = 156/228 (líkur)</p>
+n = 6 (fjöldi í hópi) og p = 156/228 (líkur) sem við margföldum síðan
+við fjölda hópa, eða 38</p>
 <p><span class="math display">\[
-  P(X = 1) = choose(6, 1)*(156/228)^1*(1-(156/228))^5 * 38 = 0.4899
+  P(X = 1) = \binom{6} {1}*(156/228)^1*(1-(156/228))^5 * 38 = 0.4899
 \]</span></p>
 <p>Þá eru líkurnar á því að eitthver nemandi sé sá eini sem mæti í
 eitthvern hóp rúmlega 50%.</p>
@@ -413,7 +414,7 @@ og margfalda við fjölda hópa. Þegar fjöldi nemenda er 8 í hverjum hópi
 og hóparnir eru 28 þá eru líkurnar á því að einhver nemandi sé eini sem
 sé mættur í einhverjum hópi:</p>
 <p><span class="math display">\[
-P(X = 1) = choose(8, 1) * (156/228)^1 * (1 - (156/228))^7 * 28 = 0.0479
+P(X = 1) = \binom{8} {1} * (156/228)^1 * (1 - (156/228))^7 * 28 = 0.0479
 \]</span> En þar sem 28 hópar með 8 nemendum hver er einungis samtals
 224 nemendur, þá þurfa fjórir hópar að vera með 9 nemendum. Því er
 lágmarksfjöldi hópa 24 með 8 nemendur og 4 hópar með 9 nemendum.</p>
@@ -421,19 +422,19 @@ lágmarksfjöldi hópa 24 með 8 nemendur og 4 hópar með 9 nemendum.</p>
 lágmarksfjöldi hópa 19 með 12 nemendum í hverjum hópi. Líkurnar á því að
 einhver nemendi væri eini sem myndi mæta í einhvern hóp væru þá:</p>
 <p><span class="math display">\[
-P(X = 1) = choose(12, 1) * (156/228)^1 * (1 - (156/228))^{11} * 19 =
+P(X = 1) = \binom{12}{1} * (156/228)^1 * (1 - (156/228))^{11} * 19 =
 0.0005
 \]</span></p>
 <p>Meðalfjöldi í hóp, ef hóparnir væru 24 með 8 nemendur og 4 með 9
 nemendum og allir nemendur mæta væri:</p>
 <p><span class="math display">\[
-Meðalfjöldi = (24 * 8) + (4 * 9) / 28 = 8.14
+Meðalfjöldi = \frac{(24 * 8) + (4 * 9)}{28} = 8.14
 \]</span> Við námundum niður og því væri meðalfjöldi um 8 nemendur í
 hóp.</p>
 <p>Við athugum einnig meðalfjölda í hóp þeirra sem mæta í kennslustund,
 ef hóparnir væru 24 með 8 nemendur og 4 með 9 nemendur:</p>
 <p><span class="math display">\[
-Meðalfjöldi = 156 / 28 = 5.57
+Meðalfjöldi = \frac{156}{28} = 5.57
 \]</span></p>
 <p>Þar sem við getum ekki fengið hálfan nemenda í hóp, þá námundum við
 niður og fáum að meðalfjöldi þeirra nemenda sem mæta væri um 5 í
@@ -470,7 +471,7 @@ P(X \ge 30) = 1-P(X&lt;30) = 1-Φ((30-40/10))
 grunni.</p>
 <p>Ef við segjum að spurning sé einstaklega flókin ef það tekur lengri
 tíma að svara henni en 99% annarra spurninga þá tekur svona langan tíma
-að svara einstaklega flókinni spurningu að lágmarki:</p>
+að svara henni að lágmarki:</p>
 <pre class="r"><code>x &lt;- qnorm(0.99,40,10)
 x</code></pre>
 <pre><code>## [1] 63.26348</code></pre>
@@ -478,25 +479,39 @@ x</code></pre>
 einstaklega flókinni spurning stærðfræðilega með því að leysa
 eftirfarandi jöfnu:</p>
 <p><span class="math display">\[
-z=(x-μ)/σ
+z=\frac{(x-μ)}{σ}
 \]</span></p>
 <p>Við leysum fyrir x svo jafnan er</p>
 <p><span class="math display">\[
 x=μ+(z*σ)
 \]</span></p>
-<p>í töflu 12.1 í bókinni tölfræði frá grunni kemur fram að z gildið
+<p>í töflu 12.1 í bókinni Tölfræði frá grunni kemur fram að z gildið
 okkar sé 2.33.</p>
 <p>Þá er x = 40 + (2.33*10) = 63.3. Það tekur því 63.3 sekúndur að
 lágmarki til að svara flókinni spurningu.</p>
 </div>
 <div id="dæmi-5" class="section level3">
 <h3>Dæmi 5:</h3>
-<p>Til að finna út úr því hve mörgmum spurningum má búast við í 80
-mínútna langri kennslustund með 38 hópum af nemendum þegar gert ráð
-fyrir því að það er alveg slembið hvenær hópur kemur með nýja spurningu
-í liðsnámsstund, óháð því hve langt síðan er hópurinn bar síðast upp
-spurningu og hve margir hópmeðlimir eru, en hver hópur ber upp eina
-spurningu á 10 mínútna fresti að jafnaði, þá…</p>
+<p>Það eru 38 hópar sem spurja eina spurningu á 10 mínútna fresti í 80
+mínútur svo fjöldi spurninga er: <span class="math display">\[38*\frac{80}{10}=304\text{ spurningar}.\]</span>
+Það er spurð <span class="math inline">\(1 spurn/10min = 0.1
+spurn/min\)</span> svo lambda er: <span class="math display">\[\lambda=0.1*80*38 = 304\]</span>.</p>
+<p>Við getum notað Poisson dreifingu til að gera líkan af fjölda
+spurninga spurðar af hópunum í 80 mínútna kennslustund þar sem við höfum
+engin efri mörk á fjölda tilrauna og við vitum meðalfjölda jákvæðra
+útkoma á tiltekna einingu. Við notum svo massafall Poisson dreifingar
+til að reikna hverjar líkurnar eru á að mismunandi fjölda spurninga eru
+spurðar.</p>
+<p>Reiknum líkindadreifinguna að 304 spurningar eru spurðar:</p>
+<pre class="r"><code>likur &lt;- dpois(304,304)
+likur</code></pre>
+<pre><code>## [1] 0.02287464</code></pre>
+<p>eða:</p>
+<p><span class="math display">\[P(X=304)=\frac{e^{-304}*304^{304}}{304!}=0,023.\]</span></p>
+<p>Þ.e. það eru 2,3% líkur á að spurðar verða 304 spurningar. Það tekur
+að meðaltali 40 sek að svara einni spurningu svo það má búast við að það
+taki</p>
+<p><span class="math display">\[304*40sek=12160 sek=203 min\]</span></p>
 </div>
 <div id="dæmi-6" class="section level3">
 <h3>Dæmi 6:</h3>

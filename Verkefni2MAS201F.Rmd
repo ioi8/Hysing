@@ -19,7 +19,7 @@ $$
       p = 156/228 (Líkur) 
       
 $$
-P(X = 1) = choose(6, 1)*(156/228)^1*(1-(156/228))^5 = 0.0129
+P(X = 1) = \binom{6} {1}*(156/228)^1*(1-(156/228))^5 = 0.0129
 $$
   
   Líkur á því að einn ákveðinn nemandi lendi í hóp þar sem hann er eini sem mætir eru um 1.3%
@@ -40,11 +40,11 @@ $$
    þar sem:
     K = 1 (og 0 er þá enginn hópur sé með aðeins einum nemanda),
     n = 6 (fjöldi í hópi) og
-    p = 156/228 (líkur)
+    p = 156/228 (líkur) sem við margföldum síðan við fjölda hópa, eða 38
 
     
 $$
-  P(X = 1) = choose(6, 1)*(156/228)^1*(1-(156/228))^5 * 38 = 0.4899
+  P(X = 1) = \binom{6} {1}*(156/228)^1*(1-(156/228))^5 * 38 = 0.4899
 $$
   
   Þá eru líkurnar á því að eitthver nemandi sé sá eini sem mæti í eitthvern hóp rúmlega 50%.
@@ -70,20 +70,20 @@ Við prófum okkur áfram með því að hækka fjölda nemenda í hverjum hópi
     
     
 $$
-P(X = 1) = choose(8, 1) * (156/228)^1 * (1 - (156/228))^7 * 28 = 0.0479
+P(X = 1) = \binom{8} {1} * (156/228)^1 * (1 - (156/228))^7 * 28 = 0.0479
 $$
 En þar sem 28 hópar með 8 nemendum hver er einungis samtals 224 nemendur, þá þurfa fjórir hópar að vera með 9 nemendum. Því er lágmarksfjöldi hópa 24 með 8 nemendur og 4 hópar með 9 nemendum. 
 
   Ef markmið kennara væri að halda jafnri dreifingu í hverjum hópi væri lágmarksfjöldi hópa 19 með 12 nemendum í hverjum hópi. Líkurnar á því að einhver nemendi væri eini sem myndi mæta í einhvern hóp væru þá:
 
 $$
-P(X = 1) = choose(12, 1) * (156/228)^1 * (1 - (156/228))^{11} * 19 = 0.0005
+P(X = 1) = \binom{12}{1} * (156/228)^1 * (1 - (156/228))^{11} * 19 = 0.0005
 $$
 
 Meðalfjöldi í hóp, ef hóparnir væru 24 með 8 nemendur og 4 með 9 nemendum og allir nemendur mæta væri:
 
 $$
-Meðalfjöldi = (24 * 8) + (4 * 9) / 28 = 8.14
+Meðalfjöldi = \frac{(24 * 8) + (4 * 9)}{28} = 8.14
 $$
 Við námundum niður og því væri meðalfjöldi um 8 nemendur í hóp. 
 
@@ -91,7 +91,7 @@ Við námundum niður og því væri meðalfjöldi um 8 nemendur í hóp.
 Við athugum einnig meðalfjölda í hóp þeirra sem mæta í kennslustund, ef hóparnir væru 24 með 8 nemendur og 4 með 9 nemendur:
 
 $$
-Meðalfjöldi = 156 / 28 = 5.57
+Meðalfjöldi = \frac{156}{28} = 5.57
 $$
 
 Þar sem við getum ekki fengið hálfan nemenda í hóp, þá námundum við niður og fáum að meðalfjöldi þeirra nemenda sem mæta væri um 5 í hópi. 
@@ -138,7 +138,7 @@ x
 Við lýsum því að finna út hversu langan tíma það tekur að svara einstaklega flókinni spurning stærðfræðilega með því að leysa eftirfarandi jöfnu: 
 
 $$
-z=(x-μ)/σ
+z=\frac{(x-μ)}{σ}
 $$
 
 Við leysum fyrir x svo jafnan er 
@@ -147,12 +147,31 @@ $$
 x=μ+(z*σ)
 $$
 
-í töflu 12.1 í bókinni tölfræði frá grunni kemur fram að z gildið okkar sé 2.33. 
+í töflu 12.1 í bókinni Tölfræði frá grunni kemur fram að z gildið okkar sé 2.33. 
 
   Þá er x = 40 + (2.33*10) = 63.3. Það tekur því 63.3 sekúndur að lágmarki til að svara flókinni spurningu.
 
 ### Dæmi 5:
-  Til að finna út úr því hve mörgmum spurningum má búast við í 80 mínútna langri kennslustund með 38 hópum af nemendum þegar gert ráð fyrir því að það er alveg slembið hvenær hópur kemur með nýja spurningu í liðsnámsstund, óháð því hve langt síðan er hópurinn bar síðast upp spurningu og hve margir hópmeðlimir eru, en hver hópur ber upp eina spurningu á 10 mínútna fresti að jafnaði, þá...
+
+  Það eru 38 hópar sem spurja eina spurningu á 10 mínútna fresti í 80 mínútur svo fjöldi spurninga er: $$38*\frac{80}{10}=304\text{ spurningar}.$$
+Það er spurð $1 spurn/10min = 0.1 spurn/min$ svo lambda er: $$\lambda=0.1*80*38 = 304$$.
+
+Við getum notað Poisson dreifingu til að gera líkan af fjölda spurninga spurðar af hópunum í 80 mínútna kennslustund þar sem við höfum engin efri mörk á fjölda tilrauna og við vitum meðalfjölda jákvæðra útkoma á tiltekna einingu. Við notum svo massafall Poisson dreifingar til að reikna hverjar líkurnar eru á að mismunandi fjölda spurninga eru spurðar.
+
+Reiknum líkindadreifinguna að 304 spurningar eru spurðar:
+```{r}
+likur <- dpois(304,304)
+likur
+```
+
+eða:
+
+$$P(X=304)=\frac{e^{-304}*304^{304}}{304!}=0,023.$$
+
+Þ.e. það eru 2,3% líkur á að spurðar verða 304 spurningar.
+Það tekur að meðaltali 40 sek að svara einni spurningu svo það má búast við að það taki
+
+$$304*40sek=12160 sek=203 min$$
 
 ### Dæmi 6:
   Að ári væri hægt að skipta upp í hópa eftir fyrstu kennsluvikuna. Þá væri hægt að taka niður mætingu í fyrstu tveimur kennslustundunum, eða á Canvas, og athuga hversu margir mæti eða ætli sér að mæta. Því næst væri hægt skipta nemendum handahófskennt í hópa. Af niðurstöðunum hér fyrir ofan má áætla að hentugra væri að hafa færri hópa, með fleiri nemendum í hverjum hópi, til að líkurnar á því að einhver nemendi sé sá eini sem mæti séu minni. 
