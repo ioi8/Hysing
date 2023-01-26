@@ -128,7 +128,7 @@ $$
 
 Við fundum gildið á Φ(-1) í töflu 12.1 í bókinni Tölfræði frá grunni. 
 
-  Ef við segjum að spurning sé einstaklega flókin ef það tekur lengri tíma að svara henni en 99% annarra spurninga þá tekur svona langan tíma að svara einstaklega flókinni spurningu að lágmarki:
+  Ef við segjum að spurning sé einstaklega flókin ef það tekur lengri tíma að svara henni en 99% annarra spurninga þá tekur svona langan tíma að svara henni að lágmarki:
 
 ```{r}
 x <- qnorm(0.99,40,10)
