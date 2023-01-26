@@ -61,7 +61,59 @@ $$
 
   
 ### Dæmi 4:
-  Til að finna líkurnar á því að það taki meiri en 30 sekúndur að svara handahófskenndri spurningu frá hóp í liðsnámsstund þegar gert er ráð fyrir því að tíminn fylgi normaldreifingu og að það taki 40 sekúndur að meðaltali að svara einni spurningu, með staðalfrávik 10 sekúndur þá...
+  Til að finna líkurnar á því að það taki meiri en 30 sekúndur að svara handahófskenndri spurningu frá hóp í liðsnámsstund þegar gert er ráð fyrir því að tíminn fylgi normaldreifingu og að það taki 40 sekúndur að meðaltali að svara einni spurningu, með staðalfrávik 10 sekúndur þá notum við pnorm til þess að reikna líkur á því að slembistærð sem fylgir normaldreifingu taki gildi minna en gefna viðmiðunargildið. 
+
+```{r}
+
+minna <- pnorm(30,40,10)
+minna
+```
+
+Það eru 15.86% líkur á að það taki minna en 30 sekúndur. Svo líkurnar á að spurning taki meira en 30 sekúndur er þá:
+
+```{r}
+meira <- 1-minna
+meira
+```
+
+
+Við lýsum þessu vandamáli stærðfræðilega með dreififalli normaldreifingar Φ(x) sem er jafnt P(X < x). Í þessu dæmi þá byrjum við á því að reikna líkurnar á að slembistærðin X sé minni en x. 
+Jafnan er því: 
+
+$$
+P(X \ge 30) = 1-P(X<30) = 1-Φ((30-40/10))
+$$
+
+Þegar við notum þessa jöfnu fáum við út:
+
+$$
+1-Φ(-1) = 1-0.1587 = 0.8413
+$$
+
+Við fundum gildið á Φ(-1) í töflu 12.1 í bókinni Tölfræði frá grunni. 
+
+  Ef við segjum að spurning sé einstaklega flókin ef það tekur lengri tíma að svara henni en 99% annarra spurninga þá tekur svona langan tíma að svara einstaklega flókinni spurningu að lágmarki:
+
+```{r}
+x <- qnorm(0.99,40,10)
+x
+```
+
+Við lýsum því að finna út hversu langan tíma það tekur að svara einstaklega flókinni spurning stærðfræðilega með því að leysa eftirfarandi jöfnu: 
+
+$$
+z=(x-μ)/σ
+$$
+
+Við leysum fyrir x svo jafnan er 
+
+$$
+x=μ+(z*σ)
+$$
+
+í töflu 12.1 í bókinni tölfræði frá grunni kemur fram að z gildið okkar sé 2.33. 
+
+  Þá er x = 40 + (2.33*10) = 63.3. Það tekur því 63.3 sekúndur að lágmarki til að svara flókinni spurningu.
 
 ### Dæmi 5:
   Til að finna út úr því hve mörgmum spurningum má búast við í 80 mínútna langri kennslustund með 38 hópum af nemendum þegar gert ráð fyrir því að það er alveg slembið hvenær hópur kemur með nýja spurningu í liðsnámsstund, óháð því hve langt síðan er hópurinn bar síðast upp spurningu og hve margir hópmeðlimir eru, en hver hópur ber upp eina spurningu á 10 mínútna fresti að jafnaði, þá...
