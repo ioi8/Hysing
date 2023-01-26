@@ -155,7 +155,7 @@ $$
   Til að finna út úr því hve mörgmum spurningum má búast við í 80 mínútna langri kennslustund með 38 hópum af nemendum þegar gert ráð fyrir því að það er alveg slembið hvenær hópur kemur með nýja spurningu í liðsnámsstund, óháð því hve langt síðan er hópurinn bar síðast upp spurningu og hve margir hópmeðlimir eru, en hver hópur ber upp eina spurningu á 10 mínútna fresti að jafnaði, þá...
 
 ### Dæmi 6:
-  Að ári væri hægt að skipta upp í eftir fyrstu kennslustundina. Þá væri hægt að taka niður mætingu í fyrsta kennslutímanum 
+  Að ári væri hægt að skipta upp í hópa eftir fyrstu kennsluvikuna. Þá væri hægt að taka niður mætingu í fyrstu tveimur kennslustundunum, eða á Canvas, og athuga hversu margir mæti eða ætli sér að mæta. Því næst væri hægt skipta nemendum handahófskennt í hópa. Af niðurstöðunum hér fyrir ofan má áætla að hentugra væri að hafa færri hópa, með fleiri nemendum í hverjum hópi, til að líkurnar á því að einhver nemendi sé sá eini sem mæti séu minni. 
 
     
     
