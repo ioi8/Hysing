@@ -88,13 +88,13 @@ $$
 Við námundum niður og því væri meðalfjöldi um 8 nemendur í hóp. 
 
 
-Við athugum einnig meðalfjölda í hóp þeirra sem mæta í kennslustund, ef hóparnir væru 24 með 8 nemendur og 4 með 9 nemendur væri:
+Við athugum einnig meðalfjölda í hóp þeirra sem mæta í kennslustund, ef hóparnir væru 24 með 8 nemendur og 4 með 9 nemendur:
 
 $$
 Meðalfjöldi = 156 / 28 = 5.57
 $$
 
-Þar sem við getum ekki fengið hálfan nemenada í hóp, þá námundum við niður og fáum að meðalfjöldi þeirra nemenda sem mæta væri um 5 í hópi. 
+Þar sem við getum ekki fengið hálfan nemenda í hóp, þá námundum við niður og fáum að meðalfjöldi þeirra nemenda sem mæta væri um 5 í hópi. 
 
 ### Dæmi 4:
   Til að finna líkurnar á því að það taki meiri en 30 sekúndur að svara handahófskenndri spurningu frá hóp í liðsnámsstund þegar gert er ráð fyrir því að tíminn fylgi normaldreifingu og að það taki 40 sekúndur að meðaltali að svara einni spurningu, með staðalfrávik 10 sekúndur þá notum við pnorm til þess að reikna líkur á því að slembistærð sem fylgir normaldreifingu taki gildi minna en gefna viðmiðunargildið. 
