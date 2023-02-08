@@ -374,7 +374,7 @@ Poi(2.72)\]</span></p>
 <h3>B</h3>
 <p>Slembið fyrirbæri sem fylgir Poisson líkindadreifingu með stika 6.21
 er til dæmis ef fjöldi viðskiptavina sem koma inn í verslunarmiðstöð séu
-6.21 á mínútu.</p>
+að meðaltali 6.21 á mínútu.</p>
 <p>Slembið fyrirbæri sem fylgir Tvíkostadreifingu með stika (7, 0.27) er
 til dæmis ef líkurnar á því að símtal sem fyrirtæki berst á viku (7
 dagar) sé kvörtun er 0.27.</p>
@@ -384,8 +384,9 @@ dagar) sé kvörtun er 0.27.</p>
 <p>Slembið fyrirbæri sem fylgir Tvíkostadreifingu með stika (6, 0.35) er
 til dæmis ef valdir eru 6 nemendur úr áfanganum Líkindareikningur og
 tölfræði og líkurnar á því að nemandi muni ná áfanganum eru 0.35.</p>
-<p>Slembi fyrirbæri sem fylgir Poisson líkindadreifingu með stika 2.72
-er til dæmis ef fjöldi bíla sem</p>
+<p>Slembið fyrirbæri sem fylgir Poisson líkindadreifingu með stika 2.72
+er til dæmis ef fjöldi bíla sem keyra í gegnum stoppskyldu á fjölförnum
+gatnamótum séu að meðtali 2.72 á klukkustund.</p>
 </div>
 <div id="c" class="section level3">
 <h3>C</h3>
@@ -410,7 +411,10 @@ er 5.54, þá er raunverulegt meðaltal úrvinnsluhraða 5.54</p>
 tölfræði og líkurnar á því að nemendi hafi náð áfanganum er 0.34 þá er
 væntigildi líkindadreifingarinnar 2.10. Þá er raunverulegt meðaltal
 nemenda sem hafa náð áfangnum 2.10.</p>
-<p>Ef….</p>
+<p>Ef fjöldi bíla sem hunsa stoppskyldu á fjölförnum gatnamótum séu að
+meðaltali 2.72 og líkindadreifingin hefur væntigildi 2.72 þá er það
+raunverulegt meðaltal fjölda bíla sem stöðva ekki við stoppskyldu á
+klukkustund.</p>
 </div>
 </div>
 <div id="liður-2" class="section level2">
@@ -430,21 +434,227 @@ meðaltal af úrvinnsluhraða hennar.</p>
 <p>Til að kanna hvaða líkurnar á því að nemandi nái áfanganum
 Líkindareikningur og tölfræði væri hægt að taka slembiúrtök af fyrrum
 nemendum sem hafa tekið áfangann líkindareikningur og tölfræði.</p>
-<p>Til að kanna….</p>
+<p>Til að kanna fjölda bíla sem stöðva ekki við stoppskyldu á fjölförnum
+gatnamótum væri hentugt að taka úrtak með því að standa við gatnamótin í
+klukkustund á dag í nokkra daga og telja bílana sem sem fara yfir
+gatnamótin og skrásetja hversu margir stöðva ekki við stoppskylduna.</p>
 </div>
 <div id="liður-3" class="section level2">
 <h2>Liður 3</h2>
 <div id="a-1" class="section level3">
 <h3>A</h3>
+<p>Í höfuðsetningu tölfræðarinnar (e. Central limit theorem) kemur fram
+ef við tökum meðaltal nógu margra mælinga munum við fá meðaltal sem
+fylgir normaldreifingu sama hver dreifing upprunalegu mælingunnar er.
+Mælingarnar þurfa að vera óháðar og fylgja sömu dreifingu. Það viðmið
+sem oftast er miðað við er að n sé jafnt og, eða stærra en 30.</p>
 </div>
 <div id="b-1" class="section level3">
 <h3>B</h3>
+<p>Væntigildi slembistærðar er raunverulega meðaltal slembistærðarinnar
+og því er væntigildi meðaltalsins jafnt og væntigildi upprunalegu
+slembistærðanna sem við fengum í upphafi.</p>
+<pre class="r"><code>v_medal &lt;- c(&quot;Væntigildi meðaltals&quot;, &quot;Væntigildi slembistærða&quot;)
+v_rbinom1 &lt;- c(2.10, 2.10)
+v_rexp &lt;- c(5.54, 5.54)
+v_rpois1 &lt;- c(6.21, 6.21)
+v_rbinom2 &lt;- c(1.89, 1.89)
+v_rpois2 &lt;- c(2.72, 2.72)
+
+col_names_v &lt;- c(&quot;Mæling&quot;, &quot;Tvíkostadreifing 1&quot;, &quot;Veldisdreifing&quot;, &quot;Poisson dreifing 1&quot;, &quot;Tvíkostadreifing 2&quot;, &quot;Poisson dreifing 2&quot;)
+
+tafla_væntg &lt;- data.frame(v_medal, v_rbinom1, v_rexp, v_rpois1, v_rbinom2, v_rpois2)
+colnames(tafla_væntg) &lt;- col_names_v
+
+kable(tafla_væntg, caption = &quot;Munur á væntgildi meðaltals og væntgildi upprunalegu slembistærðar&quot;)</code></pre>
+<table style="width:100%;">
+<caption>Munur á væntgildi meðaltals og væntgildi upprunalegu
+slembistærðar</caption>
+<colgroup>
+<col width="20%" />
+<col width="16%" />
+<col width="13%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Mæling</th>
+<th align="right">Tvíkostadreifing 1</th>
+<th align="right">Veldisdreifing</th>
+<th align="right">Poisson dreifing 1</th>
+<th align="right">Tvíkostadreifing 2</th>
+<th align="right">Poisson dreifing 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Væntigildi meðaltals</td>
+<td align="right">2.1</td>
+<td align="right">5.54</td>
+<td align="right">6.21</td>
+<td align="right">1.89</td>
+<td align="right">2.72</td>
+</tr>
+<tr class="even">
+<td align="left">Væntigildi slembistærða</td>
+<td align="right">2.1</td>
+<td align="right">5.54</td>
+<td align="right">6.21</td>
+<td align="right">1.89</td>
+<td align="right">2.72</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="c-1" class="section level3">
 <h3>C</h3>
+<p>Væntigildi meðaltalsins er jafnt meðaltalinu alveg sama hver
+úrtaksstærðin er. Sjá má töflu fyrir neðan að væntigildi meðaltalsins
+breytist því ekki neitt þegar að úrtaksstærðin stækkar.</p>
+<pre class="r"><code>m_úrtaksstærð &lt;- c(10, 30, 50, 100)
+m_rbinom1 &lt;- c(2.10, 2.10, 2.10, 2.10)
+m_rexp &lt;- c(5.54, 5.54, 5.54, 5.54)
+m_rpois1 &lt;- c(6.21, 6.21, 6.21, 6.21)
+m_rbinom2 &lt;- c(1.89, 1.89, 1.89, 1.89)
+m_rpois2 &lt;- c(2.72, 2.72, 2.72, 2.72)
+
+col_names_m &lt;- c(&quot;Úrtaksstærð&quot;, &quot;Tvíkostadreifing 1&quot;, &quot;Veldisdreifing&quot;, &quot;Poisson dreifing 1&quot;, &quot;Tvíkostadreifing 2&quot;, &quot;Poisson dreifing 2&quot;)
+
+tafla_medaltal &lt;- data.frame(m_úrtaksstærð, m_rbinom1, m_rexp, m_rpois1, m_rbinom2, m_rpois2)
+colnames(tafla_medaltal) &lt;- col_names_m
+
+kable(tafla_medaltal, caption = &quot;Breyting á meðaltali með mismunandi úrtaksstærðir&quot;)</code></pre>
+<table>
+<caption>Breyting á meðaltali með mismunandi úrtaksstærðir</caption>
+<colgroup>
+<col width="11%" />
+<col width="18%" />
+<col width="14%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Úrtaksstærð</th>
+<th align="right">Tvíkostadreifing 1</th>
+<th align="right">Veldisdreifing</th>
+<th align="right">Poisson dreifing 1</th>
+<th align="right">Tvíkostadreifing 2</th>
+<th align="right">Poisson dreifing 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">10</td>
+<td align="right">2.1</td>
+<td align="right">5.54</td>
+<td align="right">6.21</td>
+<td align="right">1.89</td>
+<td align="right">2.72</td>
+</tr>
+<tr class="even">
+<td align="right">30</td>
+<td align="right">2.1</td>
+<td align="right">5.54</td>
+<td align="right">6.21</td>
+<td align="right">1.89</td>
+<td align="right">2.72</td>
+</tr>
+<tr class="odd">
+<td align="right">50</td>
+<td align="right">2.1</td>
+<td align="right">5.54</td>
+<td align="right">6.21</td>
+<td align="right">1.89</td>
+<td align="right">2.72</td>
+</tr>
+<tr class="even">
+<td align="right">100</td>
+<td align="right">2.1</td>
+<td align="right">5.54</td>
+<td align="right">6.21</td>
+<td align="right">1.89</td>
+<td align="right">2.72</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="d" class="section level3">
 <h3>D</h3>
+<p>Því stærri sem úrtaksstærðin er því minni breytileiki verður í
+úrtakinu. Við sjáum á töflunni fyrir neðan að dreifnin minnkar alltaf
+þegar að úrtaksstærðin stækkar.</p>
+<pre class="r"><code>d_úrtaksstærð &lt;- c(10, 30, 50, 100)
+d_rbinom1 &lt;- c(0.137, 0.0458, 0.0275, 0.0137)
+d_rexp &lt;- c(3.06, 1.02, 0.613, 0.307)
+d_rpois1 &lt;- c(0.623, 0.207, 0.124, 0.0621)
+d_rbinom2 &lt;- c(0.139, 0.0462, 0.0275, 0.0138)
+d_rpois2 &lt;- c(0.272, 0.0904, 0.0544, 0.0269)
+
+col_names_d &lt;- c(&quot;Úrtaksstærð&quot;, &quot;Tvíkostadreifing 1&quot;, &quot;Veldisdreifing&quot;, &quot;Poisson dreifing 1&quot;, &quot;Tvíkostadreifing 2&quot;, &quot;Poisson dreifing 2&quot;)
+
+tafla_dreifni &lt;- data.frame(d_úrtaksstærð, d_rbinom1, d_rexp, d_rpois1, d_rbinom2, d_rpois2)
+colnames(tafla_dreifni) &lt;- col_names_d
+
+kable(tafla_dreifni, caption = &quot;Breyting á dreifni með mismunandi úrtaksstærðir&quot;)</code></pre>
+<table>
+<caption>Breyting á dreifni með mismunandi úrtaksstærðir</caption>
+<colgroup>
+<col width="11%" />
+<col width="18%" />
+<col width="14%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Úrtaksstærð</th>
+<th align="right">Tvíkostadreifing 1</th>
+<th align="right">Veldisdreifing</th>
+<th align="right">Poisson dreifing 1</th>
+<th align="right">Tvíkostadreifing 2</th>
+<th align="right">Poisson dreifing 2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">10</td>
+<td align="right">0.1370</td>
+<td align="right">3.060</td>
+<td align="right">0.6230</td>
+<td align="right">0.1390</td>
+<td align="right">0.2720</td>
+</tr>
+<tr class="even">
+<td align="right">30</td>
+<td align="right">0.0458</td>
+<td align="right">1.020</td>
+<td align="right">0.2070</td>
+<td align="right">0.0462</td>
+<td align="right">0.0904</td>
+</tr>
+<tr class="odd">
+<td align="right">50</td>
+<td align="right">0.0275</td>
+<td align="right">0.613</td>
+<td align="right">0.1240</td>
+<td align="right">0.0275</td>
+<td align="right">0.0544</td>
+</tr>
+<tr class="even">
+<td align="right">100</td>
+<td align="right">0.0137</td>
+<td align="right">0.307</td>
+<td align="right">0.0621</td>
+<td align="right">0.0138</td>
+<td align="right">0.0269</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="liður-4" class="section level2">
@@ -474,21 +684,84 @@ veldisdreifingu er því eina sem er samfelld. Hún er samfelld í
 </div>
 <div id="b-3" class="section level3">
 <h3>B</h3>
-<p>Munur á væntigildi stærsta gildis og Poisson líkindadreifingar með
-væntigildi 6.21 er 10.3 - 6.21 = 4.09 þegar fjöldi í úrtaki er 10. Þessi
-munur stækkar svo eftir því sem fjöldi í úrtaki stækkar.</p>
-<p>Munur á væntigildi stærsta gildis og Tvíkostadreifingar með
-væntigildi 1.89 er 3.77 - 1.89 = 1.88 þegar fjöldi í úrtaki er 10. Þessi
-munur stækkar svo eftir því sem fjöldi í úrtaki stækkar.</p>
-<p>Munur á væntigildi stærsta gildis og Veldisdreifingu með væntigildi
-5.54 er 16.2 - 5.54 = 10.66 þegar fjöldi í úrtaki er 10. Þessi munur
-stækkar svo eftir því sem fjöldi í úrtaki stækkar.</p>
-<p>Munur á væntigildi stærsta gildis og Tvíkostadreifingar með
-væntigildi 2.10 er 3.92 - 2.10 = 1.82 þegar fjöldi í úrtaki er 10. Þessi
-munur stækkar svo eftir því sem fjöldi í úrtaki stækkar.</p>
-<p>Munur á væntigildi stærsta gildis og Poisson dreifingar með
-væntigildi 2.72 er 5.48 - 2.72 = 2.76 þegar fjöldi í úrtaki er 10. Þessi
-munur stækkar svo eftir því sem fjöldi í úrtaki stækkar.</p>
+<p>Í töflunni má sjá mun á væntigildi stærsta gildis og væntigildi
+upprunalegu slembistærðanna. Væntigildi hverrar líkindadreifingar fyrir
+sig hækkar þegar fjöldi í úrtaki hækkar. Í töflunni má sjá að hún
+stækkar mest í tilfella veldisdreifingar.</p>
+<pre class="r"><code>urtaks_staersta &lt;- c(&quot;Upprunalega&quot;, 10, 30, 50, 100)
+staersta_poisson1 &lt;- c(2.72, 5.48, 6.57, 7.03, 7.64)
+staersta_poisson2 &lt;- c(6.21, 10.3, 11.8, 12.4, 13.3)
+staersta_tvikosta1 &lt;- c(2.10, 3.92, 4.52, 4.76, 5.06)
+staersta_tvikosta2 &lt;- c(1.89, 3.77, 4.43, 4.69, 5.04)
+staersta_veldis &lt;- c(5.54, 16.2, 22.1, 24.9, 28.7)
+
+tafla_staersta &lt;- data.frame(urtaks_staersta, staersta_poisson1, staersta_poisson2, staersta_tvikosta1, staersta_tvikosta2, staersta_veldis) 
+
+colnames(tafla_staersta) &lt;- c(&quot;Úrtaksstærð&quot;, &quot;Poisson dreifing 1&quot;, &quot;Poisson dreifing 2&quot;, &quot;Tvíkostadreifing 1&quot;, &quot;Tvíkostadreifing 2&quot;, &quot;Veldisdreifing&quot;)
+
+kable(tafla_staersta)</code></pre>
+<table>
+<colgroup>
+<col width="11%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Úrtaksstærð</th>
+<th align="right">Poisson dreifing 1</th>
+<th align="right">Poisson dreifing 2</th>
+<th align="right">Tvíkostadreifing 1</th>
+<th align="right">Tvíkostadreifing 2</th>
+<th align="right">Veldisdreifing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Upprunalega</td>
+<td align="right">2.72</td>
+<td align="right">6.21</td>
+<td align="right">2.10</td>
+<td align="right">1.89</td>
+<td align="right">5.54</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="right">5.48</td>
+<td align="right">10.30</td>
+<td align="right">3.92</td>
+<td align="right">3.77</td>
+<td align="right">16.20</td>
+</tr>
+<tr class="odd">
+<td align="left">30</td>
+<td align="right">6.57</td>
+<td align="right">11.80</td>
+<td align="right">4.52</td>
+<td align="right">4.43</td>
+<td align="right">22.10</td>
+</tr>
+<tr class="even">
+<td align="left">50</td>
+<td align="right">7.03</td>
+<td align="right">12.40</td>
+<td align="right">4.76</td>
+<td align="right">4.69</td>
+<td align="right">24.90</td>
+</tr>
+<tr class="odd">
+<td align="left">100</td>
+<td align="right">7.64</td>
+<td align="right">13.30</td>
+<td align="right">5.06</td>
+<td align="right">5.04</td>
+<td align="right">28.70</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="c-3" class="section level3">
 <h3>C</h3>
@@ -497,10 +770,75 @@ stækkar. Það gildir um allar líkindadreifingarinnar.</p>
 </div>
 <div id="d-2" class="section level3">
 <h3>D</h3>
-<p>Dreifni stærsta gildisins minnkar eftir því sem úrtakstærðin stækkar
-í tilfelli Poisson og Tvíkostadreifingar. Í tilfelli líkindadreifingar
-veldistærðar þá stækkar dreifni stærsta gildisins smávægilega eftir því
-sem úrtaksstærðin stækkar.</p>
+<p>Í töflunni má sjá að dreifni stærsta gildisins minnkar eftir því sem
+úrtakstærðin stækkar í tilfelli Poisson og Tvíkostadreifingar. Í
+tilfelli veldisdreifingar þá stækkar dreifni stærsta gildisins
+smávægilega eftir því sem úrtaksstærðin stækkar.</p>
+<pre class="r"><code>dreifni_urtak &lt;- c(10, 30, 50, 100)
+dreifni_staersta_poisson1 &lt;- c(1.66, 1.36, 1.24, 1.15)
+dreifni_staersta_poisson2 &lt;- c(3.19, 2.49, 2.31, 2.07)
+dreifni_staersta_tvikosta1 &lt;- c(0.579, 0.403, 0.362, 0.269)
+dreifni_staersta_tvikosta2 &lt;- c(0.671, 0.492, 0.449, 0.378)
+dreifni_staersta_veldis &lt;- c(47.4, 49.4, 50.0, 50.3)
+
+tafla_dreifni_staersta &lt;- data.frame(dreifni_urtak, dreifni_staersta_poisson1, dreifni_staersta_poisson2, dreifni_staersta_tvikosta1, dreifni_staersta_tvikosta2, dreifni_staersta_veldis)
+
+colnames(tafla_dreifni_staersta) &lt;- c(&quot;Úrtaksstærð&quot;, &quot;Poisson dreifing 1&quot;, &quot;Poisson dreifing 2&quot;, &quot;Tvíkostadreifing 1&quot;, &quot;Tvíkostadreifing 2&quot;, &quot;Veldisdreifing&quot;)
+kable(tafla_dreifni_staersta)</code></pre>
+<table>
+<colgroup>
+<col width="11%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Úrtaksstærð</th>
+<th align="right">Poisson dreifing 1</th>
+<th align="right">Poisson dreifing 2</th>
+<th align="right">Tvíkostadreifing 1</th>
+<th align="right">Tvíkostadreifing 2</th>
+<th align="right">Veldisdreifing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">10</td>
+<td align="right">1.66</td>
+<td align="right">3.19</td>
+<td align="right">0.579</td>
+<td align="right">0.671</td>
+<td align="right">47.4</td>
+</tr>
+<tr class="even">
+<td align="right">30</td>
+<td align="right">1.36</td>
+<td align="right">2.49</td>
+<td align="right">0.403</td>
+<td align="right">0.492</td>
+<td align="right">49.4</td>
+</tr>
+<tr class="odd">
+<td align="right">50</td>
+<td align="right">1.24</td>
+<td align="right">2.31</td>
+<td align="right">0.362</td>
+<td align="right">0.449</td>
+<td align="right">50.0</td>
+</tr>
+<tr class="even">
+<td align="right">100</td>
+<td align="right">1.15</td>
+<td align="right">2.07</td>
+<td align="right">0.269</td>
+<td align="right">0.378</td>
+<td align="right">50.3</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="liður-6" class="section level2">

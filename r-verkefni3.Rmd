@@ -7,6 +7,9 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+library(knitr)
+library(tidyverse)
 ```
 
 ## Liður 1 
@@ -72,12 +75,69 @@ Til að kanna fjölda bíla sem stöðva ekki við stoppskyldu á fjölförnum g
 ## Liður 3
 
 ### A 
+Í höfuðsetningu tölfræðarinnar (e. Central limit theorem) kemur fram ef við tökum meðaltal nógu margra mælinga munum við fá meðaltal sem fylgir normaldreifingu sama hver dreifing upprunalegu mælingunnar er. Mælingarnar þurfa að vera óháðar og fylgja sömu dreifingu. Það viðmið sem oftast er miðað við er að n sé jafnt og, eða stærra en 30.
 
 ### B
+Væntigildi slembistærðar er raunverulega meðaltal slembistærðarinnar og því er væntigildi meðaltalsins jafnt og væntigildi upprunalegu slembistærðanna sem við fengum í upphafi.  
+
+```{r}
+v_medal <- c("Væntigildi meðaltals", "Væntigildi slembistærða")
+v_rbinom1 <- c(2.10, 2.10)
+v_rexp <- c(5.54, 5.54)
+v_rpois1 <- c(6.21, 6.21)
+v_rbinom2 <- c(1.89, 1.89)
+v_rpois2 <- c(2.72, 2.72)
+
+col_names_v <- c("Mæling", "Tvíkostadreifing 1", "Veldisdreifing", "Poisson dreifing 1", "Tvíkostadreifing 2", "Poisson dreifing 2")
+
+tafla_væntg <- data.frame(v_medal, v_rbinom1, v_rexp, v_rpois1, v_rbinom2, v_rpois2)
+colnames(tafla_væntg) <- col_names_v
+
+kable(tafla_væntg, caption = "Munur á væntgildi meðaltals og væntgildi upprunalegu slembistærðar")
+```
+
+
 
 ### C
 
+Væntigildi meðaltalsins er jafnt meðaltalinu alveg sama hver úrtaksstærðin er. Sjá má töflu fyrir neðan að væntigildi meðaltalsins breytist því ekki neitt þegar að úrtaksstærðin stækkar.
+
+```{r}
+m_úrtaksstærð <- c(10, 30, 50, 100)
+m_rbinom1 <- c(2.10, 2.10, 2.10, 2.10)
+m_rexp <- c(5.54, 5.54, 5.54, 5.54)
+m_rpois1 <- c(6.21, 6.21, 6.21, 6.21)
+m_rbinom2 <- c(1.89, 1.89, 1.89, 1.89)
+m_rpois2 <- c(2.72, 2.72, 2.72, 2.72)
+
+col_names_m <- c("Úrtaksstærð", "Tvíkostadreifing 1", "Veldisdreifing", "Poisson dreifing 1", "Tvíkostadreifing 2", "Poisson dreifing 2")
+
+tafla_medaltal <- data.frame(m_úrtaksstærð, m_rbinom1, m_rexp, m_rpois1, m_rbinom2, m_rpois2)
+colnames(tafla_medaltal) <- col_names_m
+
+kable(tafla_medaltal, caption = "Breyting á meðaltali með mismunandi úrtaksstærðir")
+```
+
+
 ### D
+Því stærri sem úrtaksstærðin er því minni breytileiki verður í úrtakinu. Við sjáum á töflunni fyrir neðan að dreifnin minnkar alltaf þegar að úrtaksstærðin stækkar.
+
+```{r}
+d_úrtaksstærð <- c(10, 30, 50, 100)
+d_rbinom1 <- c(0.137, 0.0458, 0.0275, 0.0137)
+d_rexp <- c(3.06, 1.02, 0.613, 0.307)
+d_rpois1 <- c(0.623, 0.207, 0.124, 0.0621)
+d_rbinom2 <- c(0.139, 0.0462, 0.0275, 0.0138)
+d_rpois2 <- c(0.272, 0.0904, 0.0544, 0.0269)
+
+col_names_d <- c("Úrtaksstærð", "Tvíkostadreifing 1", "Veldisdreifing", "Poisson dreifing 1", "Tvíkostadreifing 2", "Poisson dreifing 2")
+
+tafla_dreifni <- data.frame(d_úrtaksstærð, d_rbinom1, d_rexp, d_rpois1, d_rbinom2, d_rpois2)
+colnames(tafla_dreifni) <- col_names_d
+
+kable(tafla_dreifni, caption = "Breyting á dreifni með mismunandi úrtaksstærðir")
+```
+
 
 ## Liður 4
 
@@ -95,21 +155,45 @@ Til að kanna fjölda bíla sem stöðva ekki við stoppskyldu á fjölförnum g
 Þar sem veldisdreifing er samfelld dreifing þá má áætla að ef tekin eru stærstu gildi úr 100.000 ítrunum að þau dreifist samfellt. Úrtaksdreifing stærsta gildis slembistærðarinnar sem fylgir veldisdreifingu er því eina sem er samfelld. Hún er samfelld í úrtaksstærðum 10, 30, 50 og 100. 
 
 ### B
-Munur á væntigildi stærsta gildis og Poisson líkindadreifingar með væntigildi 6.21 er 10.3 - 6.21 = 4.09 þegar fjöldi í úrtaki er 10. Þessi munur stækkar svo eftir því sem fjöldi í úrtaki stækkar. 
 
-Munur á væntigildi stærsta gildis og Tvíkostadreifingar með væntigildi 1.89 er 3.77 - 1.89 = 1.88 þegar fjöldi í úrtaki er 10. Þessi munur stækkar svo eftir því sem fjöldi í úrtaki stækkar. 
+Í töflunni má sjá mun á væntigildi stærsta gildis og væntigildi upprunalegu slembistærðanna. Væntigildi hverrar líkindadreifingar fyrir sig hækkar þegar fjöldi í úrtaki hækkar. Í töflunni má sjá að hún stækkar mest í tilfella veldisdreifingar.
 
-Munur á væntigildi stærsta gildis og Veldisdreifingu með væntigildi 5.54 er 16.2 - 5.54 = 10.66 þegar fjöldi í úrtaki er 10. Þessi munur stækkar svo eftir því sem fjöldi í úrtaki stækkar. 
+```{r}
+urtaks_staersta <- c("Upprunalega", 10, 30, 50, 100)
+staersta_poisson1 <- c(2.72, 5.48, 6.57, 7.03, 7.64)
+staersta_poisson2 <- c(6.21, 10.3, 11.8, 12.4, 13.3)
+staersta_tvikosta1 <- c(2.10, 3.92, 4.52, 4.76, 5.06)
+staersta_tvikosta2 <- c(1.89, 3.77, 4.43, 4.69, 5.04)
+staersta_veldis <- c(5.54, 16.2, 22.1, 24.9, 28.7)
 
-Munur á væntigildi stærsta gildis og Tvíkostadreifingar með væntigildi 2.10 er 3.92 - 2.10 = 1.82 þegar fjöldi í úrtaki er 10. Þessi munur stækkar svo eftir því sem fjöldi í úrtaki stækkar.
+tafla_staersta <- data.frame(urtaks_staersta, staersta_poisson1, staersta_poisson2, staersta_tvikosta1, staersta_tvikosta2, staersta_veldis) 
 
-Munur á væntigildi stærsta gildis og Poisson dreifingar með væntigildi 2.72 er 5.48 - 2.72 = 2.76 þegar fjöldi í úrtaki er 10. Þessi munur stækkar svo eftir því sem fjöldi í úrtaki stækkar. 
+colnames(tafla_staersta) <- c("Úrtaksstærð", "Poisson dreifing 1", "Poisson dreifing 2", "Tvíkostadreifing 1", "Tvíkostadreifing 2", "Veldisdreifing")
+
+kable(tafla_staersta)
+```
+
 
 ### C
 Væntigildi stærsta gildisins stækkar eftir því sem úrtakstærðin stækkar. Það gildir um allar líkindadreifingarinnar.
 
 ### D
-Dreifni stærsta gildisins minnkar eftir því sem úrtakstærðin stækkar í tilfelli Poisson og Tvíkostadreifingar. Í tilfelli líkindadreifingar veldistærðar þá stækkar dreifni stærsta gildisins smávægilega eftir því sem úrtaksstærðin stækkar. 
+Í töflunni má sjá að dreifni stærsta gildisins minnkar eftir því sem úrtakstærðin stækkar í tilfelli Poisson og Tvíkostadreifingar. Í tilfelli veldisdreifingar þá stækkar dreifni stærsta gildisins smávægilega eftir því sem úrtaksstærðin stækkar. 
+
+```{r}
+dreifni_urtak <- c(10, 30, 50, 100)
+dreifni_staersta_poisson1 <- c(1.66, 1.36, 1.24, 1.15)
+dreifni_staersta_poisson2 <- c(3.19, 2.49, 2.31, 2.07)
+dreifni_staersta_tvikosta1 <- c(0.579, 0.403, 0.362, 0.269)
+dreifni_staersta_tvikosta2 <- c(0.671, 0.492, 0.449, 0.378)
+dreifni_staersta_veldis <- c(47.4, 49.4, 50.0, 50.3)
+
+tafla_dreifni_staersta <- data.frame(dreifni_urtak, dreifni_staersta_poisson1, dreifni_staersta_poisson2, dreifni_staersta_tvikosta1, dreifni_staersta_tvikosta2, dreifni_staersta_veldis)
+
+colnames(tafla_dreifni_staersta) <- c("Úrtaksstærð", "Poisson dreifing 1", "Poisson dreifing 2", "Tvíkostadreifing 1", "Tvíkostadreifing 2", "Veldisdreifing")
+kable(tafla_dreifni_staersta)
+```
+
 
 ## Liður 6
 
