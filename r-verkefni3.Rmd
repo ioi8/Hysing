@@ -25,7 +25,7 @@ Slembið fyrirbæri sem fylgir Poisson líkindadreifingu með stika 6.21 er til 
 
 Slembið fyrirbæri sem fylgir Tvíkostadreifingu með stika 7, 0.27 er til dæmis ef líkurnar á því að símtal sem fyrirtæki berst á viku (7 dagar) sé kvörtun er 0.27. 
 
-Slembið fyrirbæri sem fylgir líkindadreifingu Veldisstærðar með stika 0.1805054 er til dæmis tíminn sem
+Slembið fyrirbæri sem fylgir líkindadreifingu Veldisstærðar með stika 0.1805054 er til dæmis úrvinnsluhraði hjá tölvu og við athugum líkurnar á því að tölvan framkvæmi úrvinnsluna á 0.1 (sek). 
 
 Slembið fyrirbæri sem fylgir Tvíkostadreifingu með stika 6, 0.35 er til dæmis ef valdnar eru 6 vörur úr matvöruverslun og líkurnar á því að varan sé skemmd eru 0.35.
 
@@ -42,13 +42,13 @@ Væntigildi Tvíkostastærðar með stika 6, 0.35 er $E[X] = 6 * 0.35 = 2.10$
 
 ### E
 
-Ef gert er ráð fyrir því að fjöldi viðskiptavina sem koma inn í verslunarmiðstöð á mínútu sé 6.21 og líkindadreifingin hefur væntigildi 6.21 þá er það raunverulegt meðaltal fjölda viðskiptinavina sem kom inn í verslunarmiðstöð á mínútu. 
+Ef gert er ráð fyrir því að fjöldi viðskiptavina sem koma inn í verslunarmiðstöð á mínútu sé 6.21 og líkindadreifingin hefur væntigildi 6.21 þá er það raunverulegt meðaltal fjölda viðskiptavina sem kom inn í verslunarmiðstöð á mínútu. 
 
 Ef líkurnar eru 0.27 að símtal sem fyrirtæki berst á viku sé kvörtun þá er væntigildi dreifingarinnar 1.89. Þá er raunverulegt meðaltal símtala sem eru kvörtun á viku 1.89. 
 
-Ef 
+Ef úrvinnsluhraði tölvu er 0.181 og væntigildi er 5.54, þá er raunverulegt meðaltal úrvinnsluhraða 5.54
 
-Ef valdnar eru 6 vörur úr matvöruverslun og líkurnar á því að varan sé skemmd er 0.34 þá er væntigildi líkindadreifingarinnar 2.10 Þá er raunverulegt meðaltal skemmdra vara 2.10.
+Ef valdnar eru 6 vörur úr matvöruverslun og líkurnar á því að varan sé skemmd er 0.34 þá er væntigildi líkindadreifingarinnar 2.10. Þá er raunverulegt meðaltal skemmdra vara 2.10.
 
 
 ## Liður 2
