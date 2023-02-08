@@ -139,16 +139,6 @@ kable(tafla_dreifni, caption = "Breyting á dreifni með mismunandi úrtaksstær
 ```
 
 
-## Liður 4
-
-### A
-
-### B
-
-### C
-
-### D
-
 ## Liður 5
 
 ### A 
