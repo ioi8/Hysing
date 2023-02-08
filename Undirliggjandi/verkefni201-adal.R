@@ -24,10 +24,6 @@ SS <- select(gogninn, c(SS_02, SS_05, SS_07, SS_09, SS_10, SS_11, SS_12, SS_15))
 TA <- select(gogninn, c(TA_18, TA_20, TA_22, TA_23, TA_26, TA_27, TA_28, TA_29, TA_30, TA_31))
 AH <- select(gogninn, c(AH_03, AH_13, AH_14, AH_17, AH_21, AH_24, AH_25, AH_32))
 
-describe(JS)
-describe(SS)
-describe(TA)
-describe(AH)
 ##------------------------------Taka fyrstu þrjar---------------------
 
 gogn2 <- select(gogninn, !c(kyn, ald_hop, skolstig))
@@ -39,6 +35,12 @@ gogninn[gogninn == 99] <- NA
 ## -----------------------------Lýsandi tölfræði-------------------------
 
 describe(gogn2)
+
+describe(JS)
+describe(SS)
+describe(TA)
+describe(AH)
+
 psych::alpha(gogn2)
 
 ## -----------------------------Svarferlalíkan--------------------------
