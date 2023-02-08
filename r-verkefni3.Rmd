@@ -1,0 +1,104 @@
+---
+title: "R verkefni 3"
+author: "Adalheidur, Isak, Larus og Svavar"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Liður 1 
+
+### A 
+Líkindadreifingarnar sem valdnar voru eru eftirfarandi; 
+
+Líkindadreifing 1 er Poisson stærð með stika 6.21. $$X \sim~ Poi(6.21)$$
+Líkindadreifing 2 er Tvíkostastærð með stika 7, 0.27. $$X \sim ~ Bin(7, 0.27)$$
+Líkindadreifing 3 er Veldisstærð með stika 0.1805054. $$X \sim ~ Exp(0.1805054)$$ 
+Líkindadreifing 4 er Tvíkostastærð með stika 6, 0.35. $$X \sim ~ Bin(6, 0.35)$$
+
+### B 
+
+Slembið fyrirbæri sem fylgir Poisson líkindadreifingu með stika 6.21 er til dæmis ef fjöldi viðskiptavina sem koma inn í verslunarmiðstöð séu 6.21 á mínútu. 
+
+Slembið fyrirbæri sem fylgir Tvíkostadreifingu með stika 7, 0.27 er til dæmis ef líkurnar á því að símtal sem fyrirtæki berst á viku (7 dagar) sé kvörtun er 0.27. 
+
+Slembið fyrirbæri sem fylgir líkindadreifingu Veldisstærðar með stika 0.1805054 er til dæmis tíminn sem
+
+Slembið fyrirbæri sem fylgir Tvíkostadreifingu með stika 6, 0.35 er til dæmis ef valdnar eru 6 vörur úr matvöruverslun og líkurnar á því að varan sé skemmd eru 0.35.
+
+
+### C
+
+Væntigildi Poisson stærðar með stika 6.21 er $E[X] = 6.21$
+
+Væntigildi Tvíkostastærðar með stika 7, 0,27 er $E[X] = 7 * 0.27 = 1.89$
+
+Væntigildi Veldisstærðar með stika 0.1805054 er $E[X] = 1 / 0.1805054 = 5.54$
+
+Væntigildi Tvíkostastærðar með stika 6, 0.35 er $E[X] = 6 * 0.35 = 2.10$
+
+### E
+
+Ef gert er ráð fyrir því að fjöldi viðskiptavina sem koma inn í verslunarmiðstöð á mínútu sé 6.21 og líkindadreifingin hefur væntigildi 6.21 þá er það raunverulegt meðaltal fjölda viðskiptinavina sem kom inn í verslunarmiðstöð á mínútu. 
+
+Ef líkurnar eru 0.27 að símtal sem fyrirtæki berst á viku sé kvörtun þá er væntigildi dreifingarinnar 1.89. Þá er raunverulegt meðaltal símtala sem eru kvörtun á viku 1.89. 
+
+Ef 
+
+Ef valdnar eru 6 vörur úr matvöruverslun og líkurnar á því að varan sé skemmd er 0.34 þá er væntigildi líkindadreifingarinnar 2.10 Þá er raunverulegt meðaltal skemmdra vara 2.10.
+
+
+## Liður 2
+
+Ef kanna á fjölda viðskiptavina sem koma í verslunarmiðstöð á mínútu væru hentugt að taka úrtak með því að fara í verslunarmiðstöð, vera í klukkustund við innganginn og skrásetja fjöldann sem kemur inn. Þetta væri svo framkvæmt í 5 daga til að fá sem bestu mynd af raunverulegu þýði. 
+
+Til að kanna líkurnar á því að símtal sem fyrirtæki berst sé kvörtun væri hægt að fylgjast með fyrirtækinu í viku, skrásetja niður erindi símtals sem fyrirtæki berst og athuga hlutfall kvartanna. 
+
+
+
+
+
+## Liður 3
+
+### A 
+
+### B
+
+### C
+
+### D
+
+## Liður 4
+
+### A
+
+### B
+
+### C
+
+### D
+
+## Liður 5
+
+### A
+
+### B
+Munur á væntigildi stærsta gildis og Poisson líkindadreifingar með væntigildi 6.21 er $ 10.3 - 6.21 = 4.09 $ þegar fjöldi í úrtaki er 10. Þessi munur stækkar svo eftir því sem fjöldi í úrtaki stækkar. 
+
+Munur á væntigildi stærsta gildis og Tvíkosta líkindadreifingar með væntigildi 1.89 er $ 3.77 - 1.89 = 1.88$ þegar fjöldi í úrtaki er 10.
+
+Munur á væntigildi stærsta gildis og líkindadreifingu 
+
+### C
+Væntigildi stærsta gildisins stækkar eftir því sem úrtakstærðin stækkar. Það gildir um allar líkindadreifingarinnar.
+
+### D
+Dreifni stærsta gildisins minnkar eftir því sem úrtakstærðin stækkar í tilfelli Poisson og Tvíkostadreifingar. Í tilfelli líkindadreifingar veldistærðar þá stækkar dreifni stærsta gildisins smávægilega eftir því sem úrtaksstærðin stækkar. 
+
+## Liður 6
+
+
+
