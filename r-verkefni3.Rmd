@@ -29,7 +29,6 @@ Slembið fyrirbæri sem fylgir líkindadreifingu Veldisstærðar með stika 0.18
 
 Slembið fyrirbæri sem fylgir Tvíkostadreifingu með stika (6, 0.35) er til dæmis ef valdir eru 6 nemendur úr áfanganum Líkindareikningur og tölfræði og líkurnar á því að nemandi muni ná áfanganum eru 0.35.
 
-
 ### C
 
 Væntigildi Poisson stærðar með stika 6.21 er $E[X] = 6.21$
@@ -50,7 +49,6 @@ Ef úrvinnsluhraði tölvu er 0.181 á hverja skipun og væntigildi þess er 5.5
 
 Ef valið er af handahófi 6 nemendur í áfanganum líkindareikningur og tölfræði og líkurnar á því að nemendi hafi náð áfanganum er 0.34 þá er væntigildi líkindadreifingarinnar 2.10. Þá er raunverulegt meðaltal nemenda sem hafa náð áfangnum 2.10.
 
-
 ## Liður 2
 
 Ef kanna á fjölda viðskiptavina sem koma í verslunarmiðstöð á mínútu væru hentugt að taka úrtak með því að fara í verslunarmiðstöð, vera í klukkustund við innganginn og skrásetja fjöldann sem kemur inn. Þetta væri svo framkvæmt í 5 daga til að fá sem bestu mynd af raunverulegu þýði. 
@@ -60,8 +58,6 @@ Til að kanna líkurnar á því að símtal sem fyrirtæki berst sé kvörtun v
 Til að kanna líkurnar á því að tölva klári úrvinnslu væri hægt að taka stórt slembiúrtak úr úrvinnslusögu hjá tölvu og finna meðalúrvinnsluhraða eða láta tölvuna keyra yfir heilan dag og taka þá meðaltal af úrvinnsluhraða hennar.
 
 Til að kanna hvaða líkurnar á því að nemandi nái áfanganum Líkindareikningur og tölfræði væri hægt að taka slembiúrtök af fyrrum nemendum sem hafa tekið áfangann líkindareikningur og tölfræði.   
-
-
 
 ## Liður 3
 
@@ -86,7 +82,7 @@ Til að kanna hvaða líkurnar á því að nemandi nái áfanganum Líkindareik
 ## Liður 5
 
 ### A 
-Þar sem veldisdreifng er samfelld dreifing þá má áætla að ef tekið er stærstu gildi úr 100.000 ítrunum að þau dreifist samfelt.
+Þar sem veldisdreifng er samfelld dreifing þá má áætla að ef tekið er stærstu gildi úr 100.000 ítrunum að þau dreifist samfellt.
 
 ### B
 Munur á væntigildi stærsta gildis og Poisson líkindadreifingar með væntigildi 6.21 er 10.3 - 6.21 = 4.09 þegar fjöldi í úrtaki er 10. Þessi munur stækkar svo eftir því sem fjöldi í úrtaki stækkar. 
