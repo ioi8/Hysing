@@ -86,11 +86,13 @@ Til að kanna líkurnar á því að símtal sem fyrirtæki berst sé kvörtun v
 ### A
 
 ### B
-Munur á væntigildi stærsta gildis og Poisson líkindadreifingar með væntigildi 6.21 er $ 10.3 - 6.21 = 4.09 $ þegar fjöldi í úrtaki er 10. Þessi munur stækkar svo eftir því sem fjöldi í úrtaki stækkar. 
+Munur á væntigildi stærsta gildis og Poisson líkindadreifingar með væntigildi 6.21 er 10.3 - 6.21 = 4.09 þegar fjöldi í úrtaki er 10. Þessi munur stækkar svo eftir því sem fjöldi í úrtaki stækkar. 
 
-Munur á væntigildi stærsta gildis og Tvíkosta líkindadreifingar með væntigildi 1.89 er $ 3.77 - 1.89 = 1.88$ þegar fjöldi í úrtaki er 10.
+Munur á væntigildi stærsta gildis og Tvíkosta líkindadreifingar með væntigildi 1.89 er 3.77 - 1.89 = 1.88 þegar fjöldi í úrtaki er 10. Þessi munur stækkar svo eftir því sem fjöldi í úrtaki stækkar. 
 
-Munur á væntigildi stærsta gildis og líkindadreifingu 
+Munur á væntigildi stærsta gildis og líkindadreifingu veldisstærðar með væntigildi 5.54 er 16.2 - 5.54 = 10.66 þegar fjöldi í úrtaki er 10. Þessi munur stækkar svo eftir því sem fjöldi í úrtaki stækkar. 
+
+Munur á væntigildi stærsta gildis og Tvíkostadreifingu með væntigildi 2.10 er 3.92 - 2.10 = 1.82 þegar fjöldi í úrtaki er 10. Þessi munur stækkar svo eftir því sem fjöldi í úrtaki stækkar.
 
 ### C
 Væntigildi stærsta gildisins stækkar eftir því sem úrtakstærðin stækkar. Það gildir um allar líkindadreifingarinnar.
