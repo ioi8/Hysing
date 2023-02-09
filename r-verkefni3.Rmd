@@ -80,7 +80,7 @@ Til að kanna fjölda bíla sem stöðva ekki við stoppskyldu á fjölförnum g
 ### B
 Væntigildi slembistærðar er raunverulega meðaltal slembistærðarinnar og því er væntigildi meðaltalsins jafnt og væntigildi upprunalegu slembistærðanna sem við fengum í upphafi.  
 
-```{r}
+```{r, echo=FALSE}
 v_medal <- c("Væntigildi meðaltals", "Væntigildi slembistærða")
 v_rbinom1 <- c(2.10, 2.10)
 v_rexp <- c(5.54, 5.54)
@@ -102,7 +102,7 @@ kable(tafla_væntg, caption = "Munur á væntgildi meðaltals og væntgildi uppr
 
 Væntigildi meðaltalsins er jafnt meðaltalinu alveg sama hver úrtaksstærðin er. Sjá má töflu fyrir neðan að væntigildi meðaltalsins breytist því ekki neitt þegar að úrtaksstærðin stækkar.
 
-```{r}
+```{r, echo=FALSE}
 m_úrtaksstærð <- c(10, 30, 50, 100)
 m_rbinom1 <- c(2.10, 2.10, 2.10, 2.10)
 m_rexp <- c(5.54, 5.54, 5.54, 5.54)
@@ -122,7 +122,7 @@ kable(tafla_medaltal, caption = "Breyting á meðaltali með mismunandi úrtakss
 ### D
 Því stærri sem úrtaksstærðin er því minni breytileiki verður í úrtakinu. Við sjáum á töflunni fyrir neðan að dreifnin minnkar alltaf þegar að úrtaksstærðin stækkar.
 
-```{r}
+```{r, echo=FALSE}
 d_úrtaksstærð <- c(10, 30, 50, 100)
 d_rbinom1 <- c(0.137, 0.0458, 0.0275, 0.0137)
 d_rexp <- c(3.06, 1.02, 0.613, 0.307)
@@ -142,11 +142,56 @@ kable(tafla_dreifni, caption = "Breyting á dreifni með mismunandi úrtaksstær
 
 ### A
 
+Úrtaksdreifing miðgildis er samfelld ef hún fylgir líkindadreifingu sem er samfelld. Þetta á við hvaða úrtaksstærð sem er. Til dæmis ef um normaldreifingu er að ræða sem er samfelld mun miðgildi slembiúrtaksins alltaf enda á því að vera samfelld dreifing.
+
 ### B
+
+Lítill munur er á væntigildi upprunalegu slembistærðarinnar og væntigildi miðgildis. Í veldisdreifingu er mesti munurinn á upprunalegu slembistærðinni og miðgildum dreifingar.
+
+```{r, echo=FALSE}
+urtaks_midgildi <- c("Upprunalega slembistærðin", 10, 30, 50, 100)
+midgildi_poisson1 <- c(2.72, 2.57, 2.56, 2.56, 2.59)
+midgildi_poisson2 <- c(6.21, 6.06, 6.05, 6.05, 6.03)
+midgildi_tvikosta1 <- c(2.10, 2.05, 2.03, 2.01, 2.00)
+midgildi_tvikosta2 <- c(1.89, 1.82, 1.88, 1.93, 1.98)
+midgildi_veldis <- c(5.54, 4.13, 3.93, 3.9, 3.87)
+
+col_names_midgildi <-  c("Úrtaksstærð", "Poisson 1", "Poisson 2", "Tvíkostadreifing 1", "Tvíkostadreifing 2", "Veldisdreifing")
+
+tafla_midgildi<- data.frame(urtaks_midgildi, midgildi_poisson1, midgildi_poisson2, midgildi_tvikosta1, midgildi_tvikosta2, midgildi_veldis) 
+
+colnames(tafla_midgildi)<- col_names_midgildi
+
+
+kable(tafla_midgildi)
+```
+
 
 ### C
 
+Skv töflunni hér að ofan má álykta að það er engin sérstök regla um það hvort væntigildi miðgildis gildisins minnki eða hækki eftir því sem úrtak stækkar. Í Poisson dreifingu og Tvíkosta dreifingu bæði minnkar það lítillega og hækkar eftir því sem úrtakstærðin. Í veldisdreifingu lækkar það lítillega eftir því sem úrtakið stækkar.
+
 ### D
+
+Í töflunni má sjá að dreifni miðgildis minnkar eftir því sem úrtaksstærðin stækkar í öllum dreifingum.
+
+```{r, echo=FALSE}
+dreifni_urtak <- c(10, 30, 50, 100)
+dreifni_midgildi_tvikosta1 <- c(0.230, 0.0578, 0.0175, 0.00113)
+dreifni_midgildi_tvikosta2 <- c(0.240, 0.100, 0.562, 0.159)
+dreifni_midgildi_poisson1 <- c(0.413, 0.229, 0.220, 0.223)
+dreifni_midgildi_poisson2 <- c(0.897, 0.357, 0.230, 0.0994)
+dreifni_midgildi_veldis <- c(2.95, 0.997, 0.606, 0.306)
+
+
+coln_dreifni_midgildi <-  c("Úrtaksstærð", "Poisson 1", "Poisson 2", "Tvíkostadreifing 1", "Tvíkostadreifing 2", "Veldisdreifing")
+
+tafla_dreifni_midgildi <- data.frame(dreifni_urtak, dreifni_midgildi_poisson1, dreifni_midgildi_poisson2, dreifni_midgildi_tvikosta1, dreifni_midgildi_tvikosta2, dreifni_midgildi_veldis)
+
+colnames(tafla_dreifni_midgildi) <- coln_dreifni_midgildi
+
+kable(tafla_dreifni_midgildi)
+```
 
 
 ## Liður 5
@@ -158,7 +203,7 @@ kable(tafla_dreifni, caption = "Breyting á dreifni með mismunandi úrtaksstær
 
 Í töflunni má sjá mun á væntigildi stærsta gildis og væntigildi upprunalegu slembistærðanna. Væntigildi hverrar líkindadreifingar fyrir sig hækkar þegar fjöldi í úrtaki hækkar. Í töflunni má sjá að hún stækkar mest í tilfella veldisdreifingar.
 
-```{r}
+```{r, echo=FALSE}
 urtaks_staersta <- c("Upprunalega", 10, 30, 50, 100)
 staersta_poisson1 <- c(2.72, 5.48, 6.57, 7.03, 7.64)
 staersta_poisson2 <- c(6.21, 10.3, 11.8, 12.4, 13.3)
@@ -180,7 +225,7 @@ Væntigildi stærsta gildisins stækkar eftir því sem úrtakstærðin stækkar
 ### D
 Í töflunni má sjá að dreifni stærsta gildisins minnkar eftir því sem úrtakstærðin stækkar í tilfelli Poisson og Tvíkostadreifingar. Í tilfelli veldisdreifingar þá stækkar dreifni stærsta gildisins smávægilega eftir því sem úrtaksstærðin stækkar. 
 
-```{r}
+```{r, echo=FALSE}
 dreifni_urtak <- c(10, 30, 50, 100)
 dreifni_staersta_poisson1 <- c(1.66, 1.36, 1.24, 1.15)
 dreifni_staersta_poisson2 <- c(3.19, 2.49, 2.31, 2.07)

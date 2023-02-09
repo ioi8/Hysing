@@ -454,19 +454,6 @@ sem oftast er miðað við er að n sé jafnt og, eða stærra en 30.</p>
 <p>Væntigildi slembistærðar er raunverulega meðaltal slembistærðarinnar
 og því er væntigildi meðaltalsins jafnt og væntigildi upprunalegu
 slembistærðanna sem við fengum í upphafi.</p>
-<pre class="r"><code>v_medal &lt;- c(&quot;Væntigildi meðaltals&quot;, &quot;Væntigildi slembistærða&quot;)
-v_rbinom1 &lt;- c(2.10, 2.10)
-v_rexp &lt;- c(5.54, 5.54)
-v_rpois1 &lt;- c(6.21, 6.21)
-v_rbinom2 &lt;- c(1.89, 1.89)
-v_rpois2 &lt;- c(2.72, 2.72)
-
-col_names_v &lt;- c(&quot;Mæling&quot;, &quot;Tvíkostadreifing 1&quot;, &quot;Veldisdreifing&quot;, &quot;Poisson dreifing 1&quot;, &quot;Tvíkostadreifing 2&quot;, &quot;Poisson dreifing 2&quot;)
-
-tafla_væntg &lt;- data.frame(v_medal, v_rbinom1, v_rexp, v_rpois1, v_rbinom2, v_rpois2)
-colnames(tafla_væntg) &lt;- col_names_v
-
-kable(tafla_væntg, caption = &quot;Munur á væntgildi meðaltals og væntgildi upprunalegu slembistærðar&quot;)</code></pre>
 <table style="width:100%;">
 <caption>Munur á væntgildi meðaltals og væntgildi upprunalegu
 slembistærðar</caption>
@@ -513,19 +500,6 @@ slembistærðar</caption>
 <p>Væntigildi meðaltalsins er jafnt meðaltalinu alveg sama hver
 úrtaksstærðin er. Sjá má töflu fyrir neðan að væntigildi meðaltalsins
 breytist því ekki neitt þegar að úrtaksstærðin stækkar.</p>
-<pre class="r"><code>m_úrtaksstærð &lt;- c(10, 30, 50, 100)
-m_rbinom1 &lt;- c(2.10, 2.10, 2.10, 2.10)
-m_rexp &lt;- c(5.54, 5.54, 5.54, 5.54)
-m_rpois1 &lt;- c(6.21, 6.21, 6.21, 6.21)
-m_rbinom2 &lt;- c(1.89, 1.89, 1.89, 1.89)
-m_rpois2 &lt;- c(2.72, 2.72, 2.72, 2.72)
-
-col_names_m &lt;- c(&quot;Úrtaksstærð&quot;, &quot;Tvíkostadreifing 1&quot;, &quot;Veldisdreifing&quot;, &quot;Poisson dreifing 1&quot;, &quot;Tvíkostadreifing 2&quot;, &quot;Poisson dreifing 2&quot;)
-
-tafla_medaltal &lt;- data.frame(m_úrtaksstærð, m_rbinom1, m_rexp, m_rpois1, m_rbinom2, m_rpois2)
-colnames(tafla_medaltal) &lt;- col_names_m
-
-kable(tafla_medaltal, caption = &quot;Breyting á meðaltali með mismunandi úrtaksstærðir&quot;)</code></pre>
 <table>
 <caption>Breyting á meðaltali með mismunandi úrtaksstærðir</caption>
 <colgroup>
@@ -587,19 +561,6 @@ kable(tafla_medaltal, caption = &quot;Breyting á meðaltali með mismunandi úr
 <p>Því stærri sem úrtaksstærðin er því minni breytileiki verður í
 úrtakinu. Við sjáum á töflunni fyrir neðan að dreifnin minnkar alltaf
 þegar að úrtaksstærðin stækkar.</p>
-<pre class="r"><code>d_úrtaksstærð &lt;- c(10, 30, 50, 100)
-d_rbinom1 &lt;- c(0.137, 0.0458, 0.0275, 0.0137)
-d_rexp &lt;- c(3.06, 1.02, 0.613, 0.307)
-d_rpois1 &lt;- c(0.623, 0.207, 0.124, 0.0621)
-d_rbinom2 &lt;- c(0.139, 0.0462, 0.0275, 0.0138)
-d_rpois2 &lt;- c(0.272, 0.0904, 0.0544, 0.0269)
-
-col_names_d &lt;- c(&quot;Úrtaksstærð&quot;, &quot;Tvíkostadreifing 1&quot;, &quot;Veldisdreifing&quot;, &quot;Poisson dreifing 1&quot;, &quot;Tvíkostadreifing 2&quot;, &quot;Poisson dreifing 2&quot;)
-
-tafla_dreifni &lt;- data.frame(d_úrtaksstærð, d_rbinom1, d_rexp, d_rpois1, d_rbinom2, d_rpois2)
-colnames(tafla_dreifni) &lt;- col_names_d
-
-kable(tafla_dreifni, caption = &quot;Breyting á dreifni með mismunandi úrtaksstærðir&quot;)</code></pre>
 <table>
 <caption>Breyting á dreifni með mismunandi úrtaksstærðir</caption>
 <colgroup>
@@ -661,15 +622,145 @@ kable(tafla_dreifni, caption = &quot;Breyting á dreifni með mismunandi úrtaks
 <h2>Liður 4</h2>
 <div id="a-2" class="section level3">
 <h3>A</h3>
+<p>Úrtaksdreifing miðgildis er samfelld ef hún fylgir líkindadreifingu
+sem er samfelld. Þetta á við hvaða úrtaksstærð sem er. Til dæmis ef um
+normaldreifingu er að ræða sem er samfelld mun miðgildi slembiúrtaksins
+alltaf enda á því að vera samfelld dreifing.</p>
 </div>
 <div id="b-2" class="section level3">
 <h3>B</h3>
+<p>Lítill munur er á væntigildi upprunalegu slembistærðarinnar og
+væntigildi miðgildis. Í veldisdreifingu er mesti munurinn á upprunalegu
+slembistærðinni og miðgildum dreifingar.</p>
+<table>
+<colgroup>
+<col width="26%" />
+<col width="10%" />
+<col width="10%" />
+<col width="19%" />
+<col width="19%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Úrtaksstærð</th>
+<th align="right">Poisson 1</th>
+<th align="right">Poisson 2</th>
+<th align="right">Tvíkostadreifing 1</th>
+<th align="right">Tvíkostadreifing 2</th>
+<th align="right">Veldisdreifing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Upprunalega slembistærðin</td>
+<td align="right">2.72</td>
+<td align="right">6.21</td>
+<td align="right">2.10</td>
+<td align="right">1.89</td>
+<td align="right">5.54</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="right">2.57</td>
+<td align="right">6.06</td>
+<td align="right">2.05</td>
+<td align="right">1.82</td>
+<td align="right">4.13</td>
+</tr>
+<tr class="odd">
+<td align="left">30</td>
+<td align="right">2.56</td>
+<td align="right">6.05</td>
+<td align="right">2.03</td>
+<td align="right">1.88</td>
+<td align="right">3.93</td>
+</tr>
+<tr class="even">
+<td align="left">50</td>
+<td align="right">2.56</td>
+<td align="right">6.05</td>
+<td align="right">2.01</td>
+<td align="right">1.93</td>
+<td align="right">3.90</td>
+</tr>
+<tr class="odd">
+<td align="left">100</td>
+<td align="right">2.59</td>
+<td align="right">6.03</td>
+<td align="right">2.00</td>
+<td align="right">1.98</td>
+<td align="right">3.87</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="c-2" class="section level3">
 <h3>C</h3>
+<p>Skv töflunni hér að ofan má álykta að það er engin sérstök regla um
+það hvort væntigildi miðgildis gildisins minnki eða hækki eftir því sem
+úrtak stækkar. Í Poisson dreifingu og Tvíkosta dreifingu bæði minnkar
+það lítillega og hækkar eftir því sem úrtakstærðin. Í veldisdreifingu
+lækkar það lítillega eftir því sem úrtakið stækkar.</p>
 </div>
 <div id="d-1" class="section level3">
 <h3>D</h3>
+<p>Í töflunni má sjá að dreifni miðgildis minnkar eftir því sem
+úrtaksstærðin stækkar í öllum dreifingum.</p>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="11%" />
+<col width="11%" />
+<col width="22%" />
+<col width="22%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">Úrtaksstærð</th>
+<th align="right">Poisson 1</th>
+<th align="right">Poisson 2</th>
+<th align="right">Tvíkostadreifing 1</th>
+<th align="right">Tvíkostadreifing 2</th>
+<th align="right">Veldisdreifing</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">10</td>
+<td align="right">0.413</td>
+<td align="right">0.8970</td>
+<td align="right">0.23000</td>
+<td align="right">0.240</td>
+<td align="right">2.950</td>
+</tr>
+<tr class="even">
+<td align="right">30</td>
+<td align="right">0.229</td>
+<td align="right">0.3570</td>
+<td align="right">0.05780</td>
+<td align="right">0.100</td>
+<td align="right">0.997</td>
+</tr>
+<tr class="odd">
+<td align="right">50</td>
+<td align="right">0.220</td>
+<td align="right">0.2300</td>
+<td align="right">0.01750</td>
+<td align="right">0.562</td>
+<td align="right">0.606</td>
+</tr>
+<tr class="even">
+<td align="right">100</td>
+<td align="right">0.223</td>
+<td align="right">0.0994</td>
+<td align="right">0.00113</td>
+<td align="right">0.159</td>
+<td align="right">0.306</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="liður-5" class="section level2">
@@ -688,18 +779,6 @@ veldisdreifingu er því eina sem er samfelld. Hún er samfelld í
 upprunalegu slembistærðanna. Væntigildi hverrar líkindadreifingar fyrir
 sig hækkar þegar fjöldi í úrtaki hækkar. Í töflunni má sjá að hún
 stækkar mest í tilfella veldisdreifingar.</p>
-<pre class="r"><code>urtaks_staersta &lt;- c(&quot;Upprunalega&quot;, 10, 30, 50, 100)
-staersta_poisson1 &lt;- c(2.72, 5.48, 6.57, 7.03, 7.64)
-staersta_poisson2 &lt;- c(6.21, 10.3, 11.8, 12.4, 13.3)
-staersta_tvikosta1 &lt;- c(2.10, 3.92, 4.52, 4.76, 5.06)
-staersta_tvikosta2 &lt;- c(1.89, 3.77, 4.43, 4.69, 5.04)
-staersta_veldis &lt;- c(5.54, 16.2, 22.1, 24.9, 28.7)
-
-tafla_staersta &lt;- data.frame(urtaks_staersta, staersta_poisson1, staersta_poisson2, staersta_tvikosta1, staersta_tvikosta2, staersta_veldis) 
-
-colnames(tafla_staersta) &lt;- c(&quot;Úrtaksstærð&quot;, &quot;Poisson dreifing 1&quot;, &quot;Poisson dreifing 2&quot;, &quot;Tvíkostadreifing 1&quot;, &quot;Tvíkostadreifing 2&quot;, &quot;Veldisdreifing&quot;)
-
-kable(tafla_staersta)</code></pre>
 <table>
 <colgroup>
 <col width="11%" />
@@ -774,17 +853,6 @@ stækkar. Það gildir um allar líkindadreifingarinnar.</p>
 úrtakstærðin stækkar í tilfelli Poisson og Tvíkostadreifingar. Í
 tilfelli veldisdreifingar þá stækkar dreifni stærsta gildisins
 smávægilega eftir því sem úrtaksstærðin stækkar.</p>
-<pre class="r"><code>dreifni_urtak &lt;- c(10, 30, 50, 100)
-dreifni_staersta_poisson1 &lt;- c(1.66, 1.36, 1.24, 1.15)
-dreifni_staersta_poisson2 &lt;- c(3.19, 2.49, 2.31, 2.07)
-dreifni_staersta_tvikosta1 &lt;- c(0.579, 0.403, 0.362, 0.269)
-dreifni_staersta_tvikosta2 &lt;- c(0.671, 0.492, 0.449, 0.378)
-dreifni_staersta_veldis &lt;- c(47.4, 49.4, 50.0, 50.3)
-
-tafla_dreifni_staersta &lt;- data.frame(dreifni_urtak, dreifni_staersta_poisson1, dreifni_staersta_poisson2, dreifni_staersta_tvikosta1, dreifni_staersta_tvikosta2, dreifni_staersta_veldis)
-
-colnames(tafla_dreifni_staersta) &lt;- c(&quot;Úrtaksstærð&quot;, &quot;Poisson dreifing 1&quot;, &quot;Poisson dreifing 2&quot;, &quot;Tvíkostadreifing 1&quot;, &quot;Tvíkostadreifing 2&quot;, &quot;Veldisdreifing&quot;)
-kable(tafla_dreifni_staersta)</code></pre>
 <table>
 <colgroup>
 <col width="11%" />
