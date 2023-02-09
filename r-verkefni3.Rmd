@@ -138,6 +138,16 @@ colnames(tafla_dreifni) <- col_names_d
 kable(tafla_dreifni, caption = "Breyting á dreifni með mismunandi úrtaksstærðir")
 ```
 
+## Liður 4
+
+### A
+
+### B
+
+### C
+
+### D
+
 
 ## Liður 5
 
@@ -187,5 +197,23 @@ kable(tafla_dreifni_staersta)
 
 ## Liður 6
 
+### A
 
+Það sést að líkindadreifingarnar bregðast eins við þegar úrtaksstærðin er stækkuð. 
 
+### B
+
+Í Poisson og tvíkosta dreifingunum hafa lýsistærðirnar sína kosti/galla og báðar lýsistærðirnar gefa dýrmætar upplýsingar um dreifingarnar en val á milli þeirra fer eftir þörfum við greiningu á gögnum.
+
+Meðaltal:
+Kostirnir eru að auðvelt að reikna (sama og lambda í Poisson). Það gefur einnig til kynna væntigildið af slembistærðinni.
+Gallarnir eru að meðaltalið er viðkvæmt fyrir útlögum sem getur leitt til ónákvæmra niðurstaða þegar gögnin eru ekki samhverf.
+
+Miðgildi:
+Kostir eru að miðgildi er ekki viðkvæmt fyrir útlögum og því gefur sterkan mælikvarða á miðlæga tilhneigingu gagnanna. Einnig aðskilur miðgildið dreifinguna í tvo jafna hluta.
+
+Í veldisdreifingunni endurspeglar meðaltalið undirliggjandi mælikvarða og gefur upplýsingar um tímakvarða dreifingarinnar, en miðgildið gefur sterkan mælikvarða á miðlæga tilhneigingu gagna og er ekki viðkvæmt fyrir útlögum.
+
+### C 
+
+Það fer mjög mikið eftir hvað við viljum rannsaka hvort sumar lýsistæðirnar eigi betur við en aðrar. T.d. ef markmiðið er að finna væntigildi af fjölda viðskiptavina sem er líklegastur til að koma inn í verslunarmiðstöðina á mínútu, þá myndi meðaltal eiga best við. Hins vegar kæmi miðgildi að góðum notum ef við viljum vita miðjuna á dreifingunni ef tekið er tillit til útlaga.
