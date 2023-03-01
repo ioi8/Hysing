@@ -57,6 +57,9 @@ VidhorfNemenda <- dplyr::select(VidhorfNemenda, !c(sp_a10, sp_b05, sp_b14)) #!sp
 
 #----------------------------------------Veljum spurningar-----------------------------------
 ##---Spurningar um  mikilvægi upplýsigna og um framkvæmd mats í skólum-----------------------
+
+
+#Settu hér inn í stað "gagnarammi" breytuheiti á viðeigandi hópi, t.d. viðhorfkennara
 hlutverk_namsmats <- dplyr::select(gagnarammi, c(sp_b01, #hve vel nemendur eru búnir undir daglegt líf og starf á fullorðinsárum
                                                  sp_b02, #hve vel nemendur eru búnir undir nám í framhaldsskóla.
                                                  sp_b03, #hvort nemendur þurfi á sérstökum stuðningi að halda.
@@ -92,8 +95,8 @@ lykilhaefni <- dplyr::select(gagnarammi, c(sp_c01, #velferð nemenda í skóla.
                                            ))
 
 #-------------------Taka burt raðir með fleiri en 4 N/A gildum í spurningum-------------------------
-NAgildi <- rowSums(is.na(gagnarammiTilbuin)) >= 4
-tilbuinnGogn <- gagnarammiTilbuin[!NAgildi, ]
+NAgildi <- rowSums(is.na(gagnarammi)) >= 4
+tilbuinnGogn <- gagnarammi[!NAgildi, ]
 sum(is.na(tilbuinnGogn))
 
 #----------------------------------------Tilreikningur----------------------------------------
