@@ -23,11 +23,6 @@ bakgrunnur[bakgrunnur == -999] <- NA
 gogn2[gogn2 == -999] <- NA
 
 
-imp_multimean <- mice(gogn2[,-1], m = 5, method = "logreg", maxit = 20)
-summary(imp_multimean)
-
-gogn2 <- complete(imp_multimean, 4)
-
 ##-------------------------------Flokka----------------------------------
 
 gogn2_foreldrar <- select(gogn)
