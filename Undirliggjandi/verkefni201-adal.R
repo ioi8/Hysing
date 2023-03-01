@@ -15,8 +15,8 @@ bakgrunnur <- read_delim("DATA_SAL138F_IRT_Skulason.2022_Vidhorf.Til.Namsmats_BA
                          delim = ";", escape_double = FALSE, trim_ws = TRUE, na = c("-999"))
 
 ## Snúa við breytum
-gagnarammi$sp_a02 = car::recode(gagnarammi$sp_a02, "0=1; 1=0")
-gagnarammi$sp_a03 = car::recode(gagnarammi$sp_a03, "0=1; 1=0")
+gagnarammi$sp_a02 = car::recode(gagnarammi$sp_a02, "1=0; 0=1")
+gagnarammi$sp_a03 = car::recode(gagnarammi$sp_a03, "1=0; 0=1")
 
 
 #---------------------------------Filter----------------------------
@@ -35,6 +35,7 @@ UtanHBS <- filter(gagnarammi, Hof_land == 2) # Utan höfuðborgarsvæðis
 
 # Kennarar  vs foreldrar
 VidhorfKennara <- filter(gagnarammi,hopur == 2)
+VidhorfKennara <- dplyr::select(VidhorfKennara, !c(id, ID2, hopur, stard_sk, Strf_ald, stadsetn, Hof_land, Ladhl, nmiss, Nmiss_f))
 VidhorfForeldra <- filter(gagnarammi, hopur == 1)
 VidhorfForeldra <- dplyr::select(VidhorfForeldra, !c(sp_a10, sp_b13, sp_b14)) #!spr fyrir kennara
 
@@ -57,14 +58,17 @@ lykilhaefni <- select(gagnarammi, c(sp_c01, sp_c02, sp_c03, sp_c04))
 
 
 #-------------------Taka burt raðir þá sem svöruðu engu------------------------
-NAgildi <- rowSums(is.na(VidhorfKennara[,-1:-8])) >= 30
+NAgildi <- rowSums(is.na(VidhorfKennara))
 tilbuinnGogn <- VidhorfKennara[!NAgildi, ]
 sum(is.na(tilbuinnGogn))
 
 #----------------------------------------Tilreikningur----------------------------------------
-imputationgogn <- mice(tilbuinnGogn, m=3, method="pmm", maxit = 3)
+imputationgogn <- mice(VidhorfKennara, m=3, method="pmm", maxit = 3)
 imputationgogn <- complete(imputationgogn, 3)
 sum(is.na(imputationgogn))
+
+heild <- rowSums(VidhorfKennara)
+describe(heild)
 
 describe(imputationgogn)
 psych::alpha(imputationgogn)
