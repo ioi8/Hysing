@@ -15,8 +15,8 @@ bakgrunnur <- read_delim("DATA_SAL138F_IRT_Skulason.2022_Vidhorf.Til.Namsmats_BA
                          delim = ";", escape_double = FALSE, trim_ws = TRUE, na = c("-999"))
 
 ## Snúa við breytum
-gagnarammi$sp_a02 = car::recode(gagnarammi$sp_a02, "1=0; 0=1")
-gagnarammi$sp_a03 = car::recode(gagnarammi$sp_a03, "1=0; 0=1")
+#gagnarammi$sp_a02 = car::recode(gagnarammi$sp_a02, "1=0; 0=1")
+#gagnarammi$sp_a03 = car::recode(gagnarammi$sp_a03, "1=0; 0=1")
 
 
 #---------------------------------Filter----------------------------
@@ -37,7 +37,7 @@ UtanHBS <- filter(gagnarammi, Hof_land == 2) # Utan höfuðborgarsvæðis
 VidhorfKennara <- filter(gagnarammi,hopur == 2)
 VidhorfKennara <- dplyr::select(VidhorfKennara, !c(id, ID2, hopur, stard_sk, Strf_ald, stadsetn, Hof_land, Ladhl, nmiss, Nmiss_f))
 VidhorfForeldra <- filter(gagnarammi, hopur == 1)
-VidhorfForeldra <- dplyr::select(VidhorfForeldra, !c(sp_a10, sp_b13, sp_b14)) #!spr fyrir kennara
+VidhorfForeldra <- dplyr::select(VidhorfForeldra, !c(id, ID2, hopur, stard_sk, Strf_ald, stadsetn, Hof_land, Ladhl, nmiss, Nmiss_f, sp_a10, sp_b13, sp_b14)) #!spr fyrir kennara
 
 #Starfsaldur
 "11lengur" <- filter(VidhorfKennara, Strf_ald == 3)
@@ -48,26 +48,32 @@ VidhorfForeldra <- dplyr::select(VidhorfForeldra, !c(sp_a10, sp_b13, sp_b14)) #!
 ##-------------------------------Flokka spurningarnar----------------------------------
 
 
-hlutverk_namsmats <- select(gagnarammi, c(sp_b01, sp_b02, sp_b03, sp_b04, sp_b05, sp_b06, sp_b07,
-                                          sp_b08, sp_b09, sp_b10, sp_b11, sp_b12, sp_b13, sp_b14))
+hlutverk_namsmats <- select(imputationgogn, c(sp_b01, sp_b02, sp_b03, sp_b04, sp_b05, sp_b06, sp_b07,
+                                          sp_b08, sp_b09, sp_b10, sp_b11, sp_b12))
+describe(hlutverk_namsmats)
+describe(rowSums(hlutverk_namsmats))
 
-upplys_mat <- select(gagnarammi, c(sp_a01, sp_a02, sp_a03, sp_a04, sp_a05, sp_a06, sp_a07, sp_a08,
-                                   sp_a09, sp_a10))
 
-lykilhaefni <- select(gagnarammi, c(sp_c01, sp_c02, sp_c03, sp_c04))
+upplys_mat <- select(imputationgogn, c(sp_a01, sp_a02, sp_a03, sp_a04, sp_a05, sp_a06, sp_a07, sp_a08,
+                                   sp_a09))
+describe(rowSums(upplys_mat))
+
+lykilhaefni <- select(imputationgogn, c(sp_c01, sp_c02, sp_c03, sp_c04))
+
+describe(rowSums(lykilhaefni))
 
 
 #-------------------Taka burt raðir þá sem svöruðu engu------------------------
-NAgildi <- rowSums(is.na(VidhorfKennara))
-tilbuinnGogn <- VidhorfKennara[!NAgildi, ]
+NAgildi <- rowSums(is.na(VidhorfForeldra)) >=25
+tilbuinnGogn <- VidhorfForeldra[!NAgildi, ]
 sum(is.na(tilbuinnGogn))
 
 #----------------------------------------Tilreikningur----------------------------------------
-imputationgogn <- mice(VidhorfKennara, m=3, method="pmm", maxit = 3)
+imputationgogn <- mice(tilbuinnGogn, m=3, method="pmm", maxit = 3)
 imputationgogn <- complete(imputationgogn, 3)
 sum(is.na(imputationgogn))
 
-heild <- rowSums(VidhorfKennara)
+heild <- rowSums(imputationgogn)
 describe(heild)
 
 describe(imputationgogn)
@@ -75,7 +81,7 @@ psych::alpha(imputationgogn)
 
 
 #----------------------------------------Svarferlalíkan----------------------------------------
-Likan <- mirt(imputationgogn[,-1:-8], itemtype = "graded")
+Likan <- mirt(imputationgogn, itemtype = "graded")
 coef(Likan, simplify = T)
 summary(Likan)
 itemfit(Likan)
