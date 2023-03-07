@@ -110,7 +110,6 @@ upplys_mat2 <- dplyr::select(VidhorfForsjá, c(sp_a01, #Ég tel mikilvægt að u
                                            sp_a07, #Mikilvægt er að til séu upplýsingar um stöðu einstakra skóla.
                                            sp_a08, #Mikilvægt er að til séu upplýsingar um stöðu skóla í einstökum landshlutum eða sveitarfélögum.
                                            sp_a09, #Mikilvægt er að til séu upplýsingar um stöðu skólakerfisins almennt.
-                                           sp_a10  #Ég á auðvelt með að meta frammistöðu nemenda samkvæmt viðmiðum aðalnámskrár.
 ))
 ##-----------------------------Spurningar um  mat tengt lykilhæfni manntunar í aðalnámsskrá-------
 lykilhaefni1 <- dplyr::select(VidhorStarfsfólks, c(sp_c01, #velferð nemenda í skóla.
@@ -126,6 +125,7 @@ lykilhaefni2 <- dplyr::select(VidhorfForsjá, c(sp_c01, #velferð nemenda í sk�
 
 
 #----------------------------------------Svarferlalíkan----------------------------------------
+set.seed(7)
 
 hlutverk_namsmats1 <- mice(hlutverk_namsmats1, m=3, method="pmm", maxit = 3) #Tilreikningur
 hlutverk_namsmats1 <- complete(hlutverk_namsmats1, 3)
@@ -145,15 +145,13 @@ itemfit(hlutverk_namsmats2_Likan)
 itemplot(hlutverk_namsmats2_Likan, 3)
 itemplot(hlutverk_namsmats2_Likan, 3, type = 'threshold', )
 
-key=list(columns=1, 
-         text=list(lab=c("Kennarar"," Forráðamenn")), 
-         lines=list(lwd=1, col=c("blue","red")))
-HN1 = plot(hlutverk_namsmats1_Likan,key=key, main="Viðhorf kennara")
-HN2 = update(plot(hlutverk_namsmats2_Likan, col="red"))
+
+key=list(columns=2,text=list(lab=c("Kennarar"," Forráðamenn")), lines=list(lwd=2, col=c("blue","red")))
+HN1 = plot(hlutverk_namsmats1_Likan,key=key, main="Viðhorf á hlutverk námsmats")
+HN2 = update(plot(hlutverk_namsmats2_Likan),col="red")
 HN1+HN2
 
 #----------------------------------------Svarferlalíkan----------------------------------------
-
 upplys_mat1 <- mice(upplys_mat1, m=3, method="pmm", maxit = 3) #Tilreikningur
 upplys_mat1 <- complete(upplys_mat1, 3)
 upplys_mat1_Likan <- mirt(upplys_mat1, itemtype = "graded")
@@ -166,18 +164,17 @@ itemplot(upplys_mat1_Likan, 3, type = 'threshold', )
 upplys_mat2 <- mice(upplys_mat2, m=3, method="pmm", maxit = 3) #Tilreikningur
 upplys_mat2 <- complete(upplys_mat2, 3)
 upplys_mat2_Likan <- mirt(upplys_mat2, itemtype = "graded")
-coef(hlutverk_namsmats2_Likan, simplify = T)
-summary(hlutverk_namsmats2_Likan)
-itemfit(hlutverk_namsmats2_Likan)
-itemplot(hlutverk_namsmats2_Likan, 3)
-itemplot(hlutverk_namsmats2_Likan, 3, type = 'threshold', )
+coef(upplys_mat2_Likan, simplify = T)
+summary(upplys_mat2_Likan)
+itemfit(upplys_mat2_Likan)
+itemplot(upplys_mat2_Likan, 3)
+itemplot(upplys_mat2_Likan, 3, type = 'threshold', )
 
-key=list(columns=1, 
-         text=list(lab=c("Kennarar"," Forráðamenn")), 
-         lines=list(lwd=1, col=c("blue","red")))
-UM1 = plot(upplys_mat1,key=key, main="Viðhorf kennara")
-UM2 = update(plot(upplys_mat2,col="red"))
-UM1+UM2
+key=list(columns=2,text=list(lab=c("Kennarar"," Forráðamenn")), lines=list(lwd=2, col=c("blue","red")))
+HN1 = plot(upplys_mat1_Likan,key=key, main="Viðhorf á mikilvægi upplýsinga og um framkvæmd mats í skólum")
+HN2 = update(plot(upplys_mat2_Likan),col="red")
+HN1+HN2
+
 
 #----------------------------------------Svarferlalíkan----------------------------------------
 
@@ -199,9 +196,10 @@ itemfit(lykilhaefni2_likan)
 itemplot(lykilhaefni2_likan, 3)
 itemplot(lykilhaefni2_likan, 3, type = 'threshold', )
 
-key=list(columns=1, 
-         text=list(lab=c("Kennarar"," Forráðamenn")), 
-         lines=list(lwd=1, col=c("blue","red")))
-LH1 = plot(lykilhaefni1_likan,key=key, main="Viðhorf kennara")
-LH2 = update(plot(lykilhaefni2_likan,col="red"))
-LH1+LH2
+key=list(columns=2,text=list(lab=c("Kennarar"," Forráðamenn")), lines=list(lwd=2, col=c("blue","red")))
+HN1 = plot(lykilhaefni1_likan,key=key, main="Viðhorf gagnvart lykillhæfni í menntun í aðalnámsskrá")
+HN2 = update(plot(lykilhaefni2_likan),col="red")
+HN1+HN2
+
+
+#Finna summutölu
