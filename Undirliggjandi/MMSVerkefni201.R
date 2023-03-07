@@ -151,6 +151,9 @@ HN1 = plot(hlutverk_namsmats1_Likan,key=key, main="Viðhorf á hlutverk námsmat
 HN2 = update(plot(hlutverk_namsmats2_Likan),col="red")
 HN1+HN2
 
+M2(hlutverk_namsmats1_Likan)
+M2(hlutverk_namsmats2_Likan)
+
 #----------------------------------------Svarferlalíkan----------------------------------------
 upplys_mat1 <- mice(upplys_mat1, m=3, method="pmm", maxit = 3) #Tilreikningur
 upplys_mat1 <- complete(upplys_mat1, 3)
@@ -175,6 +178,8 @@ HN1 = plot(upplys_mat1_Likan,key=key, main="Viðhorf á mikilvægi upplýsinga o
 HN2 = update(plot(upplys_mat2_Likan),col="red")
 HN1+HN2
 
+M2(upplys_mat1_Likan)
+M2(upplys_mat2_Likan)
 
 #----------------------------------------Svarferlalíkan----------------------------------------
 
@@ -191,15 +196,18 @@ lykilhaefni2 <- mice(lykilhaefni2, m=3, method="pmm", maxit = 3) #Tilreikningur
 lykilhaefni2 <- complete(lykilhaefni2, 3)
 lykilhaefni2_likan <- mirt(lykilhaefni2, itemtype = "graded")
 coef(lykilhaefni2_likan, simplify = T)
-summary(lykilhaefni2_likan)
+summary(lykilhaefni2_likan,fit.measures = TRUE)
 itemfit(lykilhaefni2_likan)
 itemplot(lykilhaefni2_likan, 3)
 itemplot(lykilhaefni2_likan, 3, type = 'threshold', )
+
 
 key=list(columns=2,text=list(lab=c("Kennarar"," Forráðamenn")), lines=list(lwd=2, col=c("blue","red")))
 HN1 = plot(lykilhaefni1_likan,key=key, main="Viðhorf gagnvart lykillhæfni í menntun í aðalnámsskrá")
 HN2 = update(plot(lykilhaefni2_likan),col="red")
 HN1+HN2
 
+M2(lykilhaefni2_likan)
+M2(lykilhaefni1_likan)
 
 #Finna summutölu
