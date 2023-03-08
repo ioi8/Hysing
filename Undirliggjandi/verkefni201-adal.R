@@ -1,11 +1,20 @@
 
+rm(list =  ls()) 
+graphics.off() 
+cat("\014") 
+
 ## -----------------------------Sækja pakka--------------------------
 
 library(psych) ## fyrir lýsandi tölfræði
-library(mirt) ## fyrir IRT
+library(mirt)## fyrir IRT
 library(tidyverse) ## fyrir filter og select
 library(mice) ## fyrir brottfallsgögn
 library(readr) ## fyrir að lesa inn gögn
+library(ggplot2) ## fyrir myndir
+
+library(gridExtra)
+library(parallel)
+library(lattice)
 
 ##------------------------------------Lesa inn nýju gögnin----------------
 gagnarammi <- read_delim("DATA_SAL138F_IRT_Skulason.2022_Vidhorf.Til.Namsmats_v28n3404.binay.csv", 
@@ -39,11 +48,14 @@ UtanHBS <- filter(gagnarammi, Hof_land == 2) # Utan höfuðborgarsvæðis
 # Kennarar  vs foreldrar
 VidhorfStarfsfolks <- filter(gagnarammi,hopur == 2)
 VidhorfStarfsfolks <- dplyr::select(VidhorfStarfsfolks, !c(id, ID2, hopur, stard_sk, Strf_ald, stadsetn, Hof_land, Ladhl, nmiss, Nmiss_f))
-VidhorfStarfsfolksHBS <- filter(gagnarammi, hopur == 2, Ladhl == 1)
-VidhorfStarfsfolksUtanHBS <- filter(gagnarammi, hopur == 2, Hof_land == 2)
+
 
 VidhorfForeldra <- filter(gagnarammi, hopur == 1)
 VidhorfForeldra <- dplyr::select(VidhorfForeldra, !c(id, ID2, hopur, stard_sk, Strf_ald, stadsetn, Hof_land, Ladhl, nmiss, Nmiss_f, sp_a10, sp_b13, sp_b14)) #!spr fyrir kennara
+
+
+VidhorfStarfsfolksHBS <- filter(gagnarammi, hopur == 2, Ladhl == 1)
+VidhorfStarfsfolksUtanHBS <- filter(gagnarammi, hopur == 2, Hof_land == 2)
 VidhorfForeldraHBS <- filter(gagnarammi, hopur == 1, Ladhl == 1)
 VidhorfForeldraHBS <- dplyr::select(VidhorfForeldraHBS, !c(id, ID2, hopur, stard_sk, Strf_ald, stadsetn, Hof_land, Ladhl, nmiss, Nmiss_f, sp_a10, sp_b13, sp_b14))
 VidhorfForeldraUtanHBS <- filter(gagnarammi, hopur == 1, Hof_land == 2)
@@ -55,27 +67,10 @@ ellefu_plus <- filter(VidhorfStarfsfolks, Strf_ald == 3)
 sex_til_tiu <- filter(VidhorfStarfsfolks, Strf_ald == 2)
 null_til_fimm <- filter(VidhorfStarfsfolks, Strf_ald == 1)
 
-
-##-------------------------------Flokka spurningarnar----------------------------------
-
-
-hlutverk_namsmats <- select(imputationgogn, c(sp_b01, sp_b02, sp_b03, sp_b04, sp_b05, sp_b06, sp_b07,
-                                          sp_b08, sp_b09, sp_b10, sp_b11, sp_b12))
-describe(rowSums(hlutverk_namsmats))
-
-
-upplys_mat <- select(imputationgogn, c(sp_a01, sp_a02, sp_a03, sp_a04, sp_a05, sp_a06, sp_a07, sp_a08,
-                                   sp_a09, sp_a10))
-describe(rowSums(upplys_mat))
-
-lykilhaefni <- select(imputationgogn, c(sp_c01, sp_c02, sp_c03, sp_c04))
-describe(rowSums(lykilhaefni))
-
-
 #-------------------Taka burt raðir þá sem svöruðu engu------------------------
-NAgildi <- rowSums(is.na(VidhorfForeldraHBS)) >=25
-tilbuinnGogn_ForeldrarHBS <- gagnarammi[!NAgildi, ]
-sum(is.na(tilbuinnGogn_ForeldrarHBS))
+NAgildi <- rowSums(is.na(VidhorfForeldra)) >=25
+tilbuinnGogn_Foreldrar <- VidhorfForeldra[!NAgildi, ]
+sum(is.na(tilbuinnGogn_Foreldrar))
 
 NAgildi <- rowSums(is.na(VidhorfForeldraUtanHBS)) >=25
 tilbuinnGogn_ForeldrarUtanHBS <- gagnarammi[!NAgildi, ]
@@ -83,53 +78,98 @@ sum(is.na(tilbuinnGogn_ForeldrarUtanHBS))
 
 
 #----------------------------------------Tilreikningur----------------------------------------
-imputationgogn_kennararHBS <- mice(VidhorfStarfsfolksHBS, m=3, method="pmm", maxit = 3)
+imputationgogn_kennarar <- mice(VidhorfStarfsfolks, m=3, method="pmm", maxit = 3)
 imputationgogn_kennarar <- complete(imputationgogn_kennarar, 3)
 sum(is.na(imputationgogn_kennarar))
 
-imputationgogn_kennararUtanHBS <- mice(VidhorfStarfsfolksUtanHBS, m=3, method="pmm", maxit = 3)
-imputationgogn_kennararUtanHBS <- complete(imputationgogn_kennararUtanHBS, 3)
-sum(is.na(imputationgogn_kennararUtanHBS))
 
-imputationgogn_foreldrarHBS <- mice(VidhorfForeldraHBS, m=3, method="pmm", maxit = 3)
-imputationgogn_foreldrarHBS <- complete(imputationgogn_foreldrarHBS, 3)
-sum(is.na(imputationgogn_foreldrarHBS))
+imputationgogn_foreldrar <- mice(tilbuinnGogn_Foreldrar, m=3, method="pmm", maxit = 3)
+imputationgogn_foreldrar <- complete(imputationgogn_foreldrar, 3)
+sum(is.na(imputationgogn_foreldrar))
 
-imputationgogn_foreldrarUtanHBS <- mice(VidhorfForeldraUtanHBS, m=3, method="pmm", maxit = 3)
-imputationgogn_foreldrarUtanHBS <- complete(imputationgogn_foreldrarUtanHBS, 3)
-sum(is.na(imputationgogn_foreldrarUtanHBS))
 
+##-------------------------------Flokka spurningarnar----------------------------------
+
+
+hlutverk_namsmats_foreldrar <- select(imputationgogn_foreldrar, c(sp_b01, sp_b02, sp_b03, sp_b04, sp_b05, sp_b06, sp_b07,
+                                                                  sp_b08, sp_b09, sp_b10, sp_b11, sp_b12))
+hlutverk_namsmats_kennarar <- select(imputationgogn_kennarar, c(sp_b01, sp_b02, sp_b03, sp_b04, sp_b05, sp_b06, sp_b07,
+                                                                sp_b08, sp_b09, sp_b10, sp_b11, sp_b12, sp_b13, sp_b14))
+
+
+upplys_mat_foreldrar <- select(imputationgogn_foreldrar, c(sp_a01, sp_a02, sp_a03, sp_a04, sp_a05, sp_a06, sp_a07, sp_a08,
+                                                           sp_a09))
+upplys_mat_kennarar <- select(imputationgogn_kennarar, c(sp_a01, sp_a02, sp_a03, sp_a04, sp_a05, sp_a06, sp_a07, sp_a08,
+                                                         sp_a09, sp_a10))
+
+lykilhaefni_foreldrar <- select(imputationgogn_foreldrar, c(sp_c01, sp_c02, sp_c03, sp_c04))
+lykilhaefni_kennarar <- select(imputationgogn_kennarar, c(sp_c01, sp_c02, sp_c03, sp_c04))
 
 #----------------------------------------Svarferlalíkan----------------------------------------
-VidhorfForeldraHBS_likan <- mirt(upplys_mat, itemtype = "graded")
-coef(VidhorfForeldraHBS_likan, simplify = T)
-summary(VidhorfForeldraHBS_likan)
-itemfit(VidhorfForeldraHBS_likan)
-itemplot(VidhorfForeldraHBS_likan, 3)
-itemplot(VidhorfForeldraHBS_likan, 3, type = 'threshold', )
+Hlutverk_nams_foreldrar_likan <- mirt(hlutverk_namsmats_foreldrar, itemtype = "2PL")
+M2(Hlutverk_nams_foreldrar_likan)
+mirt::coef(Hlutverk_nams_foreldrar_likan, simplify = T, IRTpar=T)
+summary(Hlutverk_nams_foreldrar_likan)
+itemfit(Hlutverk_nams_foreldrar_likan)
+itemplot(Hlutverk_nams_foreldrar_likan, 3)
+itemplot(Hlutverk_nams_foreldrar_likan, 3, type = 'threshold', )
 
-VidhorfForeldraUtanHBS_likan <- mirt(imputationgogn, itemtype = "graded")
-coef(Likan, simplify = T)
-summary(Likan)
-itemfit(Likan)
-itemplot(Likan, 3)
-itemplot(Likan, 3, type = 'threshold', )
+Hlutverk_nams_kennarar_likan <- mirt(hlutverk_namsmats_kennarar, itemtype = "2PL")
+coef(Hlutverk_nams_kennarar_likan, simplify = T, IRTpar=T)
+summary(Hlutverk_nams_kennarar_likan)
+itemfit(Hlutverk_nams_kennarar_likan)
+itemplot(Hlutverk_nams_kennarar_likan, 3)
+itemplot(Hlutverk_nams_kennarar_likan, 3, type = 'threshold', )
+
+key=list(columns=2,text=list(lab=c("Kennarar"," Forráðamenn")), lines=list(lwd=2, col=c("blue","red")))
+HN1 = plot(Hlutverk_nams_kennarar_likan,key=key, main="Viðhorf á hlutverk námsmats")
+HN2 = update(plot(Hlutverk_nams_foreldrar_likan),col="red")
+HN1 + HN2
+
+#-------------------------Svarferlalíkan 2 ---------------------------------
+
+Upplys_mat_foreldrar_likan <- mirt(upplys_mat_foreldrar, itemtype = "2PL")
+mirt::coef(Upplys_mat_foreldrar_likan, simplify = T, IRTpar = T)
+summary(Upplys_mat_foreldrar_likan)
+itemfit(Upplys_mat_foreldrar_likan)
+itemplot(Upplys_mat_foreldrar_likan, 3)
+itemplot(Upplys_mat_foreldrar_likan, 3, type = 'threshold', )
+
+Upplys_mat_kennarar_likan <- mirt(upplys_mat_kennarar, itemtype = "2PL")
+coef(Upplys_mat_kennarar_likan, simplify = T, IRTpar = T)
+summary(Upplys_mat_kennarar_likan)
+itemfit(Upplys_mat_kennarar_likan)
+itemplot(Upplys_mat_kennarar_likan, 3)
+itemplot(Upplys_mat_kennarar_likan, 3, type = 'threshold', )
+
+key=list(columns=1, 
+         text=list(lab=c("Starfsfólk skóla"," Forsjáraðilar")), 
+         lines=list(lwd=1, col=c("blue","red")))
+UM1 = plot(Upplys_mat_kennarar_likan,key=key, main="Viðhorf starfsfólks skóla")
+UM2 = update(plot(Upplys_mat_foreldrar_likan, col="red"))
+UM1+UM2
+
+#-----------------------------Svarferlalíkan 3-------------------------
+
+Lykilhaefni_foreldrar_likan <- mirt(lykilhaefni_foreldrar, itemtype = "2PL")
+mirt::coef(Lykilhaefni_foreldrar_likan, simplify = T, IRTpar=T)
+summary(Lykilhaefni_foreldrar_likan)
+itemfit(Lykilhaefni_foreldrar_likan)
+itemplot(Lykilhaefni_foreldrar_likan, 3)
+itemplot(Lykilhaefni_foreldrar_likan, 3, type = 'threshold', )
 
 
-VidhorfStarfsfolksHBS_likan <- mirt(imputationgogn, itemtype = "graded")
-coef(Likan, simplify = T)
-summary(Likan)
-itemfit(Likan)
-itemplot(Likan, 3)
-itemplot(Likan, 3, type = 'threshold', )
+Lykilhaefni_kennarar_likan <- mirt(lykilhaefni_kennarar, itemtype = "2PL")
+coef(Lykilhaefni_kennarar_likan, simplify = T, IRTpar=T)
+summary(Lykilhaefni_kennarar_likan)
+itemfit(Lykilhaefni_kennarar_likan)
+itemplot(Lykilhaefni_kennarar_likan, 3)
+itemplot(Lykilhaefni_kennarar_likan, 3, type = 'threshold', )
 
-
-VidhorfStarfsfolksUtanHBS_likan <- mirt(imputationgogn, itemtype = "graded")
-coef(Likan, simplify = T)
-summary(Likan)
-itemfit(Likan)
-itemplot(Likan, 3)
-itemplot(Likan, 3, type = 'threshold', )
-
-
+key=list(columns=1, 
+         text=list(lab=c("Starfsfólk skóla"," Forsjáraðilar")), 
+         lines=list(lwd=1, col=c("blue","red")))
+LH1 = plot(Lykilhaefni_kennarar_likan,key=key, main="Viðhorf starfsfólks skóla")
+LH2 = update(plot(Lykilhaefni_foreldrar_likan, col="red"))
+LH1+LH2
 
