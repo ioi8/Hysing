@@ -104,6 +104,9 @@ hlutverk_namsmats_foreldrar <- select(imputationgogn_foreldrar, c(sp_b01, sp_b02
 heild_hlutverk_namsmats_foreldar <- rowSums(hlutverk_namsmats_foreldrar)
 describe(heild_hlutverk_namsmats_foreldar)
 
+psych::alpha(hlutverk_namsmats_foreldrar)
+psych::alpha(heild_hlutverk_namsmats_foreldar)
+
 # Hlutverk námsmats kennarar
 hlutverk_namsmats_kennarar <- select(imputationgogn_kennarar, c(sp_b01, sp_b02, sp_b03, sp_b04, 
                                                                 sp_b05, sp_b06, sp_b07,
@@ -145,7 +148,7 @@ describe(heild_lykilhaefni_kennarar)
 #----------------------------------------Svarferlalíkan----------------------------------------
 # Foreldrar 
 Hlutverk_nams_foreldrar_likan <- mirt(hlutverk_namsmats_foreldrar, itemtype = "2PL")
-mirt::coef(Hlutverk_nams_foreldrar_likan, simplify = T, IRTpars=T)
+mirt::coef(Hlutverk_nams_foreldrar_likan, simplify = T)
 summary(Hlutverk_nams_foreldrar_likan)
 itemfit(Hlutverk_nams_foreldrar_likan)
 itemplot(Hlutverk_nams_foreldrar_likan, 3)
@@ -169,6 +172,30 @@ HN1+HN2
 
 
 # Dreifing í færni próftaka (stuðlarit)
+faerni_hlutverk_nams_foreldrar <- fscores(Hlutverk_nams_foreldrar_likan, full.scores = T, full.scores.SE = T)
+hist(faerni_hlutverk_nams_foreldrar, xlim = c(-3, 3), ylim = c(0, 1000), breaks = 10, ylab = "Tíðni",
+     xlab = "Færni", main="", col = "lightgrey", border = "black")
+
+
+h_foreldrar <- hist(faerni_hlutverk_nams_foreldrar,border = "white", col= "grey", 
+                   xlab = "Færni", ylab = "Tíðni", main = NULL, xlim = c(-3, 3), 
+                   breaks = 10, ylim = c(0, 1000)) 
+xfit <- seq(min(faerni_hlutverk_nams_foreldrar), max(faerni_hlutverk_nams_foreldrar), length = 6) 
+yfit <- dnorm(xfit_h_foreldrar, mean = mean(faerni_hlutverk_nams_foreldrar), sd = sd(faerni_hlutverk_nams_foreldrar) + 0.5) 
+yfit <- yfit_h_foreldrar * diff(h$mids[2:1]) * (length(faerni_hlutverk_nams_foreldrar))
+lines(xfit, yfit, col = "black", lwd = 2)
+
+
+faerni_hlutverk_nams_kennarar <- fscores(Hlutverk_nams_kennarar_likan, full.scores = T, full.scores.SE = T)
+hist(faerni_hlutverk_nams_kennarar, xlim = c(-3, 3), xlab = "Færni", ylab = "Tíðni", main="")
+
+h_kennarar <- hist(faerni_hlutverk_nams_kennarar,border = "white", col= "grey", 
+          xlab = "Færni", ylab = "Tíðni", main = NULL, xlim = c(-3, 3), 
+          breaks = 10, ylim = c(0, 100)) 
+xfit_h_kennarar <- seq(min(faerni_hlutverk_nams_kennarar), max(faerni_hlutverk_nams_kennarar), length = 6) 
+yfit_h_kennarar <- dnorm(xfit, mean = mean(faerni_hlutverk_nams_kennarar), sd = sd(faerni_hlutverk_nams_kennarar) + 0.5) 
+yfit_h_kennarar <- yfit * diff(h$mids[2:1]) * (length(faerni_hlutverk_nams_kennarar))
+lines(xfit, yfit, col = "black", lwd = 2)
 
 # C liður
 
@@ -176,6 +203,14 @@ HN1+HN2
 
 # Tengsl færni og staðalvillu færni 
 
+key=list(columns=1,text=list(lab=c("Starfsfólk skóla"," Forsjáraðilar")), 
+         lines=list(lwd=2, col=c("blue","red")), space="right")
+HNF1 = plot(faerni_hlutverk_nams_kennarar,key=key, main="")
+HNF2 = update(plot(faerni_hlutverk_nams_foreldrar),col="red")
+HNF1+HNF2
+
+plot(faerni_hlutverk_nams_kennarar)
+plot(faerni_hlutverk_nams_foreldrar)
 
 # Mat á stikum líkans 
 M2(Hlutverk_nams_foreldrar_likan)
@@ -211,6 +246,12 @@ HN1+HN2
 
 
 # Dreifing í færni próftaka (stuðlarit)
+faerni_upplys_mat_foreldrar <- fscores(Upplys_mat_foreldrar_likan, full.scores = T, full.scores.SE = T)
+hist(faerni_upplys_mat_foreldrar, xlim = c(-3.0, 3.0))
+
+faerni_upplys_mat_kennara <- fscores(Upplys_mat_kennarar_likan, full.scores = T, full.scores.SE = T)
+hist(faerni_upplys_mat_kennara, breaks=10, xlim = c(-2.0, 2.0))
+
 
 # C liður
 
@@ -241,7 +282,7 @@ itemplot(Lykilhaefni_foreldrar_likan, 3, type = 'threshold', )
 
 
 Lykilhaefni_kennarar_likan <- mirt(lykilhaefni_kennarar, itemtype = "2PL")
-coef(Lykilhaefni_kennarar_likan, simplify = T, IRTpar=T)
+coef(Lykilhaefni_kennarar_likan, simplify = T)
 summary(Lykilhaefni_kennarar_likan)
 itemfit(Lykilhaefni_kennarar_likan)
 itemplot(Lykilhaefni_kennarar_likan, 3)
@@ -253,13 +294,26 @@ HN1 = plot(Lykilhaefni_kennarar_likan,key=key, main="")
 HN2 = update(plot(Lykilhaefni_foreldrar_likan),col="red")
 HN1+HN2
 
+
 # Dreifing í færni próftaka (stuðlarit)
+faerni_lykilhaefni_kennara <- fscores(Lykilhaefni_kennarar_likan, full.scores = T, full.scores.SE = T)
+hist(faerni_lykilhaefni_kennara, breaks = 10, xlim = c(-2.0, 2.0))
+mean(faerni_lykilhaefni_kennara)
+
+
+faerni_lykilhaefni_foreldra <- fscores(Lykilhaefni_foreldrar_likan, full.scores = T, full.scores.SE = T)
+hist(faerni_lykilhaefni_foreldra, breaks = 10, xlim = c(-2.0, 2.0))
+summary(faerni_lykilhaefni_foreldra)
+
+plot(faerni_lykilhaefni_foreldra)
+plot(faerni_lykilhaefni_kennara)
 
 # C liður
 
 # Fylgni og samdreifing fyrir færni og summu (scatterplot)
 
 # Tengsl færni og staðalvillu færni 
+
 
 
 # Mat á stikum líkans 
