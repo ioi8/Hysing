@@ -23,6 +23,7 @@ library(readr)
 library(mice)
 library(mirt)
 library(tidyverse)
+library(latticeExtra)
 #----------------------------------------Gögn----------------------------------------
 gagnarammi <- read_delim("./Documents/GitHub/Megindleg.github.io/Undirliggjandi/DATA_SAL138F_IRT_Skulason.2022_Vidhorf.Til.Namsmats_v28n3404.binay.csv", 
                    delim = ";", escape_double = FALSE, trim_ws = TRUE, na = c("-999"))
@@ -148,8 +149,8 @@ itemplot(hlutverk_namsmats2_Likan, 3, type = 'threshold', )
 
 key=list(columns=2,text=list(lab=c("Kennarar"," Forráðamenn")), lines=list(lwd=2, col=c("blue","red")))
 HN1 = plot(hlutverk_namsmats1_Likan,key=key, main="Viðhorf á hlutverk námsmats")
-HN2 = update(plot(hlutverk_namsmats2_Likan),col="red")
-HN1+HN2
+HN2 =update(plot(hlutverk_namsmats2_Likan),col="red")
+HN1 + HN2
 
 M2(hlutverk_namsmats1_Likan)
 M2(hlutverk_namsmats2_Likan)
