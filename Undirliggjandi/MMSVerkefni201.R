@@ -49,7 +49,7 @@ UtanHBS <- filter(gagnarammi, Hof_land == 2)
 ##----------------------------------------Viðhorf------------------------------------------
 VidhorStarfsfólks<- filter(gagnarammi,hopur == 2)
 VidhorfForsjá <- filter(gagnarammi, hopur == 1)
-VidhorfForsjá <- dplyr::select(gagnarammi, !c(sp_a10, sp_b05, sp_b14)) #!spr fyrir kennara
+VidhorfForsjá <- dplyr::select(gagnarammi, !c(sp_a10, sp_b13, sp_b14)) #!spr fyrir kennara
 ###----------------------------------------Starfsaldur--------------------------------------
 #"11lengur" <- filter(VidhorfKennara, Strf_ald == 3)
 #"6til10" <- filter(VidhorfKennara,Strf_ald == 2)
@@ -81,6 +81,7 @@ hlutverk_namsmats2 <- dplyr::select(VidhorfForsjá, c(sp_b01, #hve vel nemendur 
                                                         sp_b02, #hve vel nemendur eru búnir undir nám í framhaldsskóla.
                                                         sp_b03, #hvort nemendur þurfi á sérstökum stuðningi að halda.
                                                         sp_b04, #hvort nemendur þurfi fleiri áskoranir í námi.
+                                                        sp_b05, #námsframvindu nemenda milli skólaára.
                                                         sp_b06, #skilning nemenda á sjálfbærni.
                                                         sp_b07, #styrk- og veikleika nemenda við upphaf grunnskóla.
                                                         sp_b08, #stöðu nemenda í einstökum námsgreinum.
@@ -88,7 +89,6 @@ hlutverk_namsmats2 <- dplyr::select(VidhorfForsjá, c(sp_b01, #hve vel nemendur 
                                                         sp_b10, #stöðu nemenda miðað við jafnaldra.
                                                         sp_b11, #stöðu nemenda út frá viðmiðum aðalnámskrár.
                                                         sp_b12, #stöðu nemenda þegar kennari eða forsjáraðili telur þörf á.
-                                                        sp_b13, #námsframvindu nemenda á sama skólaári.
 ))
 ##---------------------------------Spurningar um hlutverk námsmats------------------------------
 upplys_mat1 <- dplyr::select(VidhorStarfsfólks, c(sp_a01, #Ég tel mikilvægt að utanaðkomandi aðili meti námsárangur nemenda til viðbótar við námsmat skólans.
