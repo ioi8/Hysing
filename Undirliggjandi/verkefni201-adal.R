@@ -152,8 +152,13 @@ mirt::coef(Hlutverk_nams_foreldrar_likan, simplify = T)
 summary(Hlutverk_nams_foreldrar_likan)
 itemfit(Hlutverk_nams_foreldrar_likan)
 itemplot(Hlutverk_nams_foreldrar_likan, 3)
+<<<<<<< Updated upstream
 itemplot(Hlutverk_nams_foreldrar_likan, 3, type = 'threshold', )
 itemplot(Hlutverk_nams_foreldrar_likan, , type="info")
+=======
+itemplot(Hlutverk_nams_foreldrar_likan, type = 'threshold', )
+itemplot(Hlutverk_nams_foreldrar_likan, 3, type= 'infotrace')
+>>>>>>> Stashed changes
 
 # Kennarar 
 Hlutverk_nams_kennarar_likan <- mirt(hlutverk_namsmats_kennarar, itemtype = "2PL")
@@ -165,49 +170,60 @@ itemplot(Hlutverk_nams_kennarar_likan, 3, type = 'threshold', )
 
  
 # Sameiginlegt plot 
-key=list(columns=1,text=list(lab=c("Starfsfólk skóla"," Forsjáraðilar")), 
-         lines=list(lwd=2, col=c("blue","red")), space="right")
+key=list(columns=2,text=list(lab=c("Starfsfólk skóla"," Forsjáraðilar")), 
+         lines=list(lwd=2, col=c("blue","red")), space="top")
 HN1 = plot(Hlutverk_nams_kennarar_likan,key=key, main="")
 HN2 = update(plot(Hlutverk_nams_foreldrar_likan),col="red")
 HN1+HN2
 
 
-# Dreifing í færni próftaka (stuðlarit)
+# Dreifing í færni próftaka
 faerni_hlutverk_nams_foreldrar <- fscores(Hlutverk_nams_foreldrar_likan, full.scores = T)
 p1 <- hist(faerni_hlutverk_nams_foreldrar, xlim = c(-3, 3), breaks = 10, ylab = "Tíðni",
      xlab = "Færni", main="", col = "lightgrey", border = "black")
+heild_faerni_HN_f <- rowSums(faerni_hlutverk_nams_foreldrar)
 
 
 faerni_hlutverk_nams_kennarar <- fscores(Hlutverk_nams_kennarar_likan, full.scores=T)
 p2 <- hist(faerni_hlutverk_nams_kennarar, xlim = c(-3, 3), xlab = "Færni", ylab = "Tíðni", main="")
+heild_faerni_HN_k <- rowSums(faerni_hlutverk_nams_kennarar)
 
 
-
-plot(p1, col="#e9ecef", xlim=c(-3.0,3.0), main="", xlab="Færni", ylab="Tíðni")
+plot(p1, col="#e9ecef", xlim=c(-3.0,3.0), main="",xlab="θ", ylab="Tíðni")
 plot(p2, col= "lightblue", xlim=c(-3.0,3.0), add=T)
-legend('topright', c('Forsjáraðilar', 'Starfsfólk skóla'), fill=c('#e9ecef', 'lightblue'), border="black", box.lty = 0)
+par(xpd=TRUE)
+legend(x='top', c('Forsjáraðilar', 'Starfsfólk skóla'), fill=c('#e9ecef', 'lightblue'), 
+       border="black", box.lty = 0, bty = "n", ncol=2, inset=-0.1, cex=1)
 
-# C liður
 
 # Fylgni og samdreifing fyrir færni og summu (scatterplot)
+plot(faerni_hlutverk_nams_foreldrar, heild_hlutverk_namsmats_foreldar, col="blue", ylim=c(0, 15), xlim=c(-3,3), xlab="θ", ylab="Summutala")
+points(faerni_hlutverk_nams_kennarar, heild_hlutverk_namsmats_kennarar, col="red", pch=1)
+legend(x='top', c('Forsjáraðilar', 'Starfsfólk skóla'), fill=c('blue', 'red'), 
+       border="black", box.lty = 0, bty = "n", ncol=2, inset=-0.15, cex=1)
+
+
+cor(faerni_hlutverk_nams_foreldrar, heild_hlutverk_namsmats_foreldar)
+cor(faerni_hlutverk_nams_kennarar, heild_hlutverk_namsmats_kennarar)
 
 # Tengsl færni og staðalvillu færni 
 faerni_hlutverk_nams_foreldrar_stadalvilla <- fscores(Hlutverk_nams_foreldrar_likan, full.scores = T, full.scores.SE = T)
 faerni_hlutverk_nams_kennarar_stadalvilla <- fscores(Hlutverk_nams_kennarar_likan, full.scores=T, full.scores.SE = T)
 
 
-key=list(columns=1,text=list(lab=c("Starfsfólk skóla"," Forsjáraðilar")), 
-         lines=list(lwd=2, col=c("blue","red")), space="right")
-plot(faerni_hlutverk_nams_foreldrar_stadalvilla,col="blue", xlim=c(-3.0,3.0), main="", xlab="Færni", ylab="Staðalvilla færni")
+plot(faerni_hlutverk_nams_foreldrar_stadalvilla,col="blue", xlim=c(-3.0,3.0), main="", xlab="θ", ylab="Staðalvilla θ")
 points(faerni_hlutverk_nams_kennarar_stadalvilla, col='red', pch=1)
-legend('right', c('Forsjáraðilar', 'Starfsfólk skóla'), fill=c('black', 'green'), border="black", box.lty = 0)
+legend(x='top', c('Forsjáraðilar', 'Starfsfólk skóla'), fill=c('blue', 'red'), 
+       border="black", box.lty = 0, bty = "n", ncol=2, inset=-0.15, cex=1)
+
+
 
 
 # Mat á stikum líkans 
-M2(Hlutverk_nams_foreldrar_likan)
-M2(Hlutverk_nams_kennarar_likan)
 
 # Leifar líkans og kí-kvaðratpróf
+M2(Hlutverk_nams_foreldrar_likan)
+M2(Hlutverk_nams_kennarar_likan)
 
 # Mat á stikum og staðalvillur (scatterplot)
 
@@ -230,7 +246,7 @@ itemplot(Upplys_mat_kennarar_likan, 3)
 itemplot(Upplys_mat_kennarar_likan, 3, type = 'threshold', )
 
 # Sameiginlegt plot 
-key=list(columns=1,text=list(lab=c("Starfsfólk skóla"," Forsjáraðilar")), lines=list(lwd=2, col=c("blue","red")), space="right")
+key=list(columns=2,text=list(lab=c("Starfsfólk skóla"," Forsjáraðilar")), lines=list(lwd=2, col=c("blue","red")), space="top")
 HN1 = plot(Upplys_mat_kennarar_likan,key=key, main="")
 HN2 = update(plot(Upplys_mat_foreldrar_likan),col="red")
 HN1+HN2
@@ -239,38 +255,44 @@ HN1+HN2
 # Dreifing í færni próftaka (stuðlarit)
 
 faerni_upplys_mat_foreldrar <- fscores(Upplys_mat_foreldrar_likan, full.scores = T)
-p3 <- hist(faerni_upplys_mat_foreldrar,breaks = 10, xlim = c(-3.0, 3.0), main="", xlab="Færni", ylab="Tíðni", col = "#e9ecef")
+p3 <- hist(faerni_upplys_mat_foreldrar,breaks = 10, xlim = c(-3.0, 3.0), main="", xlab="θ", ylab="Tíðni", col = "#e9ecef")
 
 faerni_upplys_mat_kennara <- fscores(Upplys_mat_kennarar_likan, full.scores = T)
-p4 <- hist(faerni_upplys_mat_kennara, breaks=10, xlim = c(-3.0, 3.0), main="", xlab="Færni", ylab="Tíðni", col = "lightblue", add=T)
+p4 <- hist(faerni_upplys_mat_kennara, breaks=10, xlim = c(-3.0, 3.0), main="", xlab="θ", ylab="Tíðni", col = "lightblue", add=T)
 
-plot(p3, col="#e9ecef", xlim=c(-3.0,3.0), main="", xlab="Færni", ylab="Tíðni")
+plot(p3, col="#e9ecef", xlim=c(-3.0,3.0), main="", xlab="θ", ylab="Tíðni")
 plot(p4, col= "lightblue", xlim=c(-3.0,3.0), add=T)
-legend('topright', c('Forsjáraðilar', 'Starfsfólk skóla'), fill=c('#e9ecef', 'lightblue'), border="black", box.lty = 0)
+par(xpd=TRUE)
+legend(x='top', c('Forsjáraðilar', 'Starfsfólk skóla'), fill=c('#e9ecef', 'lightblue'), 
+       border="black", box.lty = 0, bty = "n", ncol=2, inset=-0.1, cex=1)
 
-
-# C liður
 
 # Fylgni og samdreifing fyrir færni og summu (scatterplot)
+plot(faerni_upplys_mat_foreldrar, heild_upplys_mat_foreldrar, col="blue", ylim=c(0, 15), xlim=c(-3,3), xlab="θ", ylab="Summutala")
+points(faerni_upplys_mat_kennara, heild_upplys_mat_kennarar, col="red", pch=1)
+legend(x='top', c('Forsjáraðilar', 'Starfsfólk skóla'), fill=c('blue', 'red'), 
+       border="black", box.lty = 0, bty = "n", ncol=2, inset=-0.15, cex=1)
+
+cor(faerni_upplys_mat_foreldrar, heild_upplys_mat_foreldrar)
+cor(faerni_upplys_mat_kennara, heild_upplys_mat_kennarar)
 
 # Tengsl færni og staðalvillu færni 
 
 faerni_upplys_mat_foreldrar_stadalvilla <- fscores(Upplys_mat_foreldrar_likan, full.scores.SE = T)
 faerni_upplys_mat_kennara_stadalvilla <- fscores(Upplys_mat_kennarar_likan, full.scores.SE = T)
 
-
-key=list(columns=1,text=list(lab=c("Starfsfólk skóla"," Forsjáraðilar")), lines=list(lwd=2, col=c("blue","red")), space="right")
-plot(faerni_upplys_mat_foreldrar_stadalvilla, key=key, col="red", xlim=c(-3.0,3.0), ylim = c(0.0, 0.8), main="", xlab="Færni", ylab="Staðalvilla færni")
+plot(faerni_upplys_mat_foreldrar_stadalvilla, col="red", xlim=c(-3.0,3.0), ylim=c(0.0, 0.7), main="", xlab="θ", ylab="Staðalvilla θ")
 points(faerni_upplys_mat_kennara_stadalvilla, col='blue', pch=1)
-legend('top', c('Forsjáraðilar', 'Starfsfólk skóla'), fill=c('black', 'green'), border="black", box.lty = 0)
+legend(x='top', c('Forsjáraðilar', 'Starfsfólk skóla'), fill=c('red', 'blue'), 
+       border="black", box.lty = 0, bty = "n", ncol=2, inset=-0.15, cex=1)
 
 
 # Mat á stikum líkans 
+
+# Leifar líkans og kí-kvaðratpróf
 M2(Upplys_mat_foreldrar_likan)
 M2(Upplys_mat_kennarar_likan)
 
-
-# Leifar líkans og kí-kvaðratpróf
 
 # Mat á stikum og staðalvillur (scatterplot)
 
@@ -280,7 +302,10 @@ M2(Upplys_mat_kennarar_likan)
 
 Lykilhaefni_foreldrar_likan <- mirt(lykilhaefni_foreldrar, itemtype = "2PL")
 mirt::coef(Lykilhaefni_foreldrar_likan, simplify = T)
+<<<<<<< Updated upstream
 coef()
+=======
+>>>>>>> Stashed changes
 summary(Lykilhaefni_foreldrar_likan)
 itemfit(Lykilhaefni_foreldrar_likan)
 itemplot(Lykilhaefni_foreldrar_likan, 3)
@@ -295,7 +320,7 @@ itemplot(Lykilhaefni_kennarar_likan, 3)
 itemplot(Lykilhaefni_kennarar_likan, 3, type = 'threshold', )
 
 # Sameiginlegt plot 
-key=list(columns=1,text=list(lab=c("Starfsfólk skóla","Forsjáraðila")), lines=list(lwd=2, col=c("blue","red")), space="right")
+key=list(columns=2,text=list(lab=c("Starfsfólk skóla","Forsjáraðila")), lines=list(lwd=2, col=c("blue","red")), space="top")
 HN1 = plot(Lykilhaefni_kennarar_likan,key=key, main="")
 HN2 = update(plot(Lykilhaefni_foreldrar_likan),col="red")
 HN1+HN2
@@ -303,36 +328,45 @@ HN1+HN2
 
 # Dreifing í færni próftaka (stuðlarit)
 faerni_lykilhaefni_kennara <- fscores(Lykilhaefni_kennarar_likan, full.scores = T)
-p6 <- hist(faerni_lykilhaefni_kennara, breaks=5, xlim = c(-3.0, 3.0), main="", xlab="Færni", ylab="Tíðni", col = "lightblue")
-mean(faerni_lykilhaefni_kennara)
+p6 <- hist(faerni_lykilhaefni_kennara, breaks=5, xlim = c(-3.0, 3.0), main="", xlab="θ", ylab="Tíðni", col = "lightblue")
+heild_faerni_lykilhaefni_kennara <- rowSums(faerni_lykilhaefni_kennara)
 
+plot(faerni_lykilhaefni_kennara, heild_lykilhaefni_kennarar)
 
 faerni_lykilhaefni_foreldra <- fscores(Lykilhaefni_foreldrar_likan, full.scores = T)
-p5 <- hist(faerni_lykilhaefni_foreldra,breaks = 5, xlim = c(-3.0, 3.0), main="", xlab="Færni", ylab="Tíðni", col = "#e9ecef")
+p5 <- hist(faerni_lykilhaefni_foreldra,breaks = 5, xlim = c(-3.0, 3.0), main="", xlab="θ", ylab="Tíðni", col = "#e9ecef")
 summary(faerni_lykilhaefni_foreldra)
 
-plot(p5, col="#e9ecef", xlim=c(-3.0,3.0), main="", xlab="Færni", ylab="Tíðni")
+plot(p5, col="#e9ecef", xlim=c(-3.0,3.0), main="", xlab="θ", ylab="Tíðni")
 plot(p6, col= "lightblue", xlim=c(-3.0,3.0), add=T)
-legend('topright', c('Forsjáraðilar', 'Starfsfólk skóla'), fill=c('#e9ecef', 'lightblue'), border="black", box.lty = 0)
+legend(x='top', c('Forsjáraðilar', 'Starfsfólk skóla'), fill=c('#e9ecef', 'lightblue'), 
+       border="black", box.lty = 0, bty = "n", ncol=2, inset=-0.1, cex=1)
 
-# C liður
 
 # Fylgni og samdreifing fyrir færni og summu (scatterplot)
+plot(faerni_lykilhaefni_foreldra, heild_lykilhaefni_foreldrar, col="blue", ylim=c(0, 5), xlim=c(-3,3), xlab="θ", ylab="Summutala")
+points(faerni_lykilhaefni_kennara, heild_lykilhaefni_kennarar, col="red", pch=1)
+legend(x='top', c('Forsjáraðilar', 'Starfsfólk skóla'), fill=c('blue', 'red'), 
+       border="black", box.lty = 0, bty = "n", ncol=2, inset=-0.15, cex=1)
+
+cor(faerni_lykilhaefni_foreldra, heild_lykilhaefni_foreldrar)
+cor(faerni_lykilhaefni_kennara, heild_lykilhaefni_kennarar)
 
 # Tengsl færni og staðalvillu færni 
 faerni_lykilhaefni_kennara_stadalvilla <- fscores(Lykilhaefni_kennarar_likan, full.scores = T, full.scores.SE = T)
 faerni_lykilhaefni_foreldra_stadalvilla <- fscores(Lykilhaefni_foreldrar_likan, full.scores = T, full.scores.SE = T)
 
-plot(faerni_lykilhaefni_foreldra_stadalvilla, col="black", xlim=c(-3.0,3.0), main="", xlab="Færni", ylab="Staðalvilla færni")
-points(faerni_lykilhaefni_kennara_stadalvilla, col='green', pch=2)
-legend('right', c('Forsjáraðilar', 'Starfsfólk skóla'), fill=c('black', 'green'), border="black", box.lty = 0)
+plot(faerni_lykilhaefni_foreldra_stadalvilla, col="red", xlim=c(-3.0,3.0), main="", xlab="θ", ylab="Staðalvilla θ", pch=1)
+points(faerni_lykilhaefni_kennara_stadalvilla, col='blue', pch=1)
+legend(x='top', c('Forsjáraðilar', 'Starfsfólk skóla'), fill=c('red', 'blue'), 
+       border="black", box.lty = 0, bty = "n", ncol=2, inset=-0.15, cex=1)
 
 
 # Mat á stikum líkans 
+# Leifar líkans og kí-kvaðratpróf
 M2(Lykilhaefni_foreldrar_likan)
 M2(Lykilhaefni_kennarar_likan)
 
-# Leifar líkans og kí-kvaðratpróf
 
 # Mat á stikum og staðalvillur (scatterplot)
 
