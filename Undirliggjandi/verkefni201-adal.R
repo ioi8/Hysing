@@ -153,6 +153,7 @@ summary(Hlutverk_nams_foreldrar_likan)
 itemfit(Hlutverk_nams_foreldrar_likan)
 itemplot(Hlutverk_nams_foreldrar_likan, 3)
 itemplot(Hlutverk_nams_foreldrar_likan, 3, type = 'threshold', )
+itemplot(Hlutverk_nams_foreldrar_likan, , type="info")
 
 # Kennarar 
 Hlutverk_nams_kennarar_likan <- mirt(hlutverk_namsmats_kennarar, itemtype = "2PL")
@@ -278,7 +279,7 @@ M2(Upplys_mat_kennarar_likan)
 #-----------------------------Svarferlalíkan 3-------------------------
 
 Lykilhaefni_foreldrar_likan <- mirt(lykilhaefni_foreldrar, itemtype = "2PL")
-mirt::coef(Lykilhaefni_foreldrar_likan, simplify = T, IRTpar=T)
+mirt::coef(Lykilhaefni_foreldrar_likan, simplify = T)
 coef()
 summary(Lykilhaefni_foreldrar_likan)
 itemfit(Lykilhaefni_foreldrar_likan)
