@@ -109,7 +109,7 @@ sum(is.na(imputationgogn_foreldrar))
 
 # Hlutverk námsmats foreldrar 
 hlutverk_namsmats_foreldrar <- select(imputationgogn_foreldrar, c(B1, B2, B3, 
-                                                                  B4, B5, B6, 
+                                                                  B4, B5, 
                                                                   B7, B8, B9, 
                                                                   B10, B11, B12))
 # Heild foreldrar
@@ -121,7 +121,7 @@ psych::alpha(heild_hlutverk_namsmats_foreldar)
 
 # Hlutverk námsmats kennarar
 hlutverk_namsmats_kennarar <- select(imputationgogn_kennarar, c(B1, B2, B3, 
-                                                                B4, B5, B6, 
+                                                                B4, B5, 
                                                                 B7, B8, B9, 
                                                                 B10, B11, B12, B13, B14))
 ## Heildartala kennarar
@@ -144,13 +144,13 @@ heild_upplys_mat_kennarar <- rowSums(upplys_mat_kennarar)
 describe(heild_upplys_mat_kennarar)
 
 # Lykilhæfni foreldrar
-lykilhaefni_foreldrar <- select(imputationgogn_foreldrar, c(C1, C2, C3, C4))
+lykilhaefni_foreldrar <- select(imputationgogn_foreldrar, c(C1, C2, C3, C4, B6))
 
 heild_lykilhaefni_foreldrar <- rowSums(lykilhaefni_foreldrar)
 describe(heild_lykilhaefni_foreldrar)
 
 # Lykilhæfni kennarar
-lykilhaefni_kennarar <- select(imputationgogn_kennarar, c(C1, C2, C3, C4))
+lykilhaefni_kennarar <- select(imputationgogn_kennarar, c(C1, C2, C3, C4, B6))
 
 heild_lykilhaefni_kennarar <- rowSums(lykilhaefni_kennarar)
 describe(heild_lykilhaefni_kennarar)
@@ -163,7 +163,7 @@ summary(Hlutverk_nams_foreldrar_likan)
 itemfit(Hlutverk_nams_foreldrar_likan)
 itemplot(Hlutverk_nams_foreldrar_likan, 3)
 itemplot(Hlutverk_nams_foreldrar_likan, 3, type = 'threshold', )
-plot(Hlutverk_nams_foreldrar_likan, which.items=1:12, facet_items=F, type='trace', 
+plot(Hlutverk_nams_foreldrar_likan, which.items=1:11, facet_items=F, type='trace', 
      main="Forsjáraðilar")
 
 # Kennarar 
@@ -173,7 +173,7 @@ summary(Hlutverk_nams_kennarar_likan)
 itemfit(Hlutverk_nams_kennarar_likan)
 itemplot(Hlutverk_nams_kennarar_likan, 3)
 itemplot(Hlutverk_nams_kennarar_likan, 3, type = 'threshold', )
-plot(Hlutverk_nams_kennarar_likan, which.items=1:14, facet_items=F, type='trace', 
+plot(Hlutverk_nams_kennarar_likan, which.items=1:13, facet_items=F, type='trace', 
      main="Starfsfólk skóla")
 
 # Sameiginlegt plot 
@@ -218,7 +218,7 @@ faerni_hlutverk_nams_foreldrar_stadalvilla <- fscores(Hlutverk_nams_foreldrar_li
 faerni_hlutverk_nams_kennarar_stadalvilla <- fscores(Hlutverk_nams_kennarar_likan, full.scores=T, full.scores.SE = T)
 
 heild_faerni_HN_f_stadalvilla <- rowSums(faerni_hlutverk_nams_foreldrar_stadalvilla)
-heild_faerni_HN_f_stadalvilla
+describe(heild_faerni_HN_f_stadalvilla)
 
 heild_faerni_HN_k_stadalvilla <- rowSums(faerni_hlutverk_nams_kennarar_stadalvilla)
 describe(heild_faerni_HN_k_stadalvilla)
@@ -243,7 +243,7 @@ M2(Hlutverk_nams_kennarar_likan)
 
 #-------------------------Svarferlalíkan 2 ---------------------------------
 
-Upplys_mat_foreldrar_likan <- mirt(upplys_mat_foreldrar, itemtype = "2PL")
+Upplys_mat_foreldrar_likan <- mirt(upplys_mat_foreldrar, itemtype = "graded")
 mirt::coef(Upplys_mat_foreldrar_likan, simplify = T, IRTpars=T)
 summary(Upplys_mat_foreldrar_likan)
 itemfit(Upplys_mat_foreldrar_likan)
@@ -252,7 +252,7 @@ itemplot(Upplys_mat_foreldrar_likan, 3, type = 'threshold', )
 plot(Upplys_mat_foreldrar_likan, which.items=1:9, facet_items=F, type='trace', 
      main="Forsjáraðilar")
 
-Upplys_mat_kennarar_likan <- mirt(upplys_mat_kennarar, itemtype = "2PL")
+Upplys_mat_kennarar_likan <- mirt(upplys_mat_kennarar, itemtype = "graded")
 coef(Upplys_mat_kennarar_likan, simplify = T, IRTpars=T)
 summary(Upplys_mat_kennarar_likan)
 itemfit(Upplys_mat_kennarar_likan)
@@ -325,7 +325,8 @@ summary(Lykilhaefni_foreldrar_likan)
 itemfit(Lykilhaefni_foreldrar_likan)
 itemplot(Lykilhaefni_foreldrar_likan, 3)
 itemplot(Lykilhaefni_foreldrar_likan, 3, type = 'threshold', )
-tracePlot
+plot(Lykilhaefni_foreldrar_likan, which.items=1:5, facet_items=F, type='trace', 
+     main="Forsjáraðilar")
 
 Lykilhaefni_kennarar_likan <- mirt(lykilhaefni_kennarar, itemtype = "2PL")
 coef(Lykilhaefni_kennarar_likan, simplify = T, IRTpars=T)
@@ -333,6 +334,8 @@ summary(Lykilhaefni_kennarar_likan)
 itemfit(Lykilhaefni_kennarar_likan)
 itemplot(Lykilhaefni_kennarar_likan, 3)
 itemplot(Lykilhaefni_kennarar_likan, 3, type = 'threshold', )
+plot(Lykilhaefni_kennarar_likan, which.items=1:5, facet_items=F, type='trace', 
+     main="Starfsfólk skóla")
 
 # Sameiginlegt plot 
 key=list(columns=2,text=list(lab=c("Starfsfólk skóla","Forsjáraðila")), lines=list(lwd=2, col=c("blue","red")), space="top")
