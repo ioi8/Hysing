@@ -155,9 +155,6 @@ lykilhaefni_kennarar <- select(imputationgogn_kennarar, c(C1, C2, C3, C4))
 heild_lykilhaefni_kennarar <- rowSums(lykilhaefni_kennarar)
 describe(heild_lykilhaefni_kennarar)
 
-
-lykilhaefni_heild <- select(imputationgogn_heild, c(sp_c01, sp_c02, sp_c03, sp_c04))
-
 #----------------------------------------Svarferlalíkan----------------------------------------
 # Foreldrar 
 Hlutverk_nams_foreldrar_likan <- mirt(hlutverk_namsmats_foreldrar, itemtype = "2PL")
@@ -220,6 +217,11 @@ cor(faerni_hlutverk_nams_kennarar, heild_hlutverk_namsmats_kennarar)
 faerni_hlutverk_nams_foreldrar_stadalvilla <- fscores(Hlutverk_nams_foreldrar_likan, full.scores = T, full.scores.SE = T)
 faerni_hlutverk_nams_kennarar_stadalvilla <- fscores(Hlutverk_nams_kennarar_likan, full.scores=T, full.scores.SE = T)
 
+heild_faerni_HN_f_stadalvilla <- rowSums(faerni_hlutverk_nams_foreldrar_stadalvilla)
+heild_faerni_HN_f_stadalvilla
+
+heild_faerni_HN_k_stadalvilla <- rowSums(faerni_hlutverk_nams_kennarar_stadalvilla)
+describe(heild_faerni_HN_k_stadalvilla)
 
 plot(faerni_hlutverk_nams_foreldrar_stadalvilla,col="blue", xlim=c(-3.0,3.0), main="", xlab="θ", ylab="Staðalvilla θ")
 points(faerni_hlutverk_nams_kennarar_stadalvilla, col='red', pch=1)
@@ -242,18 +244,22 @@ M2(Hlutverk_nams_kennarar_likan)
 #-------------------------Svarferlalíkan 2 ---------------------------------
 
 Upplys_mat_foreldrar_likan <- mirt(upplys_mat_foreldrar, itemtype = "2PL")
-mirt::coef(Upplys_mat_foreldrar_likan, simplify = T)
+mirt::coef(Upplys_mat_foreldrar_likan, simplify = T, IRTpars=T)
 summary(Upplys_mat_foreldrar_likan)
 itemfit(Upplys_mat_foreldrar_likan)
 itemplot(Upplys_mat_foreldrar_likan, 3)
 itemplot(Upplys_mat_foreldrar_likan, 3, type = 'threshold', )
+plot(Upplys_mat_foreldrar_likan, which.items=1:9, facet_items=F, type='trace', 
+     main="Forsjáraðilar")
 
 Upplys_mat_kennarar_likan <- mirt(upplys_mat_kennarar, itemtype = "2PL")
-coef(Upplys_mat_kennarar_likan, simplify = T)
+coef(Upplys_mat_kennarar_likan, simplify = T, IRTpars=T)
 summary(Upplys_mat_kennarar_likan)
 itemfit(Upplys_mat_kennarar_likan)
 itemplot(Upplys_mat_kennarar_likan, 3)
 itemplot(Upplys_mat_kennarar_likan, 3, type = 'threshold', )
+plot(Upplys_mat_kennarar_likan, which.items=1:10, facet_items=F, type='trace', 
+     main="Forsjáraðilar")
 
 # Sameiginlegt plot 
 key=list(columns=2,text=list(lab=c("Starfsfólk skóla"," Forsjáraðilar")), lines=list(lwd=2, col=c("blue","red")), space="top")
@@ -290,6 +296,9 @@ cor(faerni_upplys_mat_kennara, heild_upplys_mat_kennarar)
 
 faerni_upplys_mat_foreldrar_stadalvilla <- fscores(Upplys_mat_foreldrar_likan, full.scores.SE = T)
 faerni_upplys_mat_kennara_stadalvilla <- fscores(Upplys_mat_kennarar_likan, full.scores.SE = T)
+
+heild_faerni_UM_f_stadalvilla <- rowSums(faerni_upplys_mat_foreldrar_stadalvilla)
+describe(heild_faerni_UM_f_stadalvilla)
 
 plot(faerni_upplys_mat_foreldrar_stadalvilla, col="red", xlim=c(-3.0,3.0), ylim=c(0.0, 0.7), main="", xlab="θ", ylab="Staðalvilla θ")
 points(faerni_upplys_mat_kennara_stadalvilla, col='blue', pch=1)
@@ -361,6 +370,12 @@ cor(faerni_lykilhaefni_kennara, heild_lykilhaefni_kennarar)
 # Tengsl færni og staðalvillu færni 
 faerni_lykilhaefni_kennara_stadalvilla <- fscores(Lykilhaefni_kennarar_likan, full.scores = T, full.scores.SE = T)
 faerni_lykilhaefni_foreldra_stadalvilla <- fscores(Lykilhaefni_foreldrar_likan, full.scores = T, full.scores.SE = T)
+
+heild_faerni_LH_K_stadalvilla <- rowSums(faerni_lykilhaefni_kennara_stadalvilla)
+describe(heild_faerni_LH_K_stadalvilla)
+
+heild_faerni_LH_f_stadalvilla <- rowSums(faerni_lykilhaefni_foreldra_stadalvilla)
+describe(heild_faerni_LH_f_stadalvilla)
 
 plot(faerni_lykilhaefni_foreldra_stadalvilla, col="red", xlim=c(-3.0,3.0), main="", xlab="θ", ylab="Staðalvilla θ", pch=1)
 points(faerni_lykilhaefni_kennara_stadalvilla, col='blue', pch=1)
