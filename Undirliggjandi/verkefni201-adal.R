@@ -229,8 +229,6 @@ legend(x='top', c('Forsjáraðilar', 'Starfsfólk skóla'), fill=c('blue', 'red'
        border="black", box.lty = 0, bty = "n", ncol=2, inset=-0.15, cex=1)
 
 
-
-
 # Mat á stikum líkans 
 
 # Leifar líkans og kí-kvaðratpróf
