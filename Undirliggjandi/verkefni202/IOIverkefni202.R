@@ -32,6 +32,11 @@ col.names = c(
 ))
 
 Rawdata <- gagnarammi
+sum(is.na(Rawdata)) 
+describe(Rawdata)
+Rawdata %>% count(aldurMom)
+
+
 sum(is.na(gagnarammi)) #ATH á N/A-gildum
 KMO(gagnarammi) #Kaiser-Mayer-Olkin factor adequacy - 0.9+ er talið frábært
 cortest.bartlett(gagnarammi)
@@ -44,19 +49,19 @@ describe(gagnarammi)
 describe(Rawdata)
 
 #------------------Skoða dreifingu--------------------------
-
 hist(gagnarammi$HugUpp)
 describe(gagnarammi$HugUpp)
 
 hist(gagnarammi$TilfUpp)
 describe(gagnarammi$TilfUpp)
 
-
 #------------------Breytuval--------------------------
+MikillStudningur <- filter(gagnarammi, TilfUpp >= 7 )
+LitillStudningur <- filter(gagnarammi, TilfUpp < 7)
+describe(LitillStudningur)
+describe(MikillStudningur)
 
-MikillStudningur <- filter(gagnarammi,HugUpp >= 9 &  TilfUpp < 10 )
-LitillStudningur <- filter(gagnarammi,HugUpp < 9 & TilfUpp < 10)
-#------------------ CLPM --------------------------
+#------------------ CLPM uppsetning--------------------------
 gagnarammi.mod1 <- " 
 lestur4 ~ AR21 * lestur3 + CL21 * andf3 
 lestur3 ~ AR22 * lestur2 + CL22 * andf2
@@ -69,14 +74,16 @@ andf2 ~ AR13 * andf1 + CL13 * lestur1
 #Samdreifni
 andf1 ~~ lestur1
 "
+layout <- get_layout("lestur1", "lestur2", "lestur3", "lestur4",
+                     "andf1", "andf2", "andf3", "andf4", rows=2)
+
+
+#------------------ CLPM saman--------------------------
 MikillStudningur_likan <- sem(data = MikillStudningur, model = gagnarammi.mod1)
 LitillStudningur_likan <- sem(data = LitillStudningur, model = gagnarammi.mod1)
 
-layout <- get_layout("lestur1", "lestur2", "lestur3", "lestur4",
-                          "andf1", "andf2", "andf3", "andf4", rows=2)
-
 graph_sem(model = MikillStudningur_likan, layout=layout)
-summary(MikillStudningur_likan, fit.measures = TRUE)
+summary(MikillStudningur_likan, fit.measures = T)
 
 graph_sem(model = LitillStudningur_likan, layout=layout)
 summary(LitillStudningur_likan, fit.measures = TRUE)
