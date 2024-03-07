@@ -1,0 +1,89 @@
+---
+title: "Stutt verkefni 4"
+author: "Adalheidur Magnusdottir"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(car)
+library(readr)
+```
+
+### Lesa inn gögn
+
+```{r}
+df2 <- read_csv("Advertising.csv", 
+    col_types = cols(...1 = col_skip()))
+```
+
+```{r}
+df1 <- read_csv("Income2.csv", col_types = cols(...1 = col_skip()))
+```
+
+```{r, results='hide'}
+summary(df1)
+summary(df2)
+
+str(df1)
+str(df2)
+```
+
+# Gagnasafn 1
+
+### Fylgni á milli breyta í gagnasafninu income
+
+```{r}
+plot(df1)
+```
+
+### Myndir sem meta forsendur 
+
+```{r, fig.show='hold', out.width="50%"}
+likan1 <- lm(Income ~ Education + Seniority, data=df1)
+plot(likan1)
+```
+
+
+### Stöplarit til að meta forsendur
+
+```{r}
+df1$studentized.residuals <- rstudent(likan1)
+hist(df1$studentized.residuals, xlab="Leif", ylab="Tíðni", main="Stöplarit af leif")
+```
+
+### Meta skyldleika breyta
+
+```{r}
+vif(likan1)
+mean(vif(likan1))
+```
+
+# Seinna gagnasafnið
+
+```{r}
+plot(df2)
+```
+
+### Myndir sem meta forsendur 
+
+```{r, fig.show='hold', out.width="50%"}
+likan2 <- lm(Sales ~ TV + Radio + Newspaper, data=df2)
+plot(likan2)
+```
+
+### Stöplarit til að meta forsendur 
+
+```{r}
+df2$studentized.residuals <- rstudent(likan2)
+hist(df2$studentized.residuals, xlab = "Leif", ylab="Tíðni", main="Stöplarit af leif") 
+```
+
+### Meta skyldleika breyta
+
+```{r}
+vif(likan2)
+mean(vif(likan2))
+```

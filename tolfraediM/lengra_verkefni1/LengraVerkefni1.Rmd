@@ -1,0 +1,118 @@
+---
+title: "Lengra verkefni 1"
+author: "Adalheidur Magnusdottir"
+date: "`r Sys.Date()`"
+output:
+  html_document: default
+---
+
+```{r setup, include=FALSE, scripen=999}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(kableExtra)
+```
+
+Prófkvíði er algengur vandi meðal nemenda. Prófkvíði getur haft gríðarleg áhrif á frammistöðu nemenda og takmarkað getu þeirra til að frammúrskara í námi. Það er mikilvægt að sýna fram á að sá vandi sé til staðar svo hægt sé að veita viðeigandi þjónustu. Markmið þessarar rannsóknar að kanna prófkvíða meðal nemenda, sýna fram á að þetta sé raunverulegur vandi og hvaða áhrif hann hefur á frammistöðu.
+
+# Aðferð
+
+## Þátttakendur, mælitæki og framkvæmd
+
+|   Þátttakendur rannsóknarinnar voru 103 nemendur. 51 kona tók þátt og 52 karlar. Þátttakendur svöruðu kvarðanum *Exam Anxiety Questionnaire* sem metur prófkvíða. Það var einnig skrásett hve mörgum klukkustundum nemendur eyddu í undirbúning fyrir próf sem og einkunn nemenda á prófum, sem var mæld á skalanum 0 til 100.
+
+## Tölfræðileg úrvinnsla
+
+|   Úrvinnsla gagna fór fram í RStudio. Fyrst voru breyturnar Kyn og Númer þátttakanda fjarlægðar þar sem ekki var talið að þær hefðu áhrif á niðurstöður. Lýsandi tölfræði breytanna var könnuð með meðaltali og staðalfráviki. Fylgni breyta við aðrar breytur var könnuð með fylgniritum. Framkvæmd var einhliða aðfallsgreining. Einhliða aðfallsgreining veitir upplýsingar um þau áhrif sem frumbreyta hefur á fylgibreytu og gerir kleift að spá fyrir þær breytingar sem verða á fylgibreytu þegar frumbreyta hækkar eða lækkar um eina einingu. 
+|   Markmið rannsóknarinnar var að spá fyrir um einkunn nemanda á prófi út frá prófkvíða. Smíðað var líkan sem lýsir sambandi frumbreytu, prófkvíða, við fylgibreytu, einkunnir nemenda. Leitast var svara við því hvort nemendur fá hærri eða lægri einkunnir eftir því sem prófkvíði þeirra er meiri. Tilgátan var sú að eftir því sem prófkvíði nemenda er meiri þá fá þeir að jafnaði lægri einkunn á prófi.
+
+# Niðurstöður
+
+```{r, include=FALSE}
+load("langt_verkefni_1.RData")
+```
+
+```{r}
+
+# Breyturnar kyn (e. Gender) og númer þátttakanda (e. Code) voru fjarlægðar.
+
+nyttdf <- dplyr::select(df, Revise, Exam, Anxiety)
+```
+
+```{r}
+
+## Nöfnum breytanna var breytt á íslensku
+
+colnames(nyttdf) <- c("undirbuningur", "einkunn", "profkvidi")
+```
+
+```{r, include=FALSE}
+
+# Athuga breytur 
+
+str(nyttdf) 
+
+summary(nyttdf)
+```
+
+### Tafla 1. Meðaltöl og staðalfrávik breytanna.
+
+```{r}
+tafla <- cbind(sapply(nyttdf, mean), sapply(nyttdf, sd)) |> round(2)
+
+colnames(tafla) <- c("Meðaltal", "Staðalfrávik")
+rownames(tafla) <- c("Undirbúningur", "Einkunn", "Prófkvíði")
+
+
+kbl(tafla) |> kable_classic(full_width=F, position="left", font_size=18)
+
+```
+
+|   Í töflu 1 má sjá lýsandi tölfræði breytanna. Að meðaltali voru nemendur að eyða `r round(mean(nyttdf$undirbuningur), 2)` klukkustundum í undirbúning, með staðalfrávik `r round(sd(nyttdf$undirbuningur), 2)`. Einkunn nemenda var að meðaltali `r round(mean(nyttdf$einkunn), 2)` með staðalfrávikið `r round(sd(nyttdf$einkunn), 2)`. Nemendur  voru með að meðaltali `r round(mean(nyttdf$profkvidi), 2)` stig á *Exam Anxiety Questionnaire* með staðalfrávik `r round(sd(nyttdf$profkvidi), 2)`.
+
+```{r, fig.show='hold', out.width="50%"}
+plot(nyttdf, main="Mynd 1. Fylgnifylki breytanna")
+psych::pairs.panels(nyttdf, main="Mynd 2. Fylgnifylki breytanna")
+```
+
+|   Á myndunum má sjá upplýsingar um dreifingu breytanna og fylgni á milli þeirra. Dreifing undirbúnings var jákvætt skekkt en meirihluti nemenda voru að eyða á bilinu 0 til 35 klukkustundum í undirbúningi fyrir próf. Einkunnir nemenda nálgast normaldreifingu en flestir fengu um 60 til 80 stig af 100 mögulegum. Dreifing prófkvíða var neikvætt skekkt og á mynd 2 má sjá að prófkvíði mældist nokkuð hár meðal nemenda. Flestir fengu í kringum 80 stig á *Exam Anxiety Questionnaire*. 
+|   Fylgni á milli einkunnar og undirbúnings var meðalhá og jákvæð, 0.40, en töluverð frávik voru til staðar í undirbúningi eftir því sem einkunn hækkar. Neikvæð fylgni var á milli prófkvíða og einkunnar, -0.44, og voru töluverð frávik til staðar í einkunnum, sérstaklega þar sem prófkvíði var sem mestur. Há neikvæð fylgni mældist á milli prófkvíða og undirbúnings fyrir próf, -0.71, og voru til staðar frávik sem jukust þar sem prófkvíði var hæstur.
+
+
+```{r}
+lm.fit <- lm(einkunn~profkvidi, data = nyttdf)
+summary(lm.fit)
+car::Confint(lm.fit)
+```
+
+```{r, results='hide'}
+lm.fit2 <- lm(einkunn~undirbuningur, data = nyttdf)
+summary(lm.fit2)
+car::Confint(lm.fit2)
+
+lm.fit3 <- lm(undirbuningur~profkvidi, data=nyttdf)
+summary(lm.fit3)
+car::Confint(lm.fit3)
+```
+|   Framkvæmd var einföld aðfallsgreining þar sem spáð var fyrir um einkunn nemanda á prófi út frá prófkvíða.
+|   Frumbreytan prófkvíði spáir marktækt fyrir um einkunn með *p* = `r coef(summary(lm.fit))[2, "Pr(>|t|)"]` sem er minna en $\alpha = 0,05$. Skurðpunktur fyrir prófkvíða er `r round(summary(lm.fit)$coefficients[1,1], 2)` og hallastuðullinn er `r round(summary(lm.fit)$coefficients[2,1], 2)`. Hallastuðullinn gaf til kynna að fyrir hvert stig sem nemandi fékk á prófkvíðaskalanum þá lækkaði einkunn nemanda á prófi um 0.67. Öryggisbilið sýnir að sú lækkun gat verið á bilinu 0.93 til 0.40. Skýringarhlutfallið var 18,65%, sem segir að 18,65% af heildarbreytileika einkunnar má skýra með breytingum á prófkvíða. Þar sem stuðlarnir voru tiltölulega lágir var einnig litið til sambands annarra breyta til að athuga hvort skýra mætti áhrifin enn betur. 
+|   Einhliða aðfallsgreining var framkvæmd á einkunnum nemenda út frá undirbúningi fyrir próf og á undirbúningi út frá prófkvíða. Frumbreytan prófkvíði spáði marktækt fyrir um undirbúning nemenda með *p* = `r coef(summary(lm.fit3))[2, "Pr(>|t|)"]`. Skurðpunktur fyrir prófkvíða er `r round(summary(lm.fit3)$coefficients[1,1], 2)` og hallastuðullinn er `r round(summary(lm.fit3)$coefficients[2,1], 2)`. Hallastuðullinn sýndi að fyrir hvert stig sem nemandi fékk á prófkvíðakvarðanum þá lækkaði undirbúningur fyrir próf um 0.75 klukkustundir. Öryggisbilið sýnir að sú lækkun gat verið á bilinu 0.90 til 0.60. Skýringarhlutfallið var 49.81%. Frumbreytan undirbúningur spáði marktækt fyrir um einkunn nemenda með *p* = `r coef(summary(lm.fit2))[2, "Pr(>|t|)"]`. Skurðpunktur fyrir undirbúning er `r round(summary(lm.fit2)$coefficients[1,1], 2)` og hallastuðullinn er `r round(summary(lm.fit2)$coefficients[2,1], 2)`. Hallastuðullinn gaf til kynna að fyrir hvern klukkutíma sem nemenda eyddi í undirbúningi hækkaði einkunn nemenda um 0.57 stig en samkvæmt öryggisbilinu gat sú hækkun verið á bilinu 0.31 til 0.83. Skýringarhlutfallið var 14,9%. 
+
+```{r}
+plot(einkunn~profkvidi, data = nyttdf, xlab="Prófkvíði", ylab="Einkunn", main="Mynd 3. Fylgnirit  einkunna og prófkvíða")
+abline(lm.fit, lwd = 2, col="red")
+grid()
+```
+
+Á myndritinu má sjá neikvæða fylgni á milli prófkvíða og einkunna. Það þýðir að því meiri prófkvíða sem nemandi var með, því lægri var einkunn nemanda á prófi. Það voru smávægileg frávik á einkunnum þegar prófkvíði var lægstur en það jókst síðan töluvert eftir því sem prófkvíði hækkaði. Mestu frávikin voru í kringum 80 stig en flestir nemendur voru að skora á því bili á prófkvíðakvarðanum. Línan gefur þó til kynna að einkunn lækki samfara aukningu á prófkvíða. 
+
+# Umræða
+|   Markmið rannsóknarinnar var að kanna hvort prófkvíði væri vandi sem væri til staðar og hver áhrif kvíðans væru. Það var gert með því að mæla prófkvíða með *Exam Anxiety Questionnaire*, mæla tíma sem nemendur eyða í undirbúning fyrir próf og einkunnir á prófi. Niðurstöðurnar gefa til kynna að prófkvíði sé raunverulegur vandi sem hafi áhrif á einkunnir. Það má til að mynda sjá út frá meðaltali nemenda á prófkvíðaskalanum, sem var nokkuð hátt eða `r round(mean(nyttdf$profkvidi), 2)`. Fylgniritið á mynd 2 sýndi einnig að flestir nemendur væru að fá í kringum 80 stig af 100 mögulegum á skalanum. Það má því álykta að margir nemendur upplifi prófkvíða sem sýnir að vandinn sé til staðar.
+
+|   Einhliða aðfallsgreining sýndi að eftir því sem prófkvíði eykst þá bitnar það á einkunum nemenda. Hallastuðullinn sýndi að  einkunn lækki um 0.67 stig. Skýringarhlutfall líkansins var einungis 18.65% sem segir að 18.65% af heildarbreytileika einkunna má skýra með breytingum á prófkvíða. Prófkvíði virðist því hafa óljós áhrif á einkunnir nemenda en til að athuga enn betur áhrifin var litið til sambands annarra breyta. Þegar breytingar á undirbúningi voru skoðaðar kom í ljós samband þar sem einkunn hækkar eftir því sem undirbúningur er meiri og undirbúningur lækkar svo samfara aukningu á prófkvíða nemanda. Það má því álykta að prófkvíði hafi óbein áhrif á einkunnir nemenda, til að mynda í gegnum tímann sem nemandi eyðir í undirbúningi fyrir próf. Ef prófkvíði nemenda er mikill, þá eyðir sá nemandi minni tíma í undirbúningi fyrir próf sem hefur svo áhrif á einkunn þess nemenda í prófinu. 
+
+|   Á fylngiriti einkunnar og prófkvíða mátti sjá töluverð frávik sem gefur til kynna að prófkvíði hafi ólík áhrif. Nokkrir nemendur voru að fá hærri einkunn en forspá gaf til kynna um þó þeir hafi skorað hátt á prófkvíðakvarðanum. Prófkvíði virðist því ekki endilega hafa hamlandi áhrif á þá nemendur. Nokkrir aðrir nemendur voru þó að fá lægri einkunn en forspá gaf til kynna um sem sýnir að þetta geti verið hamlandi vandi og komið niður á einkunnum nemenda. Þar af leiðandi er ekki hægt að álykta um að þetta sé ekki raunverulegur vandi þó frávik hafi verið til staðar. 
+
+|   Út frá þessum niðurstöðum má gera ráð fyrir því að fyrir marga nemendur sem upplifa prófkvíða sé þetta hamlandi vandi sem hefur neikvæð áhrif á einkunnir nemenda og þar af leiðandi frammistöðu þeirra í námi. 
+
+|   Það er því gríðarlega mikilvægt að veita viðeigandi inngrip við þessum vanda svo nemendur geta nýtt færni sýna að fullnustu í námi án þess að upplifa nokkurs konar hömlur. Næstu skref væru að nýta aðstoðina sem fyrirtækið veitir og sigrast á prófkvíðanum sem er til staðar.
+

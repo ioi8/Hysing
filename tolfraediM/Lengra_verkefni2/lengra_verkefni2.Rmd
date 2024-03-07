@@ -1,0 +1,145 @@
+---
+title: "Langt verkefni 2"
+author: "Adalheidur Magnusdottir"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(kableExtra)
+library(knitr)
+library(broom)
+
+options(knitr.kable.NA = '')
+```
+
+```{r}
+load("langt_verkefni_2.RData")
+```
+
+# Inngangur
+
+|   Fordómar gagnvart hinsegin fólki eru til staðar í samfélögum um allan heim. Þar er Ísland engin undantekning. Þó þeir hafi minnkað og umburðarlyndi hefur breitt úr sér, þá er enn til staðar ójafnrétti og miklir fordómar. Fordómar geta verið hættulegir, alið á ofbeldi, niðrandi tali og útskúfun hinsegin fólks. Á síðasta ári þá voru margar fréttir af fordómafullum atburðum á Íslandi gagnvart hinsvegin fólki, þar sem skornir voru niður fánar hinseginleikans, sendar voru hatursfull bréf og gelt var á hinsegin fólk. 
+|   Það eru þó nokkrir áhrifvaldar varðandi viðhorf fólks gagnvart hinsegin fólki. Til að mynda hefur verið sýnt fram á tengsl á milli trúar og fordóma gagnvart hinsegin fólki. Meiri trú virðist tengjast meiri fordómum, til dæmis vegna þess að fólk telur hinseginleika ganga á móti gildum trúar sinnar. Eldri kynslóðir sýna meiri fordóma, mögulega vegna þess að hinseginleiki var lítið til staðar á þeirra yngri árum. Fyrir nokkrum árum var vart talað um hinseginleika en nú eru yngri kynslóðir að taka við þar sem hinseginleika er tekið fagnandi (Herek og McLemore, 2013). Fordómar eru þó enn til staðar þó umburðarlyndi fari hækkandi. Það er því mikilvægt að kanna hvað það er sem hefur áhrif á viðhorf fólks gagnvart samkynhneigðum og sýna fram á að það sé enn vandi til staðar. 
+
+# Aðferð
+
+### Þátttakendur
+
+|   Gögnin eru úr niðurstöðum Íslands á *European social survey* (EES). Þátttakendur voru 1203 talsins, á aldrinum 15 til 90 ára. Meðalaldur þátttakenda var 43,96 ár.
+
+### Mælitæki og framkvæmd
+
+|   Mældar voru 6 breytur; Viðhorf gagnvart samkynhneigðum, Pólitísk afstaða, Trú, Trúrækni, Aldur og Menntun. Viðhorf gagnvart samkynhneigðum var mæld á 5 punkta kvarða, þar sem 1 þýddi mjög sammála og 5 mjög ósammála en því var snúið við í úrvinnslu. Lægra gildi samsvaraði því meiri fordómum en hærra gildi meira umburðarlyndi. Pólitísk afstaða var mæld í tölugildum frá 0 til 10, þar sem lægra gildi samsvaraði vinstri sinnun og hærra gildi hægri sinnun. Trú var mæld út frá því hve trúaður einstaklingur telur sig vera, með gildum frá 0 til 10, þar sem hærra gildi samsvaraði meiri trú. Trúrækni var mæld út frá því hve oft einstaklingur sækir trúarlegar athafnir fyrir utan giftingar, skírnir og álíka, og var mæld frá 1 til 7 þar sem 1 stóð fyrir "alla daga" en 7 "aldrei". Sú breyta var endurkóðuð í úrvinnslu og snúið við. Breytan aldur var mæld í árum og menntun var mæld út frá fjölda ára í fullu námi.
+
+### Tölfræðileg úrvinnsla
+
+|   Breyturnar viðhorf gagnvart samkynhneigðum og trúrækni voru endurkóðaðar og snúið við í úrvinnslu. Lýsandi tölfræði breytanna var könnuð út frá meðaltali og staðalfráviki. Fylgni breyta við aðrar breytur var könnuð með fylgnifylki og athugað var hvaða breytur höfðu hæstu fylgni við viðhorf gagnvart samkynhneigðum.
+|   Marghliða aðfallsgreining var notuð til að búa til tvö mismunandi líkön með breytum sem höfðu hæstu fylgni við viðhorf gagnvart samkynhneigðum og pössuðu við út frá fræðilegu sjónarhorni. Margliða aðfallsgreining gerir kleift að nota fleiri en eina frumbreytu til að spá fyrir um gildi fylgibreytu. Hallastuðullinn lýsir þá breytingu á gildi fylgibreytu þegar frumbreyta hækkar eða lækkar um eina einingu, þegar leiðrétt er fyrir áhrifum annarra frumbreyta. Samanburður á líkönum var framkvæmdur með F-prófi, nánar tiltekið ANOVA (*Analysis of Variance*) dreifigreiningu, til að kanna hvaða líkan spáði marktækt best fyrir um viðhorf. AIC stuðull (*Akaike Information Critera*) var notaður til að kanna mátgæði líkana, þar sem lægra gildi gaf til kynna betra mát.
+|   Markmið greiningarinnar var kanna sambanda breytanna með marghliða aðfallsgreiningu þar sem leitast var eftir lokalíkani sem veitir bestu forspá fyrir viðhorfi gagnvart hinsegin fólki. 
+
+# Niðurstöður
+
+```{r, echo=FALSE}
+colnames(df) <- c("politik", "vidhorf", "tru", "truraekni", "aldur", "menntun")
+```
+
+```{r, echo=FALSE}
+df$truraekni = car::recode(df$truraekni, "1=7; 2=6; 3=5; 4=4; 5=3; 6=2; 7=1")
+
+df$vidhorf = car::recode(df$vidhorf, "1=5; 2=4; 3=3; 4=2; 5=1")
+```
+
+```{r, echo=FALSE}
+#summary(df)
+#str(df)
+```
+
+```{r, echo=FALSE}
+tafla <- cbind(sapply(df, mean), sapply(df, sd)) |> round(2)  
+
+colnames(tafla) <- c("Meðaltal", "Staðalfrávik")
+rownames(tafla) <- c("Pólitík", "Viðhorf gagnvart samkynhneigðum", "Trú", "Trúrækni", "Aldur", "Menntun")
+
+
+kbl(tafla, caption="Tafla 1. Lýsandi tölfræði breytanna", align="cc") |> kable_classic(full_width=T, font_size=18, html_font = "Times new Roman") %>% gsub("font-size: initial !important;",
+"font-size: 15pt !important;",
+.)
+
+```
+
+|   Tafla 1 sýnir meðaltal og staðalfrávik breytanna. Meðaltal viðhorfs þátttakenda gagnvart samkynhneigðum var 4.45 með staðalfrávikið 0.77. Meðalaldur þátttakenda var 43.96 ár með staðalfrávik 17.84. Þátttakendur höfðu að meðaltali eytt 14.19 árum í fullu námi, með staðalfrávik 4.29.
+
+```{r, echo=FALSE}
+psych::pairs.panels(df, main="Mynd 1. Fylgnifylki breytanna")
+```
+
+|   Á mynd 1 má sjá dreifingu breytanna og fylgnistuðla á milli þeirra. Breytan viðhorf gagnvart samkynhneigðum var neikvætt skekkt en meirihluti þátttakenda var að mælast með jákvætt viðhorf gagnvart samkynhneigðum. Breyturnar aldur og menntun höfðu hæstu fylgnina við fylgibreytuna, -0.25 og 0.22. Breytan trúrækni hafði svo næsthæstu fylgnina, -0.19. Það er því hægt að álykta að þetta eru breyturnar sem hafa mestu áhrifin á viðhorf gagnvart samkynhneigðum. Breyturnar pólitík og trú hafa svo lægri fylgni. Til að kanna þessi áhrif enn frekar var framkvæmd marghliða aðfallsgreining.
+
+### Marghliða aðfallsgreining
+
+|   Tvö líkön voru sett upp til að kanna enn frekar áhrif breyta á viðhorf gagnvart samkynhneigðum. Í báðum líkönunum var viðhorf gagnvart samkynhneigðum fylgibreytan en í líkani 1 voru frumbreyturnar aldur og menntun og í líkani 2 var frumbreytunni trúrækni bætt við.
+
+```{r, echo=FALSE}
+lm.fit1 <- lm(vidhorf ~ aldur + menntun, data=df)
+lm.fit1_oryggi <- car::Confint(lm.fit1)
+
+lm.fit1 |> tidy() |> kable(col.names = c("Forspá", "Hallastuðull", "Staðalvilla", "T-gildi", "*p*"), digits = c(0, 2, 3, 2, 20), caption = "Tafla 2. Marghliða aðfallsgreining á líkani 1", align="lcccc") |> kable_classic(full_width=T, font_size=18, html_font = "Times new Roman") %>% gsub("font-size: initial !important;",
+"font-size: 15pt !important;",
+.)
+```
+
+|   Frumbreytan aldur spáði marktækt fyrir um viðhorf gagnvart samkynhneigðum með *p* = `r coef(summary(lm.fit1))[2, "Pr(>|t|)"]` og menntun spáði einnig markækt fyrir um viðhorf með *p* = `r coef(summary(lm.fit1))[3, "Pr(>|t|)"]` miðað við $\alpha = 0,05$. Hallastuðull aldurs var `r round(summary(lm.fit1)$coefficients[2,1], 2)` sem merkir að fyrir hvert ár sem viðkomandi hækkaði í aldri þá lækkaði viðhorf þess gagnvart samkynhneigðum um 0.01. Öryggisbilið sýnir að sú lækkun gat verið á bilinu -0.01 til -0.007. Hallastuðull menntunar var `r round(summary(lm.fit1)$coefficients[3,1], 2)` sem segir að fyrir hvert ár sem einstaklingur eyðir í fullu námi þá hækkar viðhorf viðkomandi gagnvart samkynhneigðum um 0.03. Öryggisbilið var 0.02 til 0.04. Skýringarhlutfallið var 9.3%, en það merkti að 9.3% af heildarbreytileika viðhorfs til samkynhneigða mátti skýra með breytingum á aldri og menntun.
+
+```{r, echo=FALSE}
+lm.fit2 <- lm(vidhorf ~ aldur + menntun + truraekni, data = df)
+lm.fit2_oryggi <- car::Confint(lm.fit2)
+
+lm.fit2 |> tidy() |> kable(col.names = c("Forspá", "Hallastuðull", "Staðalvilla", "T-gildi", "*p*"), digits = c(0, 2, 3, 2, 15), caption = "Tafla 3. Marghliða aðfallsgreining á líkani 2", align = "lcccc") |> kable_classic(full_width=T, font_size=18, html_font = "Times new Roman")  %>% gsub("font-size: initial !important;",
+"font-size: 15pt !important;",
+.)
+```
+
+|   Í líkani 2 var breytunni trúrækni bætt við. Frumbreyturnar aldur, menntun og trúrækni spáðu marktæk fyrir um viðhorf gagnvart samkynhneigðum með *p* = `r coef(summary(lm.fit2))[2, "Pr(>|t|)"]`, *p* = `r coef(summary(lm.fit2))[3, "Pr(>|t|)"]` og *p* = `r coef(summary(lm.fit2))[4, "Pr(>|t|)"]` miðað við $\alpha = 0,05$. Hallastuðull aldurs og menntunar héldust þeir sömu, `r round(summary(lm.fit2)$coefficients[2,1], 2)` og `r round(summary(lm.fit2)$coefficients[3,1], 2)`. Öryggisbil aldurs var -0.01 til -0.006. Öryggisbil menntunar var 0.02 til 0.04. Hallastuðull trúræknis var `r round(summary(lm.fit2)$coefficients[4,1], 2)` en það merkti að þeim meiri tíma sem einstaklingur eyddi í trúarlegum athöfnum þá lækkaði viðhorf viðkomandi um 0.1. Öryggisbilið sýndi að sú lækkun gat verið frá -0.1 til -0.07. Skýringarhlutfall var 11.52%, sem segir að 11.52% af heildarbreytileika viðhorfs mátti skýra með breytingum á aldri, menntun og trúrækni.
+
+### Samanburður líkana
+
+|   Til að bera saman líkan 1 og 2 var notuð dreifigreining (Anova). Með því var hægt að athuga hvort líkanið væri marktækt betra að spá fyrir um fylgibreytuna.
+
+```{r, echo=FALSE}
+anova_greining <- anova(lm.fit1, lm.fit2)
+
+row.names(anova_greining) <- c("Líkan 1", "Líkan 2")
+colnames(anova_greining) <- c("Frígráður leifar", "Summa leifa", "Frígráður", "Summa kvaðrata", "F", "*p*")
+
+kbl(anova_greining, caption = "Tafla 5. Niðurstöður *F*-prófs.", digits = c(0, 2, 0, 3, 3, 10), align="cccccc") |> kable_classic(font = 18, html_font = "Times new Roman") %>% gsub("font-size: initial !important;",
+"font-size: 15pt !important;",
+.)
+```
+
+|   Tafla 5 sýnir að það var marktækur munur á líkönunum. Líkan 2, með breytunum aldur, menntun og trúrækni, var marktækt betra að spá fyrir um viðhorf gagnvart samkynhneigðum, miðað við $\alpha = 0,05$. AIC stuðullinn var einnig athugaður og niðurstöður má sjá í töflu 6. Hann var lægri þegar breytunni trúrækni var bætt við. Það var einnig töluverður munur sem benti til þess að seinna líkanið væri mun ákjósanlegra.
+
+```{r, echo=FALSE}
+aic_studull <- AIC(lm.fit1, lm.fit2)
+
+rownames(aic_studull) <- c("Líkan 1", "Líkan 2")
+colnames(aic_studull) <- c("Frígráður", "AIC")
+
+kbl(aic_studull, caption="Tafla 6. Samanburður á AIC stuðlum", align="cc") |> kable_classic(full_width=T, font_size=18, html_font = "Times new Roman") %>% gsub("font-size: initial !important;",
+"font-size: 15pt !important;",
+.)
+```
+
+# Umræða
+
+|   Markmið greiningarinnar var að finna líkan sem spáir best fyrir um viðhorf þátttakenda gagnvart hinsegin fólki. Sett var upp fylngifylki til að kanna fylgni á milli breyta. Á fylgniritinu mátti sjá að flestir þátttakendur væru að mælast með jákvætt viðhorf gagnvart samkynhneigðum. Þær breytur sem höfðu hæstu fylgnina við fylgibreytuna voru aldur, menntun og trúrækni. Til að kanna þau áhrif enn frekar var framkvæmd marghliða aðfallsgreining á tveimur líkönum til að kanna hvaða breytur væru að veita bestu forspánna. Líkan 1 samanstóð af frumbreytunum aldri og menntun en í líkani 2 var breytunni trúrækni bætt við.
+|   Hallastuðlar breytanna aldurs og menntun voru -0.01 og 0.03 og breyttust þeir ekki í líkani 2. Það að bæta við breytunni trúækni hafði því ekki áhrif á hallastuðlanna, en hallastuðull trúræknis var -0.1. Hallastuðlar voru því tiltölulega lágir og áhrif breytanna á fylgibreytuna ekki mikil, en þó einhver þar sem svarað var á kvarða frá 1 til 5 og því hefur t.d. 0.03 nokkur áhrif á það. Það má þó gera ráð fyrir að það séu þá einnig aðrir áhrifavaldar til staðar sem ekki voru kannaðir hér. 
+|   Út frá samanburði á líkönunum með *F*-prófi mátti sjá að líkan 2 væri marktækt að veita betri forspá um viðhorf gagnvart samkynhneigðum. AIC stuðull þess líkans var einnig töluvert lægri en stuðull líkans 1, munurinn var 28.488. Skýringarhlutfall var 9,3% þegar einungis breyturnar aldur og menntun voru í líkani 1 en hækkaði upp í 11,52% þegar trúrækni var bætt við í líkani 2. Út frá þessum niðurstöðum má áætla að líkan 2 sé ákjósanlegra líkanið og forspá þess betri. 
+|   Aldur, menntun og trúrækni hafa áhrif á viðhorf einstaklinga gagnvart hinsegin fólki. Aldur hafði neikvæð áhrif, þ.e.a.s að með hækkandi aldri þá fer umburðarlyndi gagnvart hinsegin fólki minnkandi. Þau áhrif voru ekki mikil en benda til þess að yngri kynslóðir taki margbreytileika með opnari huga. Menntun hafði jákvæð áhrif, með meiri menntun kemur meira umburðarlyndi. Trúrækni hafði neikvæð áhrif og því meiri tíma sem fólk eyðir í trúarlegum athöfnum því meiri fordómar eru til staðar. Trú og fordómar gagnvart hinseginleika haldast í hendur (Herek og McLemore, 2013). Það getur til að mynda verið vegna þess að fólk telur að hinseginleiki fari á móti þeirra gildum og réttlætir fordóma sína svoleiðis. Áhrif breytanna þriggja voru ekki mikil, enda hallastuðlar lágir. Það þyrfti að kanna það enn frekar hvaða önnur áhrif gætu verið til staðar. Það væri til að mynda hægt að skapa fleiri líkön með hinum breytunum í gagnasafninu til að kanna hvort það myndi hafa umtalsverð áhrif á hallastuðla og skýringarhlutfall. Annað sem væri hægt að gera er að mæla breyturnar öðruvísi. Í þessu tilviki voru breyturnar mældar í viðtali og getur það valdið félagslegum æskileika, sem gerir það að verkum að svör einstaklinga endurspeglar ekki raunverulega hugsun þeirra. 
+|   Fólk er margbreytilegt og er mikilvægt að sýna öðrum umburðarlyndi. Fordómar geta verið hættulegt tól og valdið ógn. Því er einstaklega jákvætt að fordómar gagnvart hinsegin fólki fari ört minnkandi en þeirri baráttu er hvergi nær lokið. Næstu skref væru að rannsaka þetta málefni enn frekar og kanna leiðir til að fræða og bæta viðhorf fólks gagnvart hinsegin fólki.
+
+
+# Heimildir
+|   Herek, G. M. og McLemore, K. A. (2013). Sexual Prejudice. *Annual Review of Psychology*, *64*, 309-333. https\://doi.org/10.1146/annurev-psych-113011-143826

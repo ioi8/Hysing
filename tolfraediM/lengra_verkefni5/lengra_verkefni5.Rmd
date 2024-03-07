@@ -1,0 +1,158 @@
+---
+title: "Langt verkefni 5"
+author: "Adalheidur Magnusdottir"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{=html}
+<style type = "text/css">
+  body{
+    font-size:12pt;
+    font-family: Times New Roman;
+  }
+</style>
+```
+
+
+|   Kulnun í starfi er algengur kvilli og hefur það aukist enn frekar á síðustu árum. Kulnun er viðbragð einstaklings við tíðri streitu í vinnuumhverfi sem getur þróast áfram í alvarlega hugræna, tilfinnilega og líkamlega kvilla (Edú-Valsania, Laguia og Moriano, 2022). Kulnun getur átt sér stað á ýmsum starfsvettvöngum, þar með talið hjá háskólakennurum. Rannsóknir á kulnun hafa aukist á síðustu árum samhliða aukinni samfélagslegri umræðu. Í rannsókn sem gerð var af Félagsvísindastofnun fyrir starfsmannasvið Háskóla Íslands árið 2016 kom í ljós að um 75% akademískra starfsmanna telja sig vera undir miklu vinnuálagi og um 45% upplifa streitu í starfi. Þessi rannsókn, sem og aðrar innlendar og erlendar, benda til þess að háskólakennarar séu í áhættuhópi varðandi upplifun álags og streitu í starfi (Ásta Möller og Jónína Helga Ólafsdóttir, 2017). Miklar kröfur eru settar á háskólakennara, frá nemendum, stjórnendum og samfélaginu sjálfu, og sýnt hefur verið fram á allt þetta eykur áhættu á kulnun (Fernández-Suárez o.fl., 2021). Einnig hafa fundist tengsl á milli persónueinkenna og kulnunar, til að mynda hefur verið sýnt fram á tengsl bjargráðs (e. coping style) og kulnunar, þar sem minni stjórn veldur aukinni hættu á kulnun (Sabagh o.fl., 2018). Mikilvægt er að beita fyrirbyggjandi aðgerðum til að koma í veg fyrir kulnun sem og inngripi ef einkenni kulnunar koma upp. Gerðar hafa verið tillögur að breytingum fyrir Háskóla Íslands sem eru til að mynda fræðsla um streitu og afleiðingu hennar, undirbúningsnámskeið í kennslufræði háskóla fyrir nýja kennara, aukinni upplýsingamiðlun til kennara og auknum sveiganleikja (Ásta Möller og Jónína Helga Ólafsdóttir, 2017). Mikilvægt er að innliða slíkar breytingar og fylgjast með áhrifum þeirra á kulnun. 
+
+|   Markmið með þessari greiningu er að spá fyrir um kulnun út frá persónueinkennum og/eða ástæðum fyrir streitu. Athugað verður hvort tengsl finnast á milli kulnunnar og annara streituvaldandi breyta. Tilgátan er sú að með aukinni streitu, minni stjórn og hæfni til að takast á við streitu aukast líkurnar á kulnun. 
+
+# Aðferð
+
+## Þátttakendur og mælitæki
+
+|   Þátttakendur voru 467 háskólakennarar. Þeir voru mældir á sex eiginleikum. Það voru kulnun, sem var metin út frá því hvort einstaklingur væri með kulnun eða ekki. Ráðavitund, sem var metin á samfelldum kvarða frá 0 upp í 100 þar sem hærra skor vísar í minni upplifaða stjórn (e. locus of control) og bjargráður, sem var einnig metin á samfelldum kvarða þar sem hærra skort vísar í minni hæfni til að takast á við streitu (e. coping style). Einnig voru mældar þrjár ástæður streitu; streita sem kemur frá kennslu, frá rannsóknum og frá því að veita persónulega ráðgjöf til nemenda. Þetta þrennt var allt mælt á samfelldum kvarða frá 0 upp í 100 þar sem hærra skor vísaði til meiri streitu.
+
+## Framkvæmd og úrvinnsla
+
+|   Markmið með rannsókninni var að spá fyrir um kulnun. Til þess var framkvæmd aðfallsgreining hlutfalla. Aðfallsgreining hlutfalla er líkt og hefðbundin aðfallsgreining, þar sem spáð er fyrir um breytingar á fylgibreytu út frá einni eða fleiri frumbreytu. Hún er þó frábrugðin að því leiti að fylgibreytan er nú flokkabreyta. Reynt er því að svara spurningunni hvort eitthvað muni eiga sér stað, en ekki hversu mikið það breytist.
+|   Búin voru til tvö líkön til að spá fyrir um kulnun. Fyrra líkanið samanstóð af fylgibreytunni kulnun ásamt frumbreytum sem voru valdar út frá mati á breytunum og lýsandi tölfræði. Seinna líkanið samanstóð einnig af fylgibreytunni kulnun en gerðar voru breytingar á frumbreytunni X og henni skipt í tvennt eftir... 
+|   Gerður var samanburður á líkönunum til að athuga hvort veitti betri forspá fyrir því hvort einstaklingur væri með kulnun eða ekki. Samanburður var framkvæmdur út frá kí-kvaðratgildi til að athuga hvort marktækur munur væri á líkönunum, anova greiningu og AIC stuðli þar sem lægri gildi vísar í að líkan falli betur að gögnunum. 
+
+
+# Niðurstöður
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(furniture)
+library(dplyr)
+library(readr)
+library(knitr)
+library(kableExtra)
+
+#options(scipen=999)
+```
+
+```{r, include=FALSE}
+df <- read_csv("langt_verkefni_5.csv", 
+    col_types = cols(...1 = col_skip()))
+
+#Athuga breytur
+str(df)
+head(df)
+summary(df)
+
+#Íslenska heiti þeirra
+colnames(df) <- c("Kulnun", "Radavitund", "Bjargrad", "Kennslustreita", "Rannsoknarstreita", "Radgjafastreita")
+df$Kulnun <- as.factor(df$Kulnun)
+
+# Athuga samanburðarhóp
+contrasts(df$Kulnun)
+levels(df$Kulnun) <- c("Kulnun", "Ekki kulnun")
+
+# Tvískipta einni frumbreytu
+cut_points <- c(-Inf, 50, Inf)
+df$bjargradur <- cut(df$Bjargrad, breaks = cut_points, labels=c("bjargradur", "ekki_bjargradur"))
+df$bjargradur <- relevel(df$bjargradur, "ekki_bjargradur")
+
+```
+
+|   Í töflu 1 má sjá lýsandi tölfræði breytanna, skipt eftir því hvort þátttakandi var með kulnun eða ekki. Þátttakendur voru samtals 467, þar af voru 119 með kulnun og 348 ekki með kulnun. Þeir sem voru með kulnun voru með hærra meðaltal í ráðavitund og þar af leiðandi telja sig almennt upplifa minni stjórn. Kulnun olli einnig með hærra meðaltali í bjargráð, sem vísar í minni hæfni til að takast á við streitu. Kulnun veldur einnig hærra meðaltali af streitu vegna kennslu og ráðgjöf, en lægra meðaltal í streitu vegna rannsókna.
+
+```{r, echo=F}
+furniture::table1(df, splitby=~Kulnun, output="markdown", "Ráðavitund" = Radavitund, "Bjargráður" = Bjargrad,
+                         "Streita vegna kennslu" = Kennslustreita, "Streita vegna rannsókna" = Rannsoknarstreita, 
+                         "Streita vegna ráðgjafar" = Radgjafastreita, caption="Tafla 1. Lýsandi tölfræði", total=T) 
+
+```
+
+## Líkan
+
+|   Smíðað var líkan þar sem spáð er fyrir um kulnun út frá frumbreytunum bjargráð, stjórnrót og streitu vegna kennslu. Í töflu 2 má sjá niðurstöður þess.
+
+```{r, echo=F}
+likan1 <- glm(Kulnun ~ Bjargrad + Radavitund + Kennslustreita, data = df, family=binomial())
+summary(likan1)
+confint(likan1)
+
+model1param <- parameters::parameters(likan1)
+model1param <- model1param[-c(4,5,6,8)]
+
+
+colnames(model1param) <- c("Fasti", "Hallastuðull", "Staðalvilla", "$z$-gildi", "$p$-gildi")
+kable(model1param, digits = 2, format = "html", caption = "Tafla 2. Niðurstöður aðfallsgreiningu hlutfalla á líkani 1", align = "c") %>%
+  kable_classic(full_width=T, font_size=18, html_font = "Times new Roman") %>% gsub("font-size: initial !important;", "font-size: 15pt !important;",
+.)
+```
+
+|   Líkanið var með betri mátgæði en líkan án frumbreytanna (336,77 á móti 530,11). Frumbreytan bjargráður hefur marktæka forspá fyrir því hvort einstaklingur sé með kulnun eða ekki, B1 = -0,13, *z* = -8,77, *p* < 0,001. Öryggisbilið var [-0,16; -0,10]. Ráðavitund hefur einnig marktæka forspá, B2 = -0,09 [-0,12:-0,06], *z* = -6,81, *p* < 0,001 og kennslustreita sömuleiðis, B3 = 0.08 [0,05;0,12], *z* = 4,90, *p* < 0,001. 
+
+## Líkan 2
+
+|   Smíðað var annað líkan þar sem spáð var aftur fyrir um kulnun. Líkanið inniheldur sömu breytur og fyrra líkan en gerðar hafa verið breytingar á breytunni bjargráð, þar sem henni var skipt í tvennt eftir því hvort fólk mældist með bjargráð eða ekki. Miðað var við að 50 stig eða hærri vísaði í að þátttakandi væri með bjargráð, þ.e. meiri hæfni til að takast á við streitu, og undir 50 stig vísaði í að þátttakandi væri með minni hæfni til að takast á við streitu. Það að hafa minni hæfni til að takast á við streitu (ekki bjargráð) var haft sem samanburðarhópur. Niðurstöður aðfallsgreiningarinnar á breyttu líkani má sjá í töflu 3. 
+
+```{r, echo=F}
+likan2 <- glm(Kulnun ~ bjargradur + Radavitund + Kennslustreita, data = df, family=binomial())
+summary(likan2)
+confint(likan2)
+
+model2param <- parameters::parameters(likan2)
+model2param <- model2param[-c(4,5,6,8)]
+
+
+colnames(model2param) <- c("Fasti", "Hallastuðull", "Staðalvilla", "$z$-gildi", "$p$-gildi")
+kable(model2param, digits = 2, format = "html", caption = "Tafla 3. Niðurstöður aðfallsgreiningu hlutfalla á líkani 2", align = "c") %>%
+  kable_classic(full_width=T, font_size=18, html_font = "Times new Roman") %>% gsub("font-size: initial !important;", "font-size: 15pt !important;",
+.)
+```
+
+|   Líkanið var með betri mátgæði en líkan án frumbreytanna (456,74 á móti 530,11). Tvískipta frumbreytan bjargráður var með marktæka forspá fyrir því hvort einstaklingur sé með kulnun eða ekki, B1 = 1,01, *z* = 2,29, *p* < 0,02. Frumbreytan ráðavitund var einnig með marktæka forspá, B2 = -0,06, *z* = -5,37, p < 0,001. Frumbreytan kennslustreita var hinsvegar ekki með marktæka forspá, B3 = -0,016, *z* = -1,49, *p* = 0,14. 
+
+## Samanburður líkana
+
+```{r, echo=F}
+modelChi.com <- likan2$deviance - likan1$deviance
+chidf.comp <- likan1$df.residual - likan2$df.residual
+1 - pchisq(modelChi.com, chidf.comp)
+```
+
+```{r, echo=F}
+anova(likan1, likan2)
+
+drop1(likan2, test="Chisq")
+
+likan2$aic - likan1$aic
+```
+
+Túlkun: 
+
+## Lokalíkan
+ 
+```{r}
+
+```
+
+Túlkun: 
+
+# Umræða
+
+# Heimildir
+
+Ásta Möller og Jónína Helga Ólafsdóttir (2017, október). *Tillögur að úrbótum á starfsumhverfi Háskóla Íslands til að draga úr vinnuálagi og streitu starfsmanna*. Háskóli Íslands. 
+
+Fernández-Suárez, I., García-González, M.A., Torrano, F. og García-González, G. (2021). Study of the prevalence of burnout in university professors in the period 2005-2020. *Education Research International*. https\://doi.org/10.1155/2021/7810659
+
+Sabagh, Z., Hall, N. C. og Saroyan, A. (2018). Antecedents, correlates and consequences of faculty burnout. *Educational Research*, *60*(2), 131-156. https\://doi.org/10.1080/00131881.2018.1461573

@@ -1,0 +1,48 @@
+---
+title: "Verkefni1"
+author: "Adalheidur Magnusdottir"
+date: "`r Sys.Date()`"
+output: html_document
+---
+# Uppsetning
+
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = T, warning = F, message = F)
+
+setwd("C:/Users/Aðalheiður/Desktop/TolfraediR")
+```
+## Hlaða inn pökkum
+
+```{r}
+
+library("dplyr")
+library("knitr")
+```
+
+## Hlaða inn gagnasafninu
+
+```{r}
+
+load("cars.RData")
+```
+
+## Prófa skipanir
+
+```{r}
+#Upplýsingar um gagnaskránna
+
+str(df)
+
+#Meðaltal 
+
+mean(df$speed)
+mean(df$dist)
+
+#Staðalfrávik 
+
+sd(df$speed)
+sd(df$dist)
+
+#Samantekt
+summary(df)
+```

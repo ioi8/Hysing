@@ -1,0 +1,81 @@
+---
+title: "Stutt verkefni 6"
+author: "Adalheidur Magnusdottir"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=F, warning=F)
+```
+
+## Gagnasett lesið inn
+
+```{r}
+df <- read.delim("stutt_verkefni_6.dat", header=T)
+```
+
+## Breytur athugaðar
+
+```{r}
+summary(df)
+str(df)
+head(df [,c("fb", "display")])
+
+
+df$fb <- as.factor(df$fb)
+df$display <- as.factor(df$display)
+```
+
+## Athuga hvernig samanburður er skilgreindur en engar breytingar gerðar
+
+|   Það að ná hvorki false belief prófinu né display prófinu er haft sem samanburður.
+
+```{r}
+contrasts(df$fb)
+contrasts(df$display)
+```
+
+## Líkan sett upp
+
+|   Líkan sett upp þar sem display próf er fylgibreyta og false belief próf er frumbreyta. 
+
+```{r}
+likan <- glm(display ~ fb, data=df, family = binomial())
+summary(likan)
+```
+
+|   Kí-kvaratgildi athugað og marktekt þess.
+
+```{r}
+likanChi <- likan$null.deviance - likan$deviance
+likanChi
+
+chiDf <- likan$df.null - likan$df.residual
+chiDf
+
+
+chisq.prob <- 1 - pchisq(likanChi, chiDf)
+chisq.prob
+
+```
+
+|   Áhættuhlutfall og öryggisbil þess kannað. 
+
+```{r}
+# Hallastuðull með andlógariþma
+exp(coef(likan))
+
+# Andlógariþmi af öryggisbili
+exp(confint(likan))
+```
+
+|   Niðurstöðurnar sýna samband á milli false belief og display prófanna þar sem líkur á að barn nái display prófinu aukast þegar false belief prófinu er náð, með hallastuðul b1 = 2,76 og marktækan mun á því að barn nái display prófinu eða ekki, χ2(1) = 26,08, *p* < 0,001. Áhrif false belief prófsins á display prófið voru ágæt, OR = 15,81, en þó með 95% öryggisbil [5,14 ; 56,16]. Það merkir að þau börn sem ná false belief prófinu eru 15,81x líklegri að ná display prófinu, en þær líkur geta verið á bilinu 5,14 til 56,16. 
+
+
+```{r, echo=F}
+library(effects)
+plot(allEffects(likan), type='response', grid=T, ylim=c(0,1), xlab="False belief", ylab="Display")
+```
+
+

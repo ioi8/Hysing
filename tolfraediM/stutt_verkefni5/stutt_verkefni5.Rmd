@@ -1,0 +1,72 @@
+---
+title: "Stutt verkefni 5"
+author: "Adalheidur Magnusdottir"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE, scipen=999}
+knitr::opts_chunk$set(echo = TRUE, message = F, warning = F)
+
+library(readr)
+library(dplyr)
+library(furniture)
+```
+
+## Lesa inn gagnasettið
+
+```{r}
+df <- read_csv("stutt_verkefni_5.csv", col_types = cols(...1 = col_skip()))
+```
+
+## Lagfæring gagna
+
+```{r}
+# Athuga breyturnur
+str(df)
+summary(df)
+
+# Breyta sveitarfélagi í þáttabreytu
+df$sveitarfelag <- as.factor(df$sveitarfelag)
+
+#Lýsandi tölfræði
+df %>%
+    furniture::table1('Sveitarfélag' = sveitarfelag, 'Heildarleiguverð á mánuði.' = verd,
+        'Stærð í fermetrum' = staerd, test = TRUE, total = TRUE, caption = "Tafla 1: Lýsandi tölfræði.", output = "markdown")
+```
+
+## Skilagreina samanburð
+
+```{r}
+# Athuga hvernig R skiptir hópunum niður
+contrasts(df$sveitarfelag)
+
+# Athuga hvernig hóparnir eru skilgreindir 
+levels(df$sveitarfelag)
+
+# Fjarlæga mosfellsbæ
+df <- df %>% filter(sveitarfelag %in% c("Garðabær", "Hafnarfjarðarkaupstaður", "Kópavogsbær", "Reykjavíkurborg"))
+df <- df %>% mutate(sveitarfelag = droplevels(sveitarfelag))
+levels(df$sveitarfelag)
+
+# Skilgreina Reykjavík sem samanburðarhóp
+Grb_v_Rvk <- c(1, 0, 0, 0)
+Hfj_v_Rvk <- c(0,1,0,0)
+Kop_v_Rvk <- c(0,0,1,0)
+contrasts(df$sveitarfelag) <- cbind(Grb_v_Rvk, Hfj_v_Rvk, Kop_v_Rvk)
+```
+
+
+## Aðfallsgreining
+
+|   Sett var upp líkan þar sem verð er fylgibreyta og sveitarfélag sem tekur fjögur gildi er frumbreyta. 
+
+```{r}
+lm.fit <- lm(verd ~ sveitarfelag, data=df)
+summary(lm.fit)
+```
+
+|   Skýringarhlutfallið er 0.01067 og líkanið nær því yfir 1.07% af breytileika fylgibreytu. Það merkir að sveitarfélag nær einungis að útskýra 1.07% af breytileika á verðbreytingum á heildarleiguverði. Líkanið sem heild er marktækt; F(3, 63548) = 229.4, *p* < 0.05. 
+|   Hallastuðull Garðabæjar var 26065.3 og marktækur með *p* < 0.05. Hallastuðull Hafnafjarðarkaupstaðar var 2963.9 og marktækur með *p* < 0.05. Hallastuðull Kópavogs var 13856.2 og marktækur með *p* < 0.05. Meðaltal fyrir Garðabæ, Hafnafjarðarkaupstað og Kópavog var hærra í samanburði við Reykjavík og sá munur var marktækur. Breyting á heildarleiguverði hækkar því þegar farið er frá Reykjavík til hinna sveitarfélaganna. 
+|   Í samanburði við Reykjavík, þá eru heildarleiguverð á mánuði í sveitarfélögunum Garðabæ, Hafnafjarðarkaupstað og Kópavogsbæ hærri. Út frá þessu líkani má því túlka að heildarleiguverð á mánuði er lægst í Reykjavík. 
+

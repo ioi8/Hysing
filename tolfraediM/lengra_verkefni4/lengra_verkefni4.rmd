@@ -1,0 +1,267 @@
+---
+title: "Lengra verkefni 4"
+author: "Adalheidur Magnusdottir og Sigrún Erna Kristinsdóttir"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+<style type = "text/css">
+  body{
+    font-size:12pt;
+    font-family: Times New Roman;
+  }
+</style>
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = F, warning = F)
+
+library(readr)
+library(kableExtra)
+library(dplyr)
+library(tidyverse)
+library(broom)
+library(jtools)
+library(effects)
+
+options(scipen=999)
+```
+
+
+|   Leigumarkaðurinn á Íslandi hefur verið hitamál í fjölmörg ár og þá sérstaklega á höfuðborgarsvæðinu. Oft er talað um að fólk "festist" á leigumarkaðinum þar sem leiguverð er talið svo hátt að fólk nær ekki að spara fyrir útborgun í íbúð. Frá janúar 2022 til janúar 2023 hækkaði vísitala leiguverðs á höfuðborgarsvæðinu um 8,1% en hún sýnir breytingar á vegnu meðaltali fermetraverðs (Vísitala leiguverðs á höfuðborgarsvæðinu, 2023). Það bendir til þess að leiguverð fari enn hækkandi á höfuðborgarsvæðinu. Nýlega hafa verið í fréttum umræðum um hátt leiguverð, til að mynda um leigufélag sem stefndi á að hækka leigu um 30%, að leigjendum óvörðum (Þórður Snær Júlíusson, 2022). Stjórnvöld telja að ástæða sé til að setja lög um hámarksleiguverð, þar sem sett verður þak á leiguverð (Gunnhildur Kjerúlf Birgisdóttir, 2022). Samkvæmt rannsókn Samtökum leigjenda í september 2022, voru um 71% landsmanna hlynnt því að leiguþak verðir sett á húsnæði á Íslandi en leiguþak er hámarksleiguverð miðað við stærð, gæði og staðsetningu húsnæðis ("71% hlynnt leiguþaki", 2022). 
+|   Það hefur oft verið talað um samanburð á því hvar sé best að búa á höfuðborgarsvæðinu, þ.e.a.s í hvaða sveitarfélagi er ódýrast að búa. Það eru hinsvegar ekki til neinar haldbærar tölur um hver munurinn á milli sveitarfélaga nákvæmlega sé en áhugavert væri að kanna það enn frekar. Í þessari greiningu verður því gerður samanburður á tveimur sveitarfélögum og athuguð áhrif þeirra sem og stærðar eignar á heildarleiguverði á mánuði. 
+
+<br><br>
+
+# Aðferð
+
+|   Gögnin eru leiguskrá íbúarhúsnæðis sem inniheldur upplýsingar um þinglýsta leigusamninga íbúarhúsnæðis sem koma frá Húsnæðis- og mannvirkjastofnun (Leiguskrá íbúðarhúsnæðis, e.d.). Upprunalegu gögnin innihalda upplýsingar um allt land en búið er að hreinsa þau, svo þau innihalda einungis upplýsingar sem súa að höfuðborgarsvæðinu. Einnig er búið að hreinsa út fleiri upplýsingar, líkt og fastanúmer, heimilisfang og fleira. Gögnin innihalda nú þrjár breytur; sveitarfélag, verð og stærð. Sveitarfélag er flokkabreyta sem tekur fimm gildi, Garðabær, Hafnafjarðarkaupstaður, Kópavogsbær, Mosfellsbær og Reykjavíkurborg. Verð er heildarleiguverð á mánuði fyrir eign og stærð er stærð eignar í fermetrum. Gögnin innihalda 65,554 leigusamninga á höfuðborgarsvæðinu (Leiguskrá íbúðarhúsnæðis, e.d.). 
+|   Gerðar voru breytingar á breytunni sveitarfélag svo hún tæki aðeins tvö gildi, Garðabær og Reykjavíkurborg. Það var gert svo hægt væri að gera skilgreina samanburð á leiguverði í tveimur sveitarfélögum, þar sem Reykjavíkurborg er samanburðarhópurinn. 
+|   Markmið greiningarinnar var að fá lokalíkan sem spáir marktækt fyrir um heildarleiguverð á mánuði fyrir eign. Framkvæmd var margliða aðfallsgreining sem gerir kleift að spá fyrir um fylgibreytu út frá fleiri en einni frumbreytu. Búin voru til tvö líkön, annarsvegar eitt sem samanstóð af verði sem fylgibreytu og stærð og sveitarfélagi sem frumbreytum, og hinsvegar annað með sömu breytum en þar sem einnig var bætt við samvirkni. Samvirkni (e. *interaction effect*) er þegar áhrif einnar frumbreytu fer eftir áhrifum annarrar frumbreytu. Þau áhrif sem ein frumbreyta hefur er þá ólík eftir því hvaða gildi önnur frumbreyta tekur. Því voru búin til tvö líkön til að kanna hvað áhrif samvirkni myndi hafa á frumbreyturnar, marktekt þeirra og hallastuðla. 
+|   Tilgátan er sú að eftir því sem eign stækkar í stærð (fermetrum) þá marktækt hækkar heildarleiguverð eignarinnar og það verð er marktækt hærra í Garðabæ samanborið við Reykjavíkurborg. 
+
+<br><br>
+
+# Niðurstöður
+
+```{r, include=FALSE}
+df <- read_csv("langt_verkefni_4.csv", col_types = cols(...1 = col_skip()))
+
+str(df)
+summary(df)
+sum(is.na(df))
+
+df$sveitarfelag <- as.factor(df$sveitarfelag)
+```
+
+|   Í töflu 1 má sjá lýsandi tölfræði fyrir breyturnar. Fjöldi leigusamninga er 65554 en í töflunni má sjá fjölda í hverju sveitarfélagi. Heildarleiguverð á mánuði var að meðaltali 163,572 krónur og meðal stærð eigna í fermetrum var 76,8. Meðaltal var hæst í Garðabæ, bæði fyrir heildarleiguverð sem var 186,446 krónur sem og meðal stærð eigna í fermetrum, 93 fermetrar. Lægst var heildarleiguverðið á mánuði í Reykjavíkurborg, 160,380 krónur, og meðal stærð eigna í fermetrum var einnig lægst, 72,9 fermtrar. 
+
+```{r, warning=FALSE, message=FALSE, tidy=TRUE, echo=F, include=F}
+df %>% 
+  furniture::table1("Sveitarfélag" = sveitarfelag,
+                    "Heildar leiguverð á mánuði fyrir eign" = verd,
+                    "Stærð eignar í fermetrum" = staerd,
+                    total = TRUE,
+                    format_number = TRUE,
+                    test = TRUE,
+                    var.equal = FALSE,
+                    caption = "Tafla 1: Lýsandi tölfræði.",
+                    output = "markdown")
+```
+
+
+```{r, warning=FALSE, message=FALSE, tidy=TRUE, echo=F}
+df %>% 
+  furniture::table1("Heildar leiguverð á mánuði fyrir eign" = verd,
+                    "Stærð eignar í fermetrum" = staerd,
+                    total = TRUE,
+                    format_number = TRUE,
+                    test = TRUE,
+                    var.equal = FALSE,
+                    splitby = ~ sveitarfelag,
+                    caption = "Tafla 1: Lýsandi tölfræði.",
+                    output = "markdown")
+```
+
+```{r, echo=F}
+#cat('\ Búið til nýtt gagnasafn þar sem sveitarfélag tók einungis tvö gildi:\n')
+df_nytt <- filter(df, sveitarfelag %in% c("Garðabær", "Reykjavíkurborg")) %>% droplevels()
+
+#cat('\nSkilgreindur samanburður þar sem Reykjavíkurborg var samanburðarhópurinn:\n')
+grb_vs_rvk <- c(1, 0)
+contrasts(df_nytt$sveitarfelag) <- cbind(grb_vs_rvk)
+```
+
+<br><br>
+
+|   Á mynd 1 má sjá leiguverð og stærð fasteigna, skipt eftir sveitarfélögum. Í Garðabæ er dreifing verðs nokkuð línuleg, með einstaka frávillinga við stærri eignir. Flestar eignir eru um það bil 50 til 150 fermetrar. Heildarleiguverð er flest frá 100,000 kr upp í 300,000 kr. Það er nokkur munur á verði þó eignir séu af svipaðri stærð, til að mynda við 300 fermetra má sjá eign þar sem heildarleiguverð er um 500,000 kr en einnig má sjá eign í sömu stærð þar sem heildarleiguverð er einungis um 100,000kr. Í Reykjavíkuborg virðist heildarleiguverð vera nokkuð hærra og minni eignir hafa hærra leiguverð. Fleiri frávillingar eru til staðar, bæði við minni eignir og stærri. Eignir eru flestar um 30 til 120 fermetrar og algengast er að heildarleiguverð sé frá 50,000 kr upp í 300,000 kr. 
+
+```{r, echo=FALSE, fig.align='center'}
+lattice::xyplot(verd ~ staerd | sveitarfelag, data= df_nytt, type= c('p','smooth'), grid= T, lwd= 3, xlab="Stærð", ylab="Verð", main="Mynd 1. Leiguverð og stærð fasteigna, skipt eftir sveitarfélögum.")
+```
+
+<br><br>
+
+|   Á mynd 2 má sjá áhrif stærðar á verð, eftir sveitarfélögum. Við minni eignirnar er leiguverð í Reykjavíkurborg ódýrar. Línurnar skarast þó við um það bil 120 fermetra og þá verður leiguverð dýrara í Reykjavíkurborg. 
+
+<br><br>
+
+```{r, echo=FALSE, fig.align='center'}
+lattice::xyplot(verd ~ staerd, groups= sveitarfelag, data= df_nytt, type= c('r'), grid= T, lwd= 3, auto.key= T, ylim=c(0,550000),
+                xlab="Stærð", ylab="Verð", main="Mynd 2. Áhrif stærðar á verð.")
+```
+
+
+## *Líkan án samvirkni*
+
+|   Búið var til líkan þar sem fylgibreytan var verð og frumbreyturnar stærð og sveitarfélag sem tók tvö gildi, Garðabær og Reykjavíkurborg. Í töflu 2 má sjá niðurstöður aðfallsgreiningarinnar. 
+
+```{r, error=FALSE, message=FALSE, warning=FALSE, echo=F}
+#
+lm.fit <- lm(verd ~ staerd + sveitarfelag, data=df_nytt)
+summary(lm.fit)
+#confint(lm.fit)
+
+model1param <- parameters::parameters(lm.fit)
+model1param <- model1param[-c(4,5,6,8)]
+
+rownames(model1param) <- c("Skurðpunktur", "Stærð", "Garðabær vs. Reykjavík")
+
+colnames(model1param) <- c("Fasti", "Hallastuðull", "Staðalvilla", "$t$-gildi", "$p$-gildi")
+kable(model1param, digits = 2, format = "html", caption = "Tafla 2. Niðurstöður marghliða aðfallsgreiningar án samvirkni: Líkan 1.", align = "c") %>%
+  kable_classic(full_width=T, font_size=18, html_font = "Times new Roman") %>% gsub("font-size: initial !important;", "font-size: 15pt !important;",
+.)
+```
+
+|   Leiðrétt skýringarhlutfall var 27,04% og líkanið nær því yfir 27,04% af breytileika fylgibreytu. Það merkir að stærð og sveitarfélag náðu að útskýra 27,04% af breytileika á verðbreytingum á heildarleiguverði. Líkanið sem heild er marktækt; F(2, 48273) = 8946, *p* < 0,001.
+|   Hallastuðull stærðar var 1010,03 og marktækur með *p* < 0,001. Því er hægt að álykta að fyrir hvern fermetra þá hækkar verð eignar um 1010,03 krónur, þegar leiðrétt er fyrir áhrifum sveitarfélags. Öryggisbilið var [995,0149 ; 1025,040]. Hallastuðull sveitarfélags var 5742,72 og marktækur með *p* < 0,001. Verð eigna er því marktækt 5742 krónum hærri í Garðabæ samanborið við Reykjavíkurborg. Öryggisbilið var [3446,3392 ; 8039,095]. 
+
+
+<br><br>
+
+## *Líkan með samvirkni*
+
+|   Smíðað var annað líkan út frá fyrra líkani þar sem bætt var við samvirkni. Niðurstöðurnar má sjá í töflu 3.
+
+```{r, error=FALSE, message=FALSE, warning=FALSE, echo=F}
+
+lm.fit1 <- lm(verd ~ staerd + sveitarfelag + staerd:sveitarfelag, data = df_nytt)
+#summary(lm.fit1)
+#confint(lm.fit1)
+
+model2param <- parameters::parameters(lm.fit1)
+model2param <- model2param[-c(4,5,6,8)]
+
+rownames(model2param) <- c("Skurðpunktur", "Stærð", "Garðabær vs. Reykjavík", "Stærð:Garðabær vs. Reykjavík" )
+
+colnames(model2param) <- c("Fasti", "Hallastuðull", "Staðalvilla", "$t$-gildi", "$p$-gildi")
+kable(model2param, digits = 2, format = "html", caption = "Tafla 3. Niðurstöður marghliða aðfallsgreiningar með samvirkni: Líkan 2.", align = "c") %>%
+  kable_classic(full_width=T, font_size=18, html_font = "Times new Roman") %>% gsub("font-size: initial !important;", "font-size: 15pt !important;",
+.)
+```
+
+|   Skýringarhlutfallið var 27,12%, líkanið nær því yfir 27,12% af breytileika fylgibreytu. Líkanið í heild var marktækt: F(3, 48272) = 5989,94, *p* < 0,001. Skurðpunktur (e. intercept) gefur til kynna leiguverð fyrir 0fm eign í Reykjavík, sem er því 85,554 krónur. Hallastuðull stærðar var 1026 og marktækur með *p* < 0,001. Verð hækkar því marktækt um 1026 krónur þegar eign stækkar um 1 fermeter í Reykjavík. Hallastuðull sveitarfélags var 25,988, marktækur með *p* < 0,001. Leiguverð er því marktækt 25,988 krónum hærra þegar farið er úr Reykjavíkurborg yfir í Garðabæ. Hallastuðull samvirknis var -221,21, marktæktur með *p* < 0,001. Hver fermeter hækkar því leiguverð um 221 krónu. 
+
+<br><br>
+
+
+## *Samanburður líkananna*
+
+|   Líkönin tvö voru borin saman og hér fyrir neðan má sjá niðurstöður samanburðarins. Fyrst eru mátgæði líkana með og án samvirkni athuguð, sjá töflu 4. Því næst eru hallastuðlar bornir saman, sjá töflu 5, og að lokum áhrif þess að fjarlægja breytu úr líkani ahuguð, fyrst fyrir líkan án samvirkni og næst fyrir líkan með samvirkni. 
+
+<br><br>
+
+### *Mátgæði líkana*
+|   Mátgæði líkans með samvirkni eru heldur betri, AIC-stuðull er lækkar úr 1180351 í 1180296. Skýringarhlutfallið hækkar hins vegar aðeins um 0,01%, sem er frekar lítið miðað við töluvert flóknara líkan. 
+
+```{r, error=FALSE, warning=FALSE, message=FALSE, echo = FALSE}
+taflaperform <- performance::compare_performance(lm.fit, lm.fit1, metrics = "all")
+taflaperform <- taflaperform[-c(2,4,6)]
+colnames(taflaperform) <- c("Líkan", "AIC", "BIC", "R²", "Leiðrétt R²", "RMSE", "Sigma")
+rownames(taflaperform) <- c("Líkan án samvirkni", "Líkan með samvirkni")
+```
+
+```{r, error=FALSE, warning=FALSE, message=FALSE, echo=FALSE}
+kable(taflaperform, digits = 3, format = "html", caption = "Tafla 4. Mátgæði líkana.", align = "c") %>%
+  kable_classic(full_width=T, font_size=18, html_font = "Times new Roman") %>% gsub("font-size: initial !important;", "font-size: 15pt !important;",
+.)
+```
+
+<br><br>
+
+### *Samanburður hallatalna*
+
+|   Í töflu 5 má sjá samanburð á líkönunum tveimur. Hallastuðull stærðar hækkar lítilega, eða um það bil 16, þegar samvirkni var bætt við líkanið en hallastuðull sveitarfélags hækkar töluvert, eða um 20,246. Skýringarhlutfallið helst óbreytt á milli líkana. 
+
+```{r, error=FALSE, warning=FALSE, message=FALSE, echo = FALSE, results='hide'}
+hallastudlar <- car::compareCoefs(lm.fit, lm.fit1, se=FALSE)
+```
+```{r, error=FALSE, warning=FALSE, message=FALSE, echo = FALSE}
+colnames(hallastudlar) <- c("Líkan án samvirkni", "Líkan með samvirkni")
+kable(hallastudlar, digits = 3, format = "html", caption = "Tafla 5. Samanburður á hallastuðlum líkana.", align = "c") %>%
+  kable_classic(full_width=T, font_size=18, html_font = "Times new Roman") %>% gsub("font-size: initial !important;", "font-size: 15pt !important;",
+.)
+```
+
+<br><br>
+
+### *Mat á mikilvægi breyta í líkani*
+
+```{r, echo=FALSE}
+drop1lmfit <- drop1(lm.fit, test="F")
+drop1lmfit
+drop1lmfit1 <- drop1(lm.fit1, test="F")
+drop1lmfit1
+```
+
+<br><br>
+
+|   Hér að ofan eru niðurstöður athugunar á áhrif þess að fjarlægja breytu úr líkani. Athygli vekur að þrátt fyrir að líkan með samvirkni hafi lofað góðu í upphafi úrvinnslu, með besta AIC-stuðulinn, lýtur út fyrir að líkan án samvirkni gæti gefið betri mátgæði eftir að breytur eru fjarlægðar. 
+|   Þegar áhrif þess að fjarlægja breytu úr líkani eru athuguð á líkan án samvirkni er ljóst að það að fjarlægja sveitarfélag ætti að stuðla að betri mátgæðum. Einnig, þegar áhrifin eru athuguð á líkan með samvirkni er ljóst að það að fjarlægja samvirkni úr líkani ætti að gefa betri mátgæði, sem gefur til kynna að samvirknin sé ekki að bæta miklu við líkanið, enda skýringarhlutafall beggja líkana svo gott sem eins. 
+
+```{r, echo=FALSE, include=FALSE}
+lm.fit3 <- lm(verd ~ staerd, data=df_nytt)
+jtools::summ(lm.fit3)
+```
+
+```{r, echo=FALSE}
+model3param <- parameters::parameters(lm.fit3)
+model3param <- model3param[-c(4,5,6,8)]
+
+rownames(model3param) <- c("Skurðpunktur", "Stærð")
+
+colnames(model3param) <- c("Fasti", "Hallastuðull", "Staðalvilla", "$t$-gildi", "$p$-gildi")
+kable(model3param, digits = 2, format = "html", caption = "Tafla 6. Niðurstöður marghliða aðfallsgreiningar án samvirkni: Líkan 3 - Lokalíkan.", align = "c") %>%
+  kable_classic(full_width=T, font_size=18, html_font = "Times new Roman") %>% gsub("font-size: initial !important;", "font-size: 15pt !important;",
+.)
+```
+
+
+<br><br>
+
+|   Það líkan sem veitir bestu forspá um heildarleiguverð á mánuði er því líkan þar sem einungis frumbreytan stærð var. Miðað við þá forsendu að til þess að flækja líkan, þ.e. að bæta öðrum breytum við, þá þurfi þær að bæta einhverju við forspánna eða útskýra enn frekar. Það kom ekki fyrir í þessu tilfelli. Skýringarhlutfall bættist ekki við það að halda öðrum breytum inni og hallastuðlar hækkuðu einungis örlítið á milli líkana. Því voru líkan 1 og 2 ekki að veita frekari upplýsingar þrátt fyrir að innihalda fleiri frumbreytur. 
+
+<br><br>
+
+## *Lokalíkan*
+
+|   Skýringarhlutfallið var 27%. Líkanið nær því yfir 27% af breytileika fylgibreytu, þ.e. að 27% af heildarbreytileika heildarleiguverðs á mánuði má skýra með breytingum á stærð eigna. Líkanið í heild var marktækt: F(1, 48274) = 17859,75, *p* = 0,001. 
+|   Hallastuðull stærðar var 1014,97 og marktæktur með *p* < 0,001. Heildarleiguverð á mánuði hækkar því marktækt um um það bil 1015 krónur þegar stærð eignar stækkar um einn fermeter. Öryggisbilið var [1000,08 ; 1029,852] og hækkun á heildarleiguverði þegar eign stækkar getur því verið á því bili. 
+
+
+# Umræða
+
+
+|   Markmið greiningarinnar var að finna lokalíkan sem veitir bestu forspá um heildarleiguverð á mánuði. Niðurstöðurnar sýna fram á að stærð eigna í fermetrum veitir bestu spá um heildarleiguverð eigna á mánuði. Ekki voru rök fyrir því að halda inni breytunum sveitarfélagi sem og samvirkni í líkönunum þar sem þær breytur veittu ekki neinar viðbótar upplýsingar. 
+
+# Heimildir
+
+71% hlynnt leiguþaki (2022, 14.september). *Mbl*. https\://www.mbl.is/frettir/innlent/2022/09/14/71_prosent_hlynnt_leiguthaki/
+
+Gunnhildur Kjerúlf Birgisdóttur (2022, 9.desember). Ástæða til að skoða leiguþak. *RÚV*. https\://www.ruv.is/frettir/innlent/2022-12-09-astaeda-til-ad-skoda-leiguthak
+
+Leiguskrá íbúðarhúsnæðis (e.d.). *Húsnæðis og mannvirkjastofnun*. https\://fasteignaskra.is/gogn/grunngogn-til-nidurhals/leiguskra-ibudarhusnaedis/
+
+Vísitala leiguverðs á höfuðborgarsvæðinu. (2023, febrúar). *Húsnæðis- og mannvirkjastofnun*. https\://hms.is/frettir/visitala-leiguverds-a-hofudborgarsvaedinu-jan23
+
+Þórður Snær Júlíusson (2022, 10.desember). Umdeilt leigufélag ratar enn og aftur í fréttirnar vegna frásagna af okri á leigjendum. *Kjarninn*. https\://kjarninn.is/skyring/umdeilt-leigufelag-ratar-enn-og-aftur-i-frettir-vegna-frasagna-af-okri-a-leigjendum/

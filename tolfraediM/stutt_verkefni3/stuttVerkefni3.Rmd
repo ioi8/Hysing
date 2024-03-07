@@ -1,0 +1,186 @@
+---
+title: "Stutt verkefni 3"
+author: "Adalheidur Magnusdottir"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE, scripen=999}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(kableExtra)
+```
+
+
+```{r}
+setwd("C:/Users/Aðalheiður/Desktop/TolfraediR")
+```
+
+
+```{r, results='hide'}
+library(readr)
+df <- read_csv("stutt_verkefni_3.csv", 
+    col_types = cols(...1 = col_skip()))
+```
+
+## Gagnasafnið sem unnið er með
+
+Gagnasafnið byggir á ESS könnun og inniheldur 7 breytur.
+
+Trstplc: Traust gagnvart lögreglu - 0 = ekkert traust; 10 = fullt traust
+
+Age: Aldur - Fjöldi ára sem þátttakandi hefur verið á lífi
+
+Eduyrs: Menntun - Fjöldi ára lokið í fullu námi
+
+Hinctnt: Laun - Heildarlaun heimilis eftir allan frádrátt. Þó mæld á 
+skalanum 1-12 en ekki í krónum. 
+
+Lrscale: Stjórnmálaafstaða - 0 = vinstrisinnun; 10 = hægri
+
+Rlgdgr: Trú - 0 = trúlaus ; 10 = mikil trú
+
+Socialtrust: Almennt traust gagnvart öðrum - 0 = vantraust gagnvart öðrum; 10 = treystir öðrum. Ath. Þetta er samsett breyta frá 3 öðrum breytum (einnig mældar á 1-10, 
+meðaltal allra þriggja mælinga tekið fyrir hvern einstakling).
+
+
+
+```{r, results='hide'}
+str(df)
+summary(df)
+
+df <- na.omit(df)
+summary(df)
+```
+
+
+## Tafla með upplýsingum um fylgni á milli allra breyta 
+
+```{r}
+fylgni <- cor(df[,c("age","eduyrs","hinctnt","lrscale","rlgdgr","socialtrust", "trstplc")], use="complete.obs")
+kable(fylgni, digits = 3) |> kable_styling()
+```
+
+Í töflunni má sjá fylgni á milli allra breyta. Bæði jákvæð og neikvæð fylgni er til staðar. 
+
+## Mynd af öllum breytunum
+
+```{r}
+car::scatterplotMatrix(~trstplc+age+eduyrs+hinctnt+lrscale+
+                         rlgdgr+socialtrust, data=df, lwd=2, 
+                       col="black", regLine = list(col="green"), 
+                       smooth=list(col.smooth="orange", col.spread="orange"))
+```
+
+## Smíða einfalt líkan og bæta við (forward), þar sem traust gagnvart lögreglu er fylgibreytan
+
+```{r}
+lm.fit1 <- lm(trstplc ~ socialtrust, data = df)
+summary(lm.fit1)
+
+lm.fit2 <- lm(trstplc ~ socialtrust + age, data = df)
+summary(lm.fit2)
+
+lm.fit3 <- lm(trstplc ~ socialtrust + age + rlgdgr, data = df)
+summary(lm.fit3)
+```
+
+Fyrst var breytan socialtrust notuð sem frumbreyta, síðan var breytunni age bætt við og að lokum rlgdgr. 
+
+## Samanburður á einföldum líkunum
+
+```{r}
+car::compareCoefs(lm.fit1, lm.fit2, lm.fit3, se= FALSE, digits= 2)
+```
+
+Hallastuðullinn á socialtraust lækkar þegar öðrum breytum var bætt við. Það sama á við um hallastuðullinn á breytunni age. 
+
+## Smíða flókið líkan og einfalda (backwards), þar sem traust gagnvart lögreglu var fylgibreytan. 
+
+```{r}
+lm.fit4 <- lm(trstplc ~ socialtrust + rlgdgr + lrscale +  eduyrs 
+              + age + hinctnt, data = df)
+summary(lm.fit4)
+
+lm.fit5 <- lm(trstplc ~ socialtrust + rlgdgr + lrscale +  eduyrs 
+              + age, data = df)
+summary(lm.fit5)
+
+lm.fit6 <- lm(trstplc ~ socialtrust + rlgdgr + lrscale, data = df)
+summary(lm.fit6)
+```
+
+Í líkani 4 voru allar breyturnar til staðar, í líkani 5 var breytan hinctnt fjarlægð og í líkani 6 voru breyturnar hinctnt, age og eduyrs fjarlægðar. 
+
+## Samanburður á flóknum líkunum
+
+```{r}
+car::compareCoefs(lm.fit4, lm.fit5, lm.fit6, se= FALSE, digits= 2)
+```
+
+Hallastuðullinn á breytunni socialtraust hækkar eftir því sem fleiri breytur voru fjarlægðar. Hallastuðull breytunnar rlgdgr lækkar á milli líkana 4 og 5 en hækkar svo aftur í líkani 6 en hallastuðullinn á breytunni lrscale hegðar sér akkúrat öfugt. Hallastuðlar eduyrs og age lækka báðir á milli líkanna 4 og 5 en hallastuðull þeirrar fyrri töluvert meira. 
+
+## Prufa styttingu og update skipunina
+
+```{r}
+lm.fit7 <- lm(trstplc ~., data=df)
+summary(lm.fit7)
+
+lm.fit8 <- update(lm.fit7, .~ . -age)
+summary(lm.fit8)
+```
+
+## Prufa MASS pakkann
+
+```{r}
+library(MASS)
+
+lm.forwards <- stepAIC(lm.fit4, direction = "forward", trace = FALSE)
+summary(lm.forwards)
+
+lm.step <- stepAIC(lm.fit4, direction = "both", trace = F)
+summary(lm.step)
+
+lm.backward <- stepAIC(lm.fit4, direction = "backward", trace = F)
+summary(lm.backward)
+
+```
+
+## Áhrif aldurs þegar leiðrétt er fyrir með félagslegu trausti
+
+```{r}
+lm.age <- lm(trstplc ~ age, data = df)
+summary(lm.age)
+
+lm.age.social <- lm(trstplc ~ age + socialtrust, data = df)
+summary(lm.age.social)
+
+car::compareCoefs(lm.age, lm.age.social, se = FALSE, digits=2)
+```
+
+Þegar félaglegu trausti er bætt við líkanið þá verður hallastuðullinn á breytunni age ómarktækur. Í samanburði á líkununum má sjá að hann lækkar einnig töluvert þegar félagslegu trausti er bætt við. Skýringarhlutfall hækkar töluvert á milli líkana, en það hækkar úr um 1% í um það bil 10% þegar félagslegu trausti er bætt við. 
+
+## Samanburður líkana - ANOVA
+
+```{r}
+
+anova(lm.fit1, lm.fit2)
+
+anova(lm.fit1, lm.fit3)
+```
+
+Í samanburði á líkani 1 og líkani 2 er ekki marktækur munur á líkönunum. Það gefur til kynna að fyrra líkanið, hið einfaldara, er ákjósanlegra og marktækt betra í að spá fyrir um traust gagnvart lögreglu. 
+
+Í samanburði á líkani 1 og líkani 3 er marktækur munur til staðar. 
+
+## Skoða AIC stuðullinn, sem athugar mátgæði
+
+```{r}
+AIC(lm.fit1, lm.fit2)
+
+AIC(lm.fit1, lm.fit3)
+```
+
+Í fyrri samanburðinum, á líkönum 1 og 2, má sjá að AIC stuðullinn er lægri í líkani 1, þar sem við erum bara með breytuna socialtrust. Munurinn er þó mjög smávægilegur. Það má álykta að munurinn sé svo smávægilegur þar sem aldur (age) er ekki að bæta við neinum upplýsingum við líkanið. Aldur gæti verið að mæla í raun það sama og félagsleg traust er að mæla. Í þessu tilviki ætti því að velja líkan 1. 
+
+Í seinni samanburðinum, á líkönum 1 og 3, er AIC stuðullinn lægri í líkani 3, þar sem breyturnar socialtrust, age og rlgdgr eru. Munurinn er mikill og því er seinna líkanið töluvert betra.

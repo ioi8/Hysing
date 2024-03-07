@@ -1,0 +1,96 @@
+---
+title: "Verkefni úr tíma 20.mars"
+author: "Adalheidur Magnusdottir"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = F)
+```
+
+
+```{r}
+df <- read.delim("eel.dat", header=T)
+```
+
+# Athuga gögn og breyta í flokkabreytur
+
+```{r}
+head(df [, c("Cured", "Intervention")])
+head(df)
+summary(df)
+str(df)
+
+df$Cured <- as.factor(df$Cured)
+df$Intervention <- as.factor(df$Intervention)
+str(df)
+```
+
+# Snúa við samanburðarhópunum
+
+```{r}
+df$Cured <- relevel(df$Cured, "Not Cured")
+df$Intervention <- relevel(df$Intervention, "No Treatment")
+
+contrasts(df$Cured)
+contrasts(df$Intervention)
+```
+
+# Setja upp líkan
+
+```{r}
+likan <- glm(Cured ~ Intervention, data=df, family = binomial())
+summary(likan)
+```
+|   Út frá þessum niðurstöðum má áætla að líkan með frumbreytu sé betra líkan samanborið við líkan án frumbreytu. Meðferð hefur marktækt áhrif á bata. Meðferð veitir því marktæka forspá fyrir því hvort einstaklingur nái bata eða ekki. B=1,23, z=3,07, *p* < 0,002. 
+
+# Finnum kí-kvarðatgildið, frígráður og marktekt kíkvaðrat
+
+```{r}
+likanChi <- likan$null.deviance - likan$deviance
+likanChi
+
+chiDf <- likan$df.null - likan$df.residual
+chiDf # Er 1 því við erum bara með eina frumbreytu
+
+
+chisq.prob <- 1 - pchisq(likanChi, chiDf)
+chisq.prob
+
+jtools::summ(likan)
+```
+
+|   Prófið er marktækt, *p* < 0.002. Líkan með frumbreytu er því marktækt betra heldur en líkan án frumbreytu. Líkanið stendur sig því betur en tilviljun ein að spá fyrir um útkomu. x2 (1) = 9,93, *p* < 0,002. 
+
+```{r}
+# Upprunalegur hallastuðull, í log
+coef(likan)
+
+# Með andlógariþma
+exp(coef(likan))
+
+# Upprunalegt öryggisbil, í log
+confint(likan)
+
+# Andlógariþmi af öryggisbili
+exp(confint(likan))
+```
+
+|   Út frá þessu sjáum við að þeir sem fá meðferð eru 3,42x líklegri til þess að ná bata heldur en þeir sem fá ekki meðferð. Öryggisbilið er [1,58 ; 7,63]. Það merkir að áhættuhlutfall í þýði liggur á bilinu 1,58 til 7,63. Ef áhættuhlutfall væri reiknað í 100 úrtökum myndu öryggisbilin innihalda áhættuhlutfall þýðis í 95% úrtaka.  
+
+|   Á myndinni má sjá að það er samband á milli meðferðar og bata þar sem líkur á bata aukast þegar meðferð er gefin. Líkurnar á því að ná bara þegar einstaklingur fær ekkki meðferð er 42,86% en líkurnar á því að ná bata þegar einstaklingur fær meðferð er 71,92%. 
+
+```{r}
+library(effects)
+allEffects(likan)
+plot(allEffects(likan), type='response', grid=T, ylim=c(0,1), xlab="Meðferð", ylab="Bati")
+```
+
+```{r}
+df$predicted.probabilites <- fitted(likan)
+df$predicted.probabilites
+```
+
+
+

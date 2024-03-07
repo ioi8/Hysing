@@ -1,0 +1,47 @@
+---
+title: "Stutt verkefni 2"
+author: "Adalheidur Magnusdottir"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, scipen=999, message = F)
+```
+
+```{r}
+library(readr)
+df <- read_csv("stutt_verkefni_2.csv")
+View(df)
+```
+
+## Fylgnirit verðs og stærðar
+
+```{r}
+plot(staerd~verd, data = df)
+```
+
+## Líkan einfaldrar aðfallsgreiningar þar sem stærð spáir fyrir um verð
+
+```{r}
+lm.fit <- lm(verd~staerd, data = df)
+```
+
+## Niðurstöður aðfallsgreiningar
+
+```{r}
+summary(lm.fit)
+```
+
+## Öryggisbil
+
+```{r}
+car::Confint(lm.fit)
+```
+
+## Myndrit með bestu línu líkans
+```{r}
+plot(verd~staerd, data = df)
+abline(lm.fit, lwd = 2, col="red")
+```
+
